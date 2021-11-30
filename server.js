@@ -124,17 +124,15 @@ io.on('connection', socket => {
 
       //var req_name = req.query.name;
       var temp;
+      var temp2;
       client.query('SELECT message, username, timestamp FROM chats;', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
-          var jsonData = JSON.parse(row);
-          for (var i = 0; i < jsonData.counters.length; i++) {
-            var counter = jsonData.counters[i];
-            console.log(counter.counter_name);
-            socket.emit('message', formatMessage(botName, counter.counter_name));
-          }
           temp = JSON.stringify(row);
-          socket.emit('message', formatMessage(botName, temp));
+          temp2 = temp.split(',');
+          for(let i of temp2 ) {
+            socket.emit('message', formatMessage(botName, i));
+          }
         }
         //console.log(temp);
         //res.send(temp);
