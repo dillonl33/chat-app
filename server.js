@@ -118,6 +118,23 @@ io.on('connection', socket => {
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
 
+    // Load previous messages
+
+    //app.get('/username', (req, res) => {
+
+      //var req_name = req.query.name;
+      var temp;
+      client.query('SELECT message FROM chats;', (err, ret) => {
+        if (err) throw err;
+        for (let row of ret.rows) {
+          temp = JSON.stringify(row);
+        }
+        socket.emit('message', formatMessage(botName, temp));
+        //console.log(temp);
+        //res.send(temp);
+      });
+    //})
+
     // Broadcast when a user connects
     socket.broadcast
       .to(user.room)
