@@ -1,5 +1,5 @@
-import express, { static } from 'express';
-import { join } from 'path';
+const express = require('express')
+const path = require('path')
 const PORT = process.env.PORT || 3000
 
 
@@ -23,14 +23,14 @@ connectionString = {
 };
 
 express()
-.use(static(join(__dirname, 'public')))
-.set('views', join(__dirname, 'views'))
+.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
 .set('view engine', 'ejs')
 .get('/', (req, res) => res.render('pages/index'))
 .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
-import { Client } from 'pg';
+const { Client } = require('pg');
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
