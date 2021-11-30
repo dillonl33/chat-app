@@ -15,7 +15,7 @@ var http = require('http');
  */
 // I belive this one needs to be different, since he has 3000 and 5000 used. making it 3001
 //var port = normalizePort(process.env.PORT || '3000');
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**

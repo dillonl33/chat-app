@@ -2,7 +2,6 @@
   "name": "chatcord",
   "version": "1.0.0",
   "description": "Realtime chat app with rooms",
-  
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon server"
