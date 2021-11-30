@@ -1,3 +1,9 @@
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 3000
+
+
+
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
