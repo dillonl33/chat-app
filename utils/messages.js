@@ -17,5 +17,8 @@ function formatMessage2(username, text, time) {
 }
 
 // how can I have both?
-module.exports = formatMessage2;
-module.exports = formatMessage;
+//module.exports = formatMessage;
+module.exports = {
+  formatMessage,
+  formatMessage2,
+};
