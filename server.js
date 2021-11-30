@@ -131,7 +131,7 @@ io.on('connection', socket => {
           temp = JSON.stringify(row);
           temp2 = temp.split(',');
           for(let i of temp2 ) {
-            socket.emit('message', formatMessage(botName, i));
+            socket.emit('message', formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\""))));
           }
         }
         //console.log(temp);
