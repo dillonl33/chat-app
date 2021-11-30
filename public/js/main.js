@@ -11,88 +11,37 @@ const { username, room } = Qs.parse(location.search, {
 
 // BEGIN CODE FROM RAI
 
-console.log(`Connecting to database`)
+connectionString = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+};
+
+express()
+.use(express.static(path.join(__dirname, 'public')))
+.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/', (req, res) => res.render('pages/index'))
+.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
+
 const { Client } = require('pg');
 
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-		rejectUnauthorized: false
-    }
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 client.connect();
 
-async function email_api_req(req_email){
-	var temp;
-	
-	var mail_link = "https://gamers-matchmaking.herokuapp.com/email?email=" + req_email + 
-	"&user-id=raistlynniyn&api-key=lOjqSRTgCzTKJukkST33lnAiOSSuzLhMAXBT33Vu45jdWWIL";
-	
-	await fetch(mail_link)
-	.then(async function(response) {
-		temp = await response.json();
-	});
-	
-	function wait_on(variable){
-		if(variable == "")
-			setTimeout(() => {wait_on(variable);}, 300);
-	}
-	wait_on(temp);
-	
-	return temp;
-}
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.get('/help', (req, res) => {
-  res.send('Hello World help!')
-})
-
-app.get('/username', (req, res) => {
-	var req_name = req.query.name;
-	var temp;
-	client.query('SELECT count(*) FROM user_password WHERE username = \''+ req_name +'\';', (err, ret) => {
-		if (err) throw err;
-		for (let row of ret.rows) {
-			temp = JSON.stringify(row);
-		}
-		console.log(temp);
-		res.send(temp);
-	});
-})
-
-app.get('/email', (req, res) => {
-	var req_name = req.query.email;
-	var temp;
-	console.log(req_name);
-	client.query('SELECT count(*) FROM user_profile WHERE email = \''+ req_name +'\';', (err, ret) => {
-		if (err) throw err;
-		for (let row of ret.rows) {
-			temp = JSON.stringify(row);
-		}
-		console.log(temp);
-		res.send(temp);
-	});
-})
-
-app.get('/email-api', (req, res) => {
-	var req_email = req.query.email;
-	var temp = "";
-	
-	temp = email_api_req(req_email);
-	
-	function wait_on(variable){
-		if(variable == "")
-			setTimeout(() => {wait_on(variable);}, 300);
-	}
-	wait_on(temp);
-	
-	res.send(temp);
-})
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  client.end();
+});
 
 
 // END CODE FROM RAI
