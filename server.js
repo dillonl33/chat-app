@@ -127,7 +127,13 @@ io.on('connection', socket => {
       client.query('SELECT message, username, timestamp FROM chats;', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
-          temp = JSON.stringify(row[0]);
+          var jsonData = JSON.parse(row);
+          for (var i = 0; i < jsonData.counters.length; i++) {
+            var counter = jsonData.counters[i];
+            console.log(counter.counter_name);
+            socket.emit('message', formatMessage(botName, counter.counter_name));
+          }
+          temp = JSON.stringify(row);
           socket.emit('message', formatMessage(botName, temp));
         }
         //console.log(temp);
