@@ -125,7 +125,7 @@ io.on('connection', socket => {
       //var req_name = req.query.name;
       var temp;
       var temp2;
-      var temp3;
+      var temp3 = [];
       client.query('SELECT username, message, timestamp FROM chats;', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
