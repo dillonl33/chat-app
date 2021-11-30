@@ -133,10 +133,10 @@ io.on('connection', socket => {
           temp2 = temp.split(',');
           var index = 0;
           for(let i of temp2 ) {
-            temp3[index] = formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\"")));
+            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
             index++;
           }
-          socket.emit('message', formatMessage(temp3[0], temp3[1], temp3[2]));
+          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
           //socket.emit('message', formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\""))));
         }
         //console.log(temp);
