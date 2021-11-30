@@ -2,8 +2,9 @@
   "name": "chatcord",
   "version": "1.0.0",
   "description": "Realtime chat app with rooms",
+  "main":  "server.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node server",
     "dev": "nodemon server"
   },
   "author": "Brad Traversy",
