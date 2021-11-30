@@ -63,7 +63,7 @@ app.get('/help', (req, res) => {
 app.get('/username', (req, res) => {
 	var req_name = req.query.name;
 	var temp;
-	client.query('SELECT count(*) FROM user_password WHERE username = \''+ req_name +'\';', (err, ret) => {
+	client.query('SELECT count(*) FROM users;', (err, ret) => {
 		if (err) throw err;
 		for (let row of ret.rows) {
 			temp = JSON.stringify(row);
