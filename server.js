@@ -125,14 +125,19 @@ io.on('connection', socket => {
       //var req_name = req.query.name;
       var temp;
       var temp2;
-      client.query('SELECT message, username, timestamp FROM chats;', (err, ret) => {
+      var temp3;
+      client.query('SELECT username, message, timestamp FROM chats;', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
           temp = JSON.stringify(row);
           temp2 = temp.split(',');
+          var index = 0;
           for(let i of temp2 ) {
-            socket.emit('message', formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\""))));
+            temp3[index] = formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\"")));
+            index++;
           }
+          socket.emit('message', formatMessage(temp3[0], temp3[1], temp3[2]));
+          //socket.emit('message', formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\""))));
         }
         //console.log(temp);
         //res.send(temp);

@@ -8,4 +8,14 @@ function formatMessage(username, text) {
   };
 }
 
+function formatMessage2(username, text, time) {
+  return {
+    username,
+    text,
+    time
+  };
+}
+
+// how can I have both?
+module.exports = formatMessage2;
 module.exports = formatMessage;
