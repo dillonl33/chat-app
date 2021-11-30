@@ -124,12 +124,12 @@ io.on('connection', socket => {
 
       //var req_name = req.query.name;
       var temp;
-      client.query('SELECT message FROM chats;', (err, ret) => {
+      client.query('SELECT message, username, timestamp FROM chats;', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
           temp = JSON.stringify(row);
+          socket.emit('message', formatMessage(botName, temp));
         }
-        socket.emit('message', formatMessage(botName, temp));
         //console.log(temp);
         //res.send(temp);
       });
