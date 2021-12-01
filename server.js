@@ -32,76 +32,6 @@ const client = new Client({
 
 client.connect();
 
-async function email_api_req(req_email){
-	var temp;
-	
-	var mail_link = "https://gamers-matchmaking.herokuapp.com/email?email=" + req_email + 
-	"&user-id=raistlynniyn&api-key=lOjqSRTgCzTKJukkST33lnAiOSSuzLhMAXBT33Vu45jdWWIL";
-	
-	await fetch(mail_link)
-	.then(async function(response) {
-		temp = await response.json();
-	});
-	
-	function wait_on(variable){
-		if(variable == "")
-			setTimeout(() => {wait_on(variable);}, 300);
-	}
-	wait_on(temp);
-	
-	return temp;
-}
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.get('/help', (req, res) => {
-  res.send('Hello World help!')
-})
-
-app.get('/username', (req, res) => {
-	var req_name = req.query.name;
-	var temp;
-	client.query('SELECT count(*) FROM users;', (err, ret) => {
-		if (err) throw err;
-		for (let row of ret.rows) {
-			temp = JSON.stringify(row);
-		}
-		console.log(temp);
-		res.send(temp);
-	});
-})
-
-app.get('/email', (req, res) => {
-	var req_name = req.query.email;
-	var temp;
-	console.log(req_name);
-	client.query('SELECT count(*) FROM user_profile WHERE email = \''+ req_name +'\';', (err, ret) => {
-		if (err) throw err;
-		for (let row of ret.rows) {
-			temp = JSON.stringify(row);
-		}
-		console.log(temp);
-		res.send(temp);
-	});
-})
-
-app.get('/email-api', (req, res) => {
-	var req_email = req.query.email;
-	var temp = "";
-	
-	temp = email_api_req(req_email);
-	
-	function wait_on(variable){
-		if(variable == "")
-			setTimeout(() => {wait_on(variable);}, 300);
-	}
-	wait_on(temp);
-	
-	res.send(temp);
-})
 
 // END CODE FROM RAI
 
@@ -120,10 +50,6 @@ io.on('connection', socket => {
     socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
 
     // Load previous messages
-
-    //app.get('/username', (req, res) => {
-
-      //var req_name = req.query.name;
       var temp;
       var temp2;
       var temp3 = [];
@@ -138,12 +64,9 @@ io.on('connection', socket => {
             index++;
           }
           socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
-          //socket.emit('message', formatMessage(botName, i.substring(i.indexOf(":")+2, i.lastIndexOf("\""))));
         }
-        //console.log(temp);
-        //res.send(temp);
+
       });
-    //})
 
     // Broadcast when a user connects
     socket.broadcast
