@@ -47,7 +47,7 @@ app.post('/auth2', function(request, response) {
         console.log('pizza time');
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('/home');
+				response.redirect('/home?user=' +  username);
         //response.render('./public/index2'/*,{user:request.session.username}*/)
         //response.sendFile(path.join(__dirname + '/public/index2.html'));2
 			} else {
@@ -74,14 +74,6 @@ app.get('/home', function(request, response) {
 	//response.end();
 });
 
-app.get('/getUsername', function(request, response) {
-	if (request.session.loggedin) {
-		response.send(request.session.username);
-	} else {
-		response.send('you are not logged in?????? daVinki????????????');
-	}
-	response.end();
-});
 
 // END CODE FROM LOGIN
 
