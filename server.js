@@ -47,7 +47,7 @@ app.post('/auth2', function(request, response) {
         console.log('pizza time');
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('/home');
+				response.redirect('./index2');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
@@ -64,6 +64,15 @@ app.get('/home', function(request, response) {
 		response.send('Welcome back, ' + request.session.username + '!');
 	} else {
 		response.send('Please login to view this page!');
+	}
+	response.end();
+});
+
+app.get('/getUsername', function(request, response) {
+	if (request.session.loggedin) {
+		response.send(request.session.username);
+	} else {
+		response.send('you are not logged in?????? daVinki????????????');
 	}
 	response.end();
 });
