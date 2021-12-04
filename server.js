@@ -51,11 +51,13 @@ app.post('/auth2', function(request, response) {
         //response.render('./public/index2'/*,{user:request.session.username}*/)
         //response.sendFile(path.join(__dirname + '/public/index2.html'));2
 			} else {
+        request.session.loggedin = false;
 				response.send('Incorrect Username and/or Password!');
 			}			
 			response.end();
 		});
 	} else {
+    request.session.loggedin = false;
 		response.send('Please enter Username and Password!');
 		response.end();
 	}
