@@ -47,7 +47,7 @@ app.post('/auth2', function(request, response) {
         console.log('pizza time');
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('./public/index2.html');
+				response.redirect('/home');
         //response.render('./public/index2'/*,{user:request.session.username}*/)
         //response.sendFile(path.join(__dirname + '/public/index2.html'));2
 			} else {
@@ -64,7 +64,7 @@ app.post('/auth2', function(request, response) {
 app.get('/home', function(request, response) {
 	if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
-    response.sendFile(path.join(__dirname + '/public/index.html'));
+    response.sendFile(path.join(__dirname + '/public/index2.html'));
 	} else {
 		response.send('Please login to view this page!');
     response.end();
