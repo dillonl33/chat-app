@@ -2,9 +2,9 @@
   "name": "chatcord",
   "version": "1.0.0",
   "description": "gaming app!",
-  "main": "server.js",
+  "main": "public/login.js",
   "scripts": {
-    "start": "node server",
+    "start": "node login",
     "dev": "nodemon server"
   },
   "author": "Group 6",
