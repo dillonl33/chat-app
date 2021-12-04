@@ -15,7 +15,8 @@ const {
 
 const loginStuff = require('./public/js/login');
 
-const app = express();
+//const app = express();
+var app = express();
 
 // START CODE FROM LOGIN
 
