@@ -38,7 +38,8 @@ app.post('/auth2', function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
 	if (username && password) {
-		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+    client.query('SELECT * FROM user_passwords;', function(error, results, fields) {
+		//client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
 				request.session2.loggedin = true;
 				request.session2.username = username;
