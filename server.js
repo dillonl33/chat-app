@@ -82,29 +82,7 @@ app.get('/home', function(request, response) {
 // END CODE FROM LOGIN
 
 
-// profile editing
-app.post('/update', function(req, res) {  
-  if (!req.body) return res.sendStatus(400);
 
-  console.log('firstname: ' + req.body.firstname);
-  console.log('lastname: ' + req.body.lastname);
-  console.log('Email: ' + req.body.email);
-  console.log('PhoneNumber: ' + req.body.phonenumber);
-  
-  res.send("welcome");
-});
-
-app.get('/update', function(req, res) {  
-  if (!req.body) return res.sendStatus(400);
-
-  console.log('firstname: ' + req.body.firstname);
-  console.log('lastname: ' + req.body.lastname);
-  console.log('Email: ' + req.body.email);
-  console.log('PhoneNumber: ' + req.body.phonenumber);
-  
-  res.send("welcome");
-});
-// end
 
 
 
@@ -134,6 +112,7 @@ client.connect();
 
 
 
+
 const botName = 'ChatCord Bot';
 
 // Run when client connects
@@ -143,6 +122,57 @@ io.on('connection', socket => {
   socket.on('getName', () => {
     socket.emit('theName', ourUsername);
   })
+
+
+// profile editing
+app.post('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
+
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.mobile_number);
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var email = req.body.email;
+  var phone = req.body.mobile_number;
+  var location = req.body.location;
+  var game = req.body.main_game;
+  var day = req.body.day;
+  var month = req.body.month;
+  var year = req.body.year;
+  var discord = req.body.discord;
+  
+  var update_query = "UPDATE users SET firstname = '" + firstname + "', secondname = '" + secondname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = ";
+  console.log(update_query);
+});
+
+app.get('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
+
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.mobile_number);
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var email = req.body.email;
+  var phone = req.body.mobile_number;
+  var location = req.body.location;
+  var game = req.body.main_game;
+  var day = req.body.day;
+  var month = req.body.month;
+  var year = req.body.year;
+  var discord = req.body.discord;
+  
+  var update_query = "UPDATE users SET firstname = '" + firstname + "', secondname = '" + secondname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = ";
+  console.log(update_query);
+});
+// end
+
+
 
 
   socket.on('joinRoom', ({ username, room }) => {
