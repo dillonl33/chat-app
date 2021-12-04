@@ -47,7 +47,7 @@ app.post('/auth2', function(request, response) {
         console.log('pizza time');
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('./public/index2');
+				response.redirect('./public/index2.html');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
