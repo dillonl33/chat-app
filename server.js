@@ -11,6 +11,8 @@ const {
   getRoomUsers
 } = require('./utils/users');
 
+const loginStuff = require('./public/js/login');
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
