@@ -28,7 +28,7 @@ app.get('/', function(request, response) {
 });
 
 app.post('/auth2', function(request, response) {
-	console.log('can we see this?');
+	console.log('in auth2 function, attempting to log in');
 	var username = request.body.username;
 	var password = request.body.password;
 	if (username && password) {

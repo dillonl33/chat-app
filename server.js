@@ -1,6 +1,6 @@
 const path = require('path');
 const http = require('http');
-var session2 = require('express-session');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 const express = require('express');
 const socketio = require('socket.io');
@@ -20,7 +20,7 @@ var app = express();
 
 // START CODE FROM LOGIN
 
-app.use(session2({
+app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
@@ -34,7 +34,7 @@ app.get('/', function(request, response) {
 });
 
 app.post('/auth2', function(request, response) {
-	console.log('can we see this?');
+	console.log('in auth2 function, attempting to log in');
 	var username = request.body.username;
 	var password = request.body.password;
 	if (username && password) {
@@ -60,8 +60,8 @@ app.post('/auth2', function(request, response) {
 });
 
 app.get('/home', function(request, response) {
-	if (request.session2.loggedin) {
-		response.send('Welcome back, ' + request.session2.username + '!');
+	if (request.session.loggedin) {
+		response.send('Welcome back, ' + request.session.username + '!');
 	} else {
 		response.send('Please login to view this page!');
 	}
