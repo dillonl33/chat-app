@@ -1,15 +1,16 @@
 {
   "name": "chatcord",
   "version": "1.0.0",
-  "description": "Realtime chat app with rooms",
-  "main":  "server.js",
+  "description": "gaming app!",
+  "main": "server.js",
   "scripts": {
     "start": "node server",
     "dev": "nodemon server"
   },
-  "author": "Brad Traversy",
-  "license": "MIT",
+  "author": "Group 6",
+  "license": "Texas A&M swag",
   "dependencies": {
+    "auth": "^0.0.9",
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "pg": "^8.7.1",
