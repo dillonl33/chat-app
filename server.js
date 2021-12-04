@@ -1,6 +1,6 @@
 const path = require('path');
 const http = require('http');
-var session = require('express-session');
+var session2 = require('express-session');
 var bodyParser = require('body-parser');
 const express = require('express');
 const socketio = require('socket.io');
@@ -20,7 +20,7 @@ var app = express();
 
 // START CODE FROM LOGIN
 
-app.use(session({
+app.use(session2({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
@@ -39,8 +39,8 @@ app.post('/auth2', function(request, response) {
 	if (username && password) {
 		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
+				request.session2.loggedin = true;
+				request.session2.username = username;
 				response.redirect('/home');
 			} else {
 				response.send('Incorrect Username and/or Password!');
@@ -60,8 +60,8 @@ app.get('/auth2', function(request, response) {
 	if (username && password) {
 		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.username = username;
+				request.session2.loggedin = true;
+				request.session2.username = username;
 				response.redirect('/home');
 			} else {
 				response.send('Incorrect Username and/or Password!');
@@ -75,8 +75,8 @@ app.get('/auth2', function(request, response) {
 });
 
 app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
+	if (request.session2.loggedin) {
+		response.send('Welcome back, ' + request.session2.username + '!');
 	} else {
 		response.send('Please login to view this page!');
 	}
