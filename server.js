@@ -40,7 +40,8 @@ app.post('/auth2', function(request, response) {
 	if (username && password) {
     //client.query('SELECT * FROM user_passwords;', function(error, results, fields) {
 		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			if (results && results.length > 0) {
+			if (results != null && results.length > 0) {
+        console.log('pizza time');
 				request.session2.loggedin = true;
 				request.session2.username = username;
 				response.redirect('/home');
