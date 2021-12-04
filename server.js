@@ -82,7 +82,29 @@ app.get('/home', function(request, response) {
 // END CODE FROM LOGIN
 
 
+// profile editing
+app.post('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
 
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.phonenumber);
+  
+  res.send("welcome");
+});
+
+app.get('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
+
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.phonenumber);
+  
+  res.send("welcome");
+});
+// end
 
 
 
