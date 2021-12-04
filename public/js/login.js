@@ -36,7 +36,7 @@ app.post('/auth2', function(request, response) {
 			if (results.length > 0) {
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('/home');
+				response.redirect('/index2.html');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
