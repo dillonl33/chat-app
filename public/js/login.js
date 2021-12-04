@@ -48,6 +48,27 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
+app.get('/auth2', function(request, response) {
+	console.log('can we see this?');
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+			if (results.length > 0) {
+				request.session.loggedin = true;
+				request.session.username = username;
+				response.redirect('/home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
 app.get('/home', function(request, response) {
 	if (request.session.loggedin) {
 		response.send('Welcome back, ' + request.session.username + '!');
