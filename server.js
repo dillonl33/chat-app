@@ -39,7 +39,7 @@ app.post('/auth2', function(request, response) {
 	var password = request.body.password;
 	if (username && password) {
     //client.query('SELECT * FROM user_passwords;', function(error, results, fields) {
-		client.query('SELECT * FROM user_passwords WHERE username = ? AND password = ?', [username, password], (err, ret) =>  {
+		client.query('SELECT * FROM user_passwords WHERE username = \''+username+'\' AND password = \'' + password + '\';', (err, ret) =>  {
       if (err) throw err;
       console.log('username: ' + username + ', password: ' + password + 'results: ' + ret);
 
