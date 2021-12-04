@@ -48,7 +48,8 @@ app.post('/auth2', function(request, response) {
 				request.session.loggedin = true;
 				request.session.username = username;
 				//response.redirect('./public/index2.html');
-        response.render('./public/index2.html'/*,{user:request.session.username}*/)
+        //response.render('./public/index2'/*,{user:request.session.username}*/)
+        response.sendFile(path.join(__dirname + '/public/index2.html'));
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
