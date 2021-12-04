@@ -2,8 +2,17 @@
 // we want to put the homepage after logging in. similar code to this should go in the homepage javascript to get the username from logging in.
 
 // Get username and room from URL
-const { username } = Qs.parse(location.search, {
+/*const { username } = Qs.parse(location.search, {
     ignoreQueryPrefix: true,
-  });
+  });*/
 
-console.log('your logged in username should be: ' + username);
+const socket = io();
+
+socket.emit('getName');
+
+socket.on('theName', (theName) => {
+    console.log('we got the username as: ' + theName);
+
+    document.getElementById('theName').innerHTML = theName;
+});
+

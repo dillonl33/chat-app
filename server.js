@@ -28,6 +28,9 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+// global variable as username, probably bad
+var ourUsername = 'uninitializedUsername';
+
 app.get('/', function(request, response) {
 	//response.sendFile(path.join(__dirname + '/login.html'));
   response.sendFile(path.join(__dirname + '/public/index.html'));
@@ -47,6 +50,7 @@ app.post('/auth2', function(request, response) {
         console.log('pizza time');
 				request.session.loggedin = true;
 				request.session.username = username;
+        ourUsername = username;
 				response.redirect('/home?user=' +  username);
         //response.render('./public/index2'/*,{user:request.session.username}*/)
         //response.sendFile(path.join(__dirname + '/public/index2.html'));2
@@ -112,6 +116,13 @@ const botName = 'ChatCord Bot';
 
 // Run when client connects
 io.on('connection', socket => {
+
+  // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
+  socket.on('getName', () => {
+    socket.emit('theName', ourUsername);
+  })
+
+
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
