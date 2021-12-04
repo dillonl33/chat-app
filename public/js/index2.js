@@ -1,10 +1,6 @@
-// this is just to show how you can get info from the server thru routing, redirect, and sendFile.
+// this is just to show how you can get info from the server thru sockets.
 // we want to put the homepage after logging in. similar code to this should go in the homepage javascript to get the username from logging in.
 
-// Get username and room from URL
-/*const { username } = Qs.parse(location.search, {
-    ignoreQueryPrefix: true,
-  });*/
 
 const socket = io();
 

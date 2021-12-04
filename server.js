@@ -51,7 +51,7 @@ app.post('/auth2', function(request, response) {
 				request.session.loggedin = true;
 				request.session.username = username;
         ourUsername = username;
-				response.redirect('/home?user=' +  username);
+				response.redirect('/home?user=' +  username); // NOTE: adding user query here IS NOT IMPLEMENTED, couldn't figure it out. that's why we use socket.io to get the username in the index2 itself.
         //response.render('./public/index2'/*,{user:request.session.username}*/)
         //response.sendFile(path.join(__dirname + '/public/index2.html'));2
 			} else {
