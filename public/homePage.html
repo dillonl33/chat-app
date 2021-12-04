@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Meta tags -->
+	<title>Homepage</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+	<script src="/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
+	<!-- <script src="../homepage/javascript/functions.js"></script> -->
+  <!-- stylesheets -->
+  <style>
+    body{
+      background-image: url(image/background-image.jpg);
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .container{
+      height: 1000px;
+      background-color: white;
+      border-radius: 25px;
+    }
+    .icon{
+      text-align: center;
+    }
+    .header{
+      border: 1px solid;
+      border-radius: 25px;
+      margin-bottom: 20px;
+    }
+    .profile{
+      margin-top: 20px;
+      border: 1px solid;
+      border-radius: 25px;
+      padding: 20px;
+
+    }
+    .Chatroom_box{
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid;
+      border-radius: 25px;
+      padding: 20px;
+
+    }
+    .Chatroom_img{
+  
+      padding: 5px;
+      width: 250px;
+      border-radius:6px;
+      border: 1px solid;
+      border-radius: 25px;
+    }
+    .button1{
+      margin-bottom: 10px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <!-- Grid part -->
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-12 column header">
+
+        <h1 class="text-center">
+          Match Found
+        </h1>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="col-md-12 column">
+        <div class="row clearfix">
+
+          <div class="col-md-3 column">
+
+
+              <!-- profile list -->
+            <div class="col-md-12 column profile">
+            <div class="row clearfix">
+
+              <!--icon-->
+              <div class="col-md-12 column icon">
+                <img alt="140x140" src="image/1.png" class="img-circle" />
+              </div>
+
+            </div>
+
+            <div class="row clearfix">
+
+              <!-- Profile detail-->
+              <div class="col-md-12 column">
+                <h3 class="text-center">
+                  Profile
+                </h3>
+                <p id="username" class="text-center">
+                  Username: temp
+                </p>
+                <p id="email" class="text-center">
+                  Email: temp
+                </p>
+                <p id="location" class="text-center">
+                   Location: temp
+                </p>
+                <p id="Discord" class="text-center">
+                   Discord: temp
+                </p>
+                <p id="mainGame" class="text-center">
+                   Main Game: temp
+                </p>
+                <p id="rank" class="text-center">
+                   Rank: temp
+                </p>
+              </div>
+
+            </div>
+
+            <div class="row clearfix">
+
+              <!-- 2 button -->
+              <div class="col-md-12 column">
+                
+                <div class ="button1">
+                 <a href="../profile_edit/Profile_edit.html">
+                 <input type="button" class="btn btn-default btn-block btn-primary" value="EDIT PROFILE"></button> 
+                 </a>
+                </div>
+
+                 <a href = "../index.html"> <!-- Link the log in page-->
+                  <input type="button" class="btn btn-default btn-block btn-danger" value ="LOG OUT"></button>
+                 </a>
+                
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- right chatroom part-->
+          <div class="col-md-9 column Chatroom_box">
+            <div class="row clearfix">
+
+              <div class="col-md-12 column">
+                <h3>
+                  Personal Chatroom
+                </h3>
+              </div>
+
+            </div>
+            
+            <div class="row clearfix">
+              <div class="col-md-4 column">
+                <a id="personalChat1" href="../chat.html?username=test&room=1">
+                <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+              </a>
+              </div>
+              <div class="col-md-4 column">
+                <a id="personalChat2" href="../chat.html?username=test&room=2">
+                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                </a>
+              </div>
+              <div class="col-md-4 column">
+                <a id="personalChat3" href="../chat.html?username=test&room=3">
+                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                </a>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <h3>
+                  Global Chatroom.
+                </h3>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-4 column">
+                <a id="globalChat1" href="../chat.html?username=test&room=4">
+                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                </a>
+              </div>
+              <div class="col-md-4 column">
+                <a id="globalChat2" href="../chat.html?username=test&room=5">
+                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                </a>
+              </div>
+              <div class="col-md-4 column">
+                <a id="globalChat3" href="../chat.html?username=test&room=6">
+                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+      integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/home.js"></script>
+
+
+
+</body>
+</html>
