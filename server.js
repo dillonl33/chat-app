@@ -190,11 +190,11 @@ app.get('/update', function(req, res) {
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
 
-    // Load previous messages
+    // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
       var temp;
       var temp2;
       var temp3 = [];
-      client.query('SELECT username, message, timestamp FROM chats;', (err, ret) => {
+      client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
           temp = JSON.stringify(row);

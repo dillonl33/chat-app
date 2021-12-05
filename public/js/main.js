@@ -5,6 +5,8 @@
 // this is backend for the chat. should probably change the name at some point.
 // similar to mainGlobal but specifically for user to user. Main difference is that we need to save and load messages. also maybe remove join and leave messages, etc.
 
+// note that "room" means the user you're talking to. can't change this to 'friend' for some reason
+
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
@@ -39,8 +41,8 @@ const socket = io();
 
 socket.emit('getName');
 
-var username = 'initializedUsername';
-var room = 'initializedroomName';
+var username = 'initializedUsername'; // your name
+var room = 'initializedroomName'; // friend's name
 
 function getTheName (onDone){
   socket.on('theName', (theName) => {
@@ -51,32 +53,24 @@ function getTheName (onDone){
         ignoreQueryPrefix: true,
       });
       room = current_room.username;
-      //console.log('1: ' + current_room.username);
-      //console.log('2: ' + room.substring(1, room.length-1))
-      //console.log('current_freind: ' + current_room);
-      console.log('room:' + room);
       onDone(current_username, room);
   });
 }
-console.log('username/room before calling function: ' + username + '/' + room);
-// supposedly this can get the username?
+
 getTheName(function(username, room) {
-  console.log('username/room inside the function: ' + username + '/' + room);
+  //console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
-  console.log('?' + room);
   socket.emit('joinRoom', { username, room });
-  console.log(room);
+
 
   // Get room and users
   socket.on('roomUsers', ({ room, users }) => {
-    console.log(room);
     outputRoomName(room);
     outputUsers(users);
   });
 
   // Message from server
   socket.on('message', (message) => {
-    console.log(room);
     console.log(message);
     outputMessage(message);
 
@@ -146,99 +140,3 @@ getTheName(function(username, room) {
   });
 
 });
-
-console.log('username after calling function: ' + username);
-
-
-
-
-
-/*socket.on('theName', (theName) => {
-    console.log('we got the username as: ' + theName);
-
-    username = theName;
-});*/
-
-
-
-/*
-// Join chatroom
-socket.emit('joinRoom', { username, room });
-
-// Get room and users
-socket.on('roomUsers', ({ room, users }) => {
-  outputRoomName(room);
-  outputUsers(users);
-});
-
-// Message from server
-socket.on('message', (message) => {
-  console.log(message);
-  outputMessage(message);
-
-  // Scroll down
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-
-// Message submit
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  // Get message text
-  let msg = e.target.elements.msg.value;
-
-  msg = msg.trim();
-
-  if (!msg) {
-    return false;
-  }
-
-  // Emit message to server
-  socket.emit('chatMessage', msg);
-
-  // Clear input
-  e.target.elements.msg.value = '';
-  e.target.elements.msg.focus();
-});
-*/
-// Output message to DOM
-/*
-function outputMessage(message) {
-  const div = document.createElement('div');
-  div.classList.add('message');
-  const p = document.createElement('p');
-  p.classList.add('meta');
-  p.innerText = message.username;
-  p.innerHTML += `<span>${message.time}</span>`;
-  div.appendChild(p);
-  const para = document.createElement('p');
-  para.classList.add('text');
-  para.innerText = message.text;
-  div.appendChild(para);
-  document.querySelector('.chat-messages').appendChild(div);
-}
-
-// Add room name to DOM
-function outputRoomName(room) {
-  roomName.innerText = room;
-}
-
-// Add users to DOM
-function outputUsers(users) {
-  userList.innerHTML = '';
-  users.forEach((user) => {
-    const li = document.createElement('li');
-    li.innerText = user.username;
-    userList.appendChild(li);
-  });
-}
-
-//Prompt the user before leave chat room
-document.getElementById('leave-btn').addEventListener('click', () => {
-  const leaveRoom = confirm('Are you sure you want to leave your chat with' + room + '?');
-  if (leaveRoom) {
-    window.location = '../homePage.html';
-  } else {
-  }
-});
-*/
