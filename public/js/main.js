@@ -14,27 +14,6 @@ const userList = document.getElementById('users');
 
 
 
-// Get username and room from URL
-// UPDATE: we want to get username of person and the person they are talking to.
-// therefore, only get username of room, and use socket to get name of current user.
-
-/*const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
-
-// should these be var instead of const since we want to be able to change the person we are talking to?
-
-/*const { room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
-
-
-/*const {const_current_room} = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
-
-
-
 
 
 const socket = io();
@@ -46,6 +25,7 @@ var room = 'initializedroomName'; // friend's name
 
 function getTheName (onDone){
   socket.on('theName', (theName) => {
+      console.log("cookie username: " + document.cookie);
       var current_username = theName;
       var current_room = 'innerInitializedroomName';
       console.log('current_username: ' + current_username);
