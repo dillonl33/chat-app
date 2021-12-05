@@ -145,7 +145,7 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.post('/auth', passport.authenticate('local', {successRedirect: '/home'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
+app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
 //app.post('/api/login', passport.authenticate('local'), users.login);
 

@@ -13,6 +13,7 @@
     "auth": "^0.0.9",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "moment": "^2.24.0",
