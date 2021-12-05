@@ -15,6 +15,7 @@ socket.emit('getDc');
 
 socket.on('theName', (theName) => {
     console.log('we got the username as: ' + theName);
+    theName = theName.substr(1).substring(-1,0);
 
     document.getElementById('username').innerHTML = "Username: "+theName;
 
@@ -27,27 +28,32 @@ socket.on('theName', (theName) => {
 });
 
 socket.on('theUid', (theUid) => {
+    theUid = theUid.substr(1).substring(-1,0);
 
     document.getElementById('uid').innerHTML = "UID: "+theUid;
 
 });
 socket.on('theEmail', (theEmail) => {
 
+    theEmail = theEmail.substr(1).substring(-1,0);
     document.getElementById('email').innerHTML = "Email: "+theEmail;
 
 });
 socket.on('theLocation', (theLocation) => {
+    theLocation = theLocation.substr(1).substring(-1,0);
 
     document.getElementById('location').innerHTML = "Location: "+theLocation;
 
 });
 socket.on('theDc', (theDc) => {
+    theDc = theDc.substr(1).substring(-1,0);
 
     document.getElementById('Discord').innerHTML = "Discord: "+theDc;
 
 });
 
 socket.on('theGame', (theGame) => {
+    theGame = theGame.substr(1).substring(-1,0);
 
     document.getElementById('mainGame').innerHTML = "Main Game: "+theGame;
 
