@@ -154,7 +154,8 @@ app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  fun
   client.query('SELECT * FROM users;', (err, ret) =>  {
     if (err) throw err;
     req.session.loggedin = true;
-    req.session.username = req.user.username;
+    req.session.username = req.body.username;
+    //req.session.username = req.user.username;
     res.redirect('/home?user=' + req.body.username);
   });
 });
@@ -256,9 +257,10 @@ const botName = 'ChatCord Bot';
 io.on('connection', socket => {
 
   // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
-  socket.on('getName', () => {
-    socket.emit('theName', ourUsername);
-  })
+  socket.on('getName', function(req, res) {
+    //socket.emit('theName', ourUsername);
+    socket.emit('theName', req.user.username);
+  });
 
   // profile editing
 app.post('/update', function(req, res) {  
