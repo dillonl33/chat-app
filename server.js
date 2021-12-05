@@ -145,7 +145,8 @@ app.post('/update', function(req, res) {
                     + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
     client.query(update_query, (err) => {
           if (err) throw err;
-          response.redirect('/home?user=' +  ourUsername);
+          res.redirect('/home?user=' +  ourUsername);
+          
       });
 
 });
@@ -174,7 +175,7 @@ app.get('/update', function(req, res) {
 
   client.query(update_query, (err) => {
         if (err) throw err;
-        response.redirect('/home?user=' +  ourUsername);
+        res.redirect('/home?user=' +  ourUsername);
   });
 
 });
