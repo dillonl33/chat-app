@@ -443,22 +443,25 @@ app.get('/update', function(req, res) {
 
       var user_uid = '0';
 
-      client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  ) ORDER BY chatid DESC LIMIT 10 ;', (err, ret) => {
+      var numChatsFromHistory = 10;
+
+      client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  ) ORDER BY chatid DESC LIMIT ' + numChatsFromHistory + ' ;', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         
         //var rows = ret.rows.prototype.reverse();
-
-
-        for (let row of ret.rows) {
+        // we want this to be backwards
+        
+        //for (let row of ret.rows) {
+          for (let row = numChatsFromHistory-1; row >= 0; row--) {
           //temp = JSON.stringify(row);
           //temp2 = temp.split(',');
           var name = 'initializedName';
           var msg = 'initializedMsg';
-          msg = row.message;
+          msg = ret.rows[row].message;
           var time = 'initializedTime';
-          console.log('raw time: ' + row.time);
-          time = JSON.stringify(row.time);
+          console.log('raw time: ' + ret.rows[row].time);
+          time = JSON.stringify(ret.rows[row].time);
           console.log('stringified time: ' + time);
           time = time.substring(time.indexOf('T')+1,  time.indexOf('.'));
           console.log('formatted time: ' + time);
@@ -467,7 +470,7 @@ app.get('/update', function(req, res) {
             name = username;
           } else { // friend to user
             console.log("hopefully  this isn't all that happens");
-            console.log("row.senderid: " + row.senderid + ", our uid: " + uid);
+            console.log("row.senderid: " + ret.rows[row].senderid + ", our uid: " + uid);
             if(firstPart == username) {
               name = secondPart;
             } else {
