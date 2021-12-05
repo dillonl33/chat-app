@@ -259,9 +259,48 @@ const botName = 'ChatCord Bot';
 io.on('connection', socket => {
 
   // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
-  socket.on('getName', () => {
-    socket.emit('theName', ourUsername);
+
+  //get user's profile and show to Homepage
+  let show_profile_query = "SELECT * FROM users WHERE username = '" + ourUsername + "';";
+  var showed_uid = '';
+  var showed_username = '';
+  var showed_email = '';
+  var showed_location = '';
+  var showed_discord = '';
+  var showed_game = '';
+  
+  client.query(show_profile_query , (err, ret) => {
+    if (err) throw err;
+    showed_uid = JSON.stringify(ret.rows[0].uid);
+    showed_username = JSON.stringify(ret.rows[0].username);
+    showed_email = JSON.stringify(ret.rows[0].email);
+    showed_location = JSON.stringify(ret.rows[0].location);
+    showed_discord = JSON.stringify(ret.rows[0].discord);
+    showed_game = JSON.stringify(ret.rows[0].game);
+  });
+
+  socket.on('getUid', () => {
+    socket.emit('theUid', showed_uid);
   })
+  socket.on('getName', () => {
+    socket.emit('theName', showed_username);
+  })
+  socket.on('getEmail', () => {
+    socket.emit('theEmail', showed_email);
+  })
+  socket.on('getLocation', () => {
+    socket.emit('theLocation', showed_location);
+  })
+  socket.on('getGame', () => {
+    socket.emit('theGame', showed_game);
+  })
+  socket.on('getDc', () => {
+    socket.emit('theDc', showed_discord);
+  })
+
+  //END
+
+
 
 
 
