@@ -22,9 +22,9 @@ const userList = document.getElementById('users');
 
 // should these be var instead of const since we want to be able to change the person we are talking to?
 
-const { friend } = Qs.parse(location.search, {
+/*const { friend } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
-});
+});*/
 
 
 
@@ -43,51 +43,54 @@ function getTheName (onDone){
   socket.on('theName', (theName) => {
       var current_username = theName;
       console.log('current_username: ' + current_username);
-      onDone(current_username);
+      const { friend } = Qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+      onDone(current_username, friend);
   });
 }
 console.log('username before calling function: ' + username);
 // supposedly this can get the username?
-getTheName(function(username) {
+getTheName(function(username, friend) {
   console.log('username inside the function: ' + username);
   // Join chatroom
-socket.emit('joinRoom', { username, friend });
+  socket.emit('joinRoom', { username, friend });
 
-// Get room and users
-socket.on('roomUsers', ({ friend, users }) => {
-  outputRoomName(friend);
-  outputUsers(users);
-});
+  // Get room and users
+  socket.on('roomUsers', ({ friend, users }) => {
+    outputRoomName(friend);
+    outputUsers(users);
+  });
 
-// Message from server
-socket.on('message', (message) => {
-  console.log(message);
-  outputMessage(message);
+  // Message from server
+  socket.on('message', (message) => {
+    console.log(message);
+    outputMessage(message);
 
-  // Scroll down
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
+    // Scroll down
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
 
-// Message submit
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+  // Message submit
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-  // Get message text
-  let msg = e.target.elements.msg.value;
+    // Get message text
+    let msg = e.target.elements.msg.value;
 
-  msg = msg.trim();
+    msg = msg.trim();
 
-  if (!msg) {
-    return false;
-  }
+    if (!msg) {
+      return false;
+    }
 
-  // Emit message to server
-  socket.emit('chatMessage', msg);
+    // Emit message to server
+    socket.emit('chatMessage', msg);
 
-  // Clear input
-  e.target.elements.msg.value = '';
-  e.target.elements.msg.focus();
-});
+    // Clear input
+    e.target.elements.msg.value = '';
+    e.target.elements.msg.focus();
+  });
 });
 console.log('username after calling function: ' + username);
 
