@@ -195,7 +195,9 @@ app.get('/update', function(req, res) {
       var temp;
       var temp2;
       var temp3 = [];
-      client.query('SELECT senderid, message, time from chats where senderid = (select uid from users where (username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\') and receiverid = (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\')  OR (senderid = (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\') and receiverid = (select uid from users where username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\')  );', (err, ret) => {
+      var firstPart = user.room.substring(0,user.room.indexOf('_'));
+      var secondPart = user.room.substring(user.room.indexOf('_')+1);
+      client.query('SELECT senderid, message, time from chats where (senderid = select uid from users where (username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\')  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  );', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
