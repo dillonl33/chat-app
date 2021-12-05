@@ -33,9 +33,11 @@ function getTheName (onDone){
       current_room = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
+      console.log('current_username: ' + current_username);
       // we want room name to be a combination of friend name and current user name, so they can both be in the same "room". to make it consistent,
       // the 'lesser' name goes first, in alphabetical order
       room = current_room.username;
+    console.log('current_username: ' + room);
       if(current_username < room) {
         room = current_username +'_' + room;
       }
