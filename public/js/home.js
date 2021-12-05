@@ -28,32 +28,38 @@ socket.on('theName', (theName) => {
 });
 
 socket.on('theUid', (theUid) => {
-    theUid = theUid.substr(1).substring(-1,0);
+    theUid = theUid.substr(1);
+    theUid = theUid.substring(0, theUid.length-1);
 
     document.getElementById('uid').innerHTML = "UID: "+theUid;
 
 });
 socket.on('theEmail', (theEmail) => {
 
-    theEmail = theEmail.substr(1).substring(-1,0);
+    theEmail = theEmail.substr(1);
+    theEmail = theEmail.substring(0, theEmail.length-1);
     document.getElementById('email').innerHTML = "Email: "+theEmail;
 
 });
 socket.on('theLocation', (theLocation) => {
-    theLocation = theLocation.substr(1).substring(-1,0);
+    theLocation = theLocation.substr(1);
+    theLocation = theLocation.substring(0, theLocation.length-1);
 
     document.getElementById('location').innerHTML = "Location: "+theLocation;
 
 });
 socket.on('theDc', (theDc) => {
-    theDc = theDc.substr(1).substring(-1,0);
+    theDc = theDc.substr(1);
+    theDc = theDc.substring(0, theDc.length-1);
+    
 
     document.getElementById('Discord').innerHTML = "Discord: "+theDc;
 
 });
 
 socket.on('theGame', (theGame) => {
-    theGame = theGame.substr(1).substring(-1,0);
+    theGame = theGame.substr(1);
+    theGame = theGame.substring(0, theGame.length-1);
 
     document.getElementById('mainGame').innerHTML = "Main Game: "+theGame;
 
