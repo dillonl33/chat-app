@@ -151,9 +151,12 @@ app.get('/', function(request, response) {
 
 app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
-  req.session.loggedin = true;
-  req.session.username = req.user.username;
-	res.redirect('/home?user=' + req.user.username);
+  client.query('SELECT * FROM users;', (err, ret) =>  {
+    if (err) throw err;
+    req.session.loggedin = true;
+    req.session.username = req.user.username;
+    res.redirect('/home?user=' + req.user.username);
+  });
 });
 
 
