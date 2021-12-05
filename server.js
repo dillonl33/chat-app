@@ -229,7 +229,7 @@ app.get('/update', function(req, res) {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
-    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + user.username + '\'), (select uid from users where username = \'' + user.room + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\'), (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         //if (err) throw err;
         // perhaps if it's not thrown it will be alright?
