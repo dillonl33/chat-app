@@ -38,21 +38,22 @@ const socket = io();
 socket.emit('getName');
 
 var username = 'initializedUsername';
+var friend = 'initializedFriendName';
 
 function getTheName (onDone){
   socket.on('theName', (theName) => {
       var current_username = theName;
       console.log('current_username: ' + current_username);
-      const { friend } = Qs.parse(location.search, {
+      var current_friend = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      onDone(current_username, friend);
+      onDone(current_username, currentFriend);
   });
 }
-console.log('username before calling function: ' + username);
+console.log('username/friend before calling function: ' + username + '/' + friend);
 // supposedly this can get the username?
 getTheName(function(username, friend) {
-  console.log('username inside the function: ' + username);
+  console.log('username/friend inside the function: ' + username + '/' + friend);
   // Join chatroom
   socket.emit('joinRoom', { username, friend });
 
@@ -92,6 +93,7 @@ getTheName(function(username, friend) {
     e.target.elements.msg.focus();
   });
 });
+
 console.log('username after calling function: ' + username);
 
 
