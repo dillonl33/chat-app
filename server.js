@@ -40,23 +40,10 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         if(ret.rows.length > 0) {
           row1 = ret.rows[0];
 
-          if(row1.length < 1) {
-            console.log("no records found");
-            return done(null, false);
-          } else {
-            console.log("a record was found");
-          }
-          console.log("hopefully this isn't poop: " + row1);
         //row1 should be the tuple from database where the username field matches the username supplied.
-        if(row1==null)
-        {
-            console.log("NO RECORDS FOUND")
-            return done(null, false)
-        }
-        else
-        {
-            console.log("Record found")
-            console.log(row1)
+
+          console.log("Record found")
+          console.log(row1)
         //     if(bcrypt.compare(password, row1.password))//Compare plaintext password with the hash
         //     {
         //         console.log("The passwords match")
@@ -68,9 +55,15 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             console.log("The passwords don't match")
         //             return done(null, false)
         //         }
-            bcrypt.compare(password, row1.password, function(err, res) {
-              console.log("pass1: " + password);
-              console.log("pass2: " + row1.password);
+        var hashedPass = "beforeHash";
+        bcrypt.hash(row1.password, 10, function(err, hash) {
+          // Store hash in your password DB.
+          hashedPass = hash;
+      });
+          bcrypt.compare(password, hashedPass, function(err, res) {
+            console.log("pass1: " + password);
+            console.log("pass2: " + row1.password);
+            console.log("hashed: " + hashedPass);
             if(res) {
               console.log("pog happened");
               done(null, row1)
@@ -79,7 +72,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
               done(null, false)
             }
           })
-         }
+
         } else {
           console.log("not found");
           return done(null, false);
