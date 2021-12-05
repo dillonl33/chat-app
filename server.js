@@ -1,3 +1,9 @@
+let passport=require('passport')
+let bcrypt=require('bcrypt-nodejs')
+let User_Obj=require('./Set_Up_Database_Stuffs')
+const local_strategy=require('passport-local').Strategy
+
+
 const path = require('path');
 const http = require('http');
 var session = require('express-session');
@@ -18,6 +24,61 @@ const loginStuff = require('./public/js/login');
 //const app = express();
 var app = express();
 
+
+// NEW CRAP FOR PASSPORT
+
+passport.use(new local_strategy(
+  async (username, password, done)=>{
+      console.log("Here inside local_strategy" ,username, password)
+  
+  try
+  {
+      //let row1=await User_Obj.findOne({username: username})
+      var row1 = 'poop' ;
+      client.query('SELECT username, password from user_password where username = \'' + username + '\';' , (err, ret) => {
+        row1 = ret.rows[0];
+        if(row1.length < 1) {
+          console.log("no records found");
+        } else {
+          console.log("a record was found");
+        }
+      });
+
+
+      console.log("hopefully this isn't poop: " + row1);
+      //row1 should be the tuple from database where the username field matches the username supplied.
+      if(row1==null)
+      {
+          console.log("NO RECORDS FOUND")
+          return done(null, false)
+      }
+      else
+      {
+          console.log("Record found")
+          console.log(row1)
+          if(bcrypt.compareSync(password, row1.password))//Compare plaintext password with the hash
+          {
+              console.log("The passwords match")
+              console.log("Finished authenticate local")
+              return done(null, row1)
+          }
+          else
+              {
+                  console.log("The passwords don't match")
+                  return done(null, false)
+              }
+      }
+      
+  }
+  catch(err){
+      console.log("Some error here")
+      return done(err)}
+  }
+));
+
+// END NEW CRAP FOR PASSPORT
+
+
 // START CODE FROM LOGIN
 
 app.use(session({
@@ -35,6 +96,9 @@ app.get('/', function(request, response) {
 	//response.sendFile(path.join(__dirname + '/login.html'));
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
+
+app.post('/auth', passport.authenticate('local', {successRedirect: '/home?user=' + username, failureRedirect: '/failurepage'}))
+//Triggers the local strategy. If successful, redirect to articles page else show failure page
 
 app.post('/auth2', function(request, response) {
 	console.log('in auth2 function, attempting to log in');
@@ -214,7 +278,7 @@ app.get('/update', function(req, res) {
         //var rows = ret.rows.prototype.reverse();
 
 
-        for (let row of rows) {
+        for (let row of ret.rows) {
           //temp = JSON.stringify(row);
           //temp2 = temp.split(',');
           var name = 'initializedName';
