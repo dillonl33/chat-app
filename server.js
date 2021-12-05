@@ -207,7 +207,7 @@ app.get('/update', function(req, res) {
 
       var user_uid = '0';
 
-      client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  );', (err, ret) => {
+      client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  ) LIMIT 5;', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
@@ -218,11 +218,13 @@ app.get('/update', function(req, res) {
           msg = row.message;
           var time = 'initializedTime';
           time = row.time;
+          time = time.substring(time.indexOf(' '),  time.indexOf('.'));
           if(row.senderid == user.id) { // this chat is from user to friend
             console.log("this does happen");
             name = username;
           } else { // friend to user
             console.log("hopefully  this isn't all that happens");
+            console.log("row.senderid: " + row.senderid + ", user.id: " + user.id);
             if(firstPart == username) {
               name = secondPart;
             } else {
