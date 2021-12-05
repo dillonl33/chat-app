@@ -151,7 +151,7 @@ app.get('/', function(request, response) {
 
 app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
-	res.redirect('/preHome?user=' + req.user.username);
+	res.redirect('/home?user=' + req.user.username);
 });
 
 
@@ -191,14 +191,14 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
-app.get('/preHome', connectEnsureLogin.ensureLoggedIn(), function(request, response) {
+app.get('/home'/*, connectEnsureLogin.ensureLoggedIn()*/, function(request, response) {
   console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   console.log("please give me the username" + request.user.username);
   //response.redirect('/home?user=' +  request.user.username);
   response.sendFile(path.join(__dirname + '/public/homePage.html'));
 });
 
-app.get('/home'/*, passport.authenticate('local')*/, function(request, response) {
+app.get('/home2'/*, passport.authenticate('local')*/, function(request, response) {
 	//if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
     
