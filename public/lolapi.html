@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>LOL api</title>
  
     <style>
 		body{
@@ -101,14 +101,13 @@ form p > * {
 <body>
     <div id = "login_frame">
         
-        <h1>Match Found</h1>
+        <h1>Enter a League of Legend ID to see the rank</h1>
         <form method="post" action="auth">
-            <p><lable class="lable_input">Username</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Username" required/></p>
-            <p><lable class="lable_input">Password</lable><input type="password" id="password" class="text_field" name="password" placeholder="Password" required/></p>
+            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="League of Legend ID" required/></p>
 
             <div id = "login_control">
-                <input type="submit" id="btn_login" value="Login"/>
-                <a class="login-links" id ="new_user" href="registration.html">New User?</a>
+                <input type="submit" id="btn_login" value="Get Rank"/>
+                <a class="login-links" id ="return" href="../homePage.html">Return to Homepage</a>
             </div>
 
         </form>
