@@ -301,6 +301,7 @@ app.get('/update', function(req, res) {
     
     var uid = '';
     client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
+      console.log("joinRoom row: " + ret.rows[0]);
       uid = JSON.stringify(ret.rows[0].uid);
       console.log('UID: ' + uid);
     });
