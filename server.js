@@ -97,6 +97,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 console.log(`Connecting to database`)
 const { Client } = require('pg');
+const e = require('express');
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -194,7 +195,7 @@ app.get('/update', function(req, res) {
       var temp;
       var temp2;
       var temp3 = [];
-      client.query('SELECT senderid, message, time from chats where senderid = (select uid from users where username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\') and receiverid = (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\');', (err, ret) => {
+      client.query('SELECT senderid, message, time from chats where senderid = (select uid from users where (username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\') and receiverid = (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\')  OR (senderid = (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\') and receiverid = (select uid from users where username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\')  );', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
@@ -229,7 +230,16 @@ app.get('/update', function(req, res) {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
-    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + user.room.substring(0,user.room.indexOf('_')) + '\'), (select uid from users where username = \'' + user.room.substring(user.room.indexOf('_')+1) + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+    var senderid = '';
+    var receiverid = '';
+    if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
+      senderid = user.room.substring(0,user.room.indexOf('_'));
+      receiverid = user.room.substring(user.room.indexOf('_')+1);
+    } else {
+      receiverid = user.room.substring(0,user.room.indexOf('_'));
+      senderid = user.room.substring(user.room.indexOf('_')+1);
+    }
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiver + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         //if (err) throw err;
         // perhaps if it's not thrown it will be alright?
