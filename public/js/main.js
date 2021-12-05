@@ -118,7 +118,7 @@ getTheName(function(username, friend) {
   
   // Add room name to DOM
   function outputRoomName(friend) {
-    console.log('why is this undefined...')
+    console.log('why is this undefined...' + friend)
     roomName.innerText = friend;
   }
   
