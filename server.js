@@ -2,6 +2,7 @@ var passport=require('passport')
 const bcrypt=require('bcrypt-nodejs')
 //const User_Obj=require('./Set_Up_Database_Stuffs')
 const local_strategy=require('passport-local').Strategy
+const connectEnsureLogin = require('connect-ensure-login');
 
 
 const path = require('path');
@@ -24,6 +25,17 @@ const loginStuff = require('./public/js/login');
 //const app = express();
 var app = express();
 
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+app.use(passport.initialize())
+app.use(passport.session())
 
 // NEW CRAP FOR PASSPORT
 
@@ -124,18 +136,8 @@ passport.deserializeUser(function(user, done) {
 
 // START CODE FROM LOGIN
 
-app.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}));
 
 
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 // global variable as username, probably bad
 var ourUsername = 'uninitializedUsername';
@@ -145,7 +147,14 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
+//app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
+
+app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
+	console.log(req.user)
+	res.redirect('/preHome');
+});
+
+
 
 //app.post('/api/login', passport.authenticate('local'), users.login);
 
@@ -182,10 +191,11 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
-app.get('/preHome', passport.authenticate('local'), function(request, response) {
+app.get('/preHome', connectEnsureLogin.ensureLogin(), function(request, response) {
   console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   console.log("please give me the username" + request.user.username);
-  response.redirect('/home?user=' +  request.user.username);
+  //response.redirect('/home?user=' +  request.user.username);
+  response.sendFile(path.join(__dirname + '/public/homePage.html'));
 });
 
 app.get('/home'/*, passport.authenticate('local')*/, function(request, response) {
