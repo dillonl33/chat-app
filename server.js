@@ -151,8 +151,8 @@ app.get('/', function(request, response) {
 
 app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
-  request.session.loggedin = true;
-  request.session.username = req.user.username;
+  req.session.loggedin = true;
+  req.session.username = req.user.username;
 	res.redirect('/home?user=' + req.user.username);
 });
 
