@@ -210,7 +210,10 @@ app.get('/update', function(req, res) {
       client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  ) ORDER BY time DESC LIMIT 10 ;', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
-        for (let row of ret.rows) {
+        
+        var rows = ret.rows.prototype.reverse();
+
+        for (let row of rows) {
           //temp = JSON.stringify(row);
           //temp2 = temp.split(',');
           var name = 'initializedName';
