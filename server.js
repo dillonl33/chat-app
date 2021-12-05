@@ -122,6 +122,34 @@ io.on('connection', socket => {
     socket.emit('theName', ourUsername);
   })
 
+  // registration
+  app.post('/regist', function(req, res){
+    if (!req.body) return res.sendStatus(400);
+    var username = req.body.username;
+    var password = req.body.password;
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
+    client.query(regist_query, (err) => {
+      if (err) throw err;
+      res.redirect('https://chat-backend-attempt.herokuapp.com/');
+      
+  });
+  });
+
+  app.get('/regist', function(req, res){
+    if (!req.body) return res.sendStatus(400);
+    var username = req.body.username;
+    var password = req.body.password;
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
+    client.query(regist_query, (err) => {
+      if (err) throw err;
+      res.redirect('https://chat-backend-attempt.herokuapp.com/');
+      
+  });
+  });
+
+// END of registrating
+
+
   // profile editing
 app.post('/update', function(req, res) {  
   if (!req.body) return res.sendStatus(400);
