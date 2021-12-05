@@ -267,7 +267,7 @@ io.on('connection', socket => {
     var username = req.body.username;
     var password = req.body.password;
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
-    let profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
+    var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
     
     //client.query(profile_create_query);
     client.query(regist_query, (err) => {
@@ -276,20 +276,20 @@ io.on('connection', socket => {
       
   });
   });
-/*
+
   app.get('/regist', function(req, res){
     if (!req.body) return res.sendStatus(400);
     var username = req.body.username;
     var password = req.body.password;
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
-    let profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
+    var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
     //client.query(profile_create_query);
     client.query(regist_query, (err) => {
       if (err) throw err;
       res.redirect('/');
       
   });
-  }); */
+  }); 
 
 // END of registrating
 
