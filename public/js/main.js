@@ -42,12 +42,13 @@ var username = 'initializedUsername';
 function getTheName (onDone){
   socket.on('theName', (theName) => {
       var current_username = theName;
+      console.log('current_username: ' + current_username);
       onDone(current_username);
   });
 }
-
-getTheName(function(username){});
-
+console.log('username before calling function: ' + username);
+getTheName(username);
+console.log('username after calling function: ' + username);
 
 
 
