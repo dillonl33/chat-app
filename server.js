@@ -150,7 +150,7 @@ app.get('/', function(request, response) {
 
 //app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
-app.post('/auth', /*passport.authenticate('local', { failureRedirect: '/' }),*/  function(req, res) {
+app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
   client.query('SELECT * FROM users;', (err, ret) =>  {
     if (err) throw err;
