@@ -344,7 +344,7 @@ io.on('connection', socket => {
     const userRecs = "WITH userInfo AS (SELECT uid,username,location,game FROM users WHERE username='"+ourUsername+"'), similarUsers AS (SELECT users.uid,users.username FROM users,userInfo WHERE userInfo.location=users.location AND userInfo.game=users.game AND NOT(userInfo.username=users.username)SELECT * FROM similarUsers LIMIT 10;";
     client.query(userRecs , (err, ret) => {
       if (err) throw err;
-      if (num > ret.rows.length()) {
+      if (num >= ret.rows.length()) {
         socket.emit('retRecs','N/A');  
       }
       console.log("adding " + ret.rows[num].username  + " at num: " + num + "to recs");
