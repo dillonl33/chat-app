@@ -182,6 +182,7 @@ app.get('/update', function(req, res) {
 // end
 
   socket.on('joinRoom', ({ username, room }) => {
+    console.log('this hsould be friend... ' + room);
     const user = userJoin(socket.id, username, room);
     
     socket.join(user.room);

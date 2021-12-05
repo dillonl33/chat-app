@@ -63,16 +63,20 @@ console.log('username/friend before calling function: ' + username + '/' + frien
 getTheName(function(username, friend) {
   console.log('username/friend inside the function: ' + username + '/' + friend);
   // Join chatroom
+  console.log(friend);
   socket.emit('joinRoom', { username, friend });
+  console.log(friend);
 
   // Get room and users
   socket.on('roomUsers', ({ friend, users }) => {
+    console.log(friend);
     outputRoomName(friend);
     outputUsers(users);
   });
 
   // Message from server
   socket.on('message', (message) => {
+    console.log(friend);
     console.log(message);
     outputMessage(message);
 
