@@ -145,7 +145,7 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.post('/auth', passport.authenticate('local', {successRedirect: '/home?user=' + session.passport.username, failureRedirect: '/failurepage'}));
+app.post('/auth', passport.authenticate('local', {successRedirect: '/home'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
 //app.post('/api/login', passport.authenticate('local'), users.login);
 
@@ -182,9 +182,15 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
+app.get('/preHome', passport.authenticate('local'), function(request, response) {
+  console.log("please give me the username" + request.user.username);
+  response.redirect('/home?user=' +  request.user.username);
+});
+
 app.get('/home'/*, passport.authenticate('local')*/, function(request, response) {
 	//if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
+    
     response.sendFile(path.join(__dirname + '/public/homePage.html'));
 	/*} else {
 		response.send('Please login to view this page!');
