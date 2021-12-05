@@ -217,14 +217,17 @@ app.get('/update', function(req, res) {
           var msg = 'initializedMsg';
           msg = row.message;
           var time = 'initializedTime';
+          console.log('raw time: ' + row.time);
           time = JSON.stringify(row.time);
-          time = time.substring(time.indexOf(' '),  time.indexOf('.'));
-          if(row.senderid == user.uid) { // this chat is from user to friend
+          console.log('stringified time: ' + time);
+          time = time.substring(time.indexOf('T')+1,  time.indexOf('.'));
+          console.log('formatted time: ' + time);
+          if(row.senderid == uid) { // this chat is from user to friend
             console.log("this does happen");
             name = username;
           } else { // friend to user
             console.log("hopefully  this isn't all that happens");
-            console.log("row.senderid: " + row.senderid + ", user.uid: " + user.uid);
+            console.log("row.senderid: " + row.senderid + ", our uid: " + uid);
             if(firstPart == username) {
               name = secondPart;
             } else {
