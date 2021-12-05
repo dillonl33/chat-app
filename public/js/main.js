@@ -132,7 +132,7 @@ getTheName(function(username, room) {
   
   //Prompt the user before leave chat room
   document.getElementById('leave-btn').addEventListener('click', () => {
-    const leaveRoom = confirm('Are you sure you want to leave your chat with' + room + '?');
+    const leaveRoom = confirm('Are you sure you want to leave your chat with ' + room + '?');
     if (leaveRoom) {
       window.location = '../homePage.html';
     } else {
