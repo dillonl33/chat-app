@@ -94,10 +94,11 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
 
 
 passport.serializeUser((user, done) => {
-  done(null, user.uid)
+  done(null, user.id)
 })
 
 passport.deserializeUser((uid, cb) => {
+  console.log("in deserialize, this is the id for you: " + uid)
   db.query('SELECT uid, username FROM users WHERE id = $1', [parseInt(uid, 10)], (err, results) => {
     if(err) {
       winston.error('Error when selecting user on session deserialize', err)
