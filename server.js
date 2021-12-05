@@ -183,8 +183,15 @@ app.get('/update', function(req, res) {
 // end
 
   socket.on('joinRoom', ({ username, room }) => {
-    console.log('this hsould be friend... ' + room);
-    const user = userJoin(socket.id, username, room);
+    
+    var uid = '';
+    client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
+      uid = JSON.stringify(row.uid);
+      console.log('UID: ' + uid);
+    });
+
+
+    const user = userJoin(socket.id, username, room, uid);
     
     socket.join(user.room);
 
@@ -197,18 +204,35 @@ app.get('/update', function(req, res) {
       var temp3 = [];
       var firstPart = user.room.substring(0,user.room.indexOf('_'));
       var secondPart = user.room.substring(user.room.indexOf('_')+1);
+
+      var user_uid = '0';
+
       client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  );', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
-          temp = JSON.stringify(row);
-          temp2 = temp.split(',');
-          var index = 0;
-          for(let i of temp2 ) {
-            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
-            index++;
+          //temp = JSON.stringify(row);
+          //temp2 = temp.split(',');
+          var name = 'initializedName';
+          var msg = 'initializedMsg';
+          msg = row.message;
+          var time = 'initializedTime';
+          time = row.time;
+          if(row.senderid == user.id) { // this chat is from user to friend
+            console.log("this does happen");
+            name = username;
+          } else { // friend to user
+            console.log("hopefully  this isn't all that happens");
+            if(firstPart == username) {
+              name = secondPart;
+            } else {
+              name = firstPart;
+            }
           }
-          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+          temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+          index++;
+
+          socket.emit('message', formatMessage2(name, msg, time));
         }
 
       });
