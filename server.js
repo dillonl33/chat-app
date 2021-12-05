@@ -201,7 +201,7 @@ app.post('/auth2', function(request, response) {
 
 app.get('/home'/*, connectEnsureLogin.ensureLoggedIn()*/, function(request, response) {
   console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  console.log("please give me the username" + request.user.username);
+  //console.log("please give me the username" + request.user.username);
   //response.redirect('/home?user=' +  request.user.username);
   response.sendFile(path.join(__dirname + '/public/homePage.html'));
 });
