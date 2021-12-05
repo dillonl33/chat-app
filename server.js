@@ -143,7 +143,7 @@ app.post('/update', function(req, res) {
   var year = req.body.year;
   var discord = req.body.discord;
   
-  var update_query = "UPDATE users SET firstname = '" + firstname + "', secondname = '" + secondname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+  var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
                   + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = ";
   console.log(update_query);
 });
