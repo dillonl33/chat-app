@@ -134,7 +134,7 @@ app.get('/', function(request, response) {
 
 app.post('/auth', passport.authenticate('local', {successRedirect: '/home', failureRedirect: '/failurepage'}));
 
-app.post('/api/login', passport.authenticate('local'), users.login)
+//app.post('/api/login', passport.authenticate('local'), users.login);
 
 //Triggers the local strategy. If successful, redirect to articles page else show failure page
 
