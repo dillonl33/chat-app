@@ -47,7 +47,48 @@ function getTheName (onDone){
   });
 }
 console.log('username before calling function: ' + username);
-getTheName(username);
+// supposedly this can get the username?
+getTheName(function(username) {
+  console.log('username inside the function: ' + username);
+  // Join chatroom
+socket.emit('joinRoom', { username, friend });
+
+// Get room and users
+socket.on('roomUsers', ({ friend, users }) => {
+  outputRoomName(friend);
+  outputUsers(users);
+});
+
+// Message from server
+socket.on('message', (message) => {
+  console.log(message);
+  outputMessage(message);
+
+  // Scroll down
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+// Message submit
+chatForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Get message text
+  let msg = e.target.elements.msg.value;
+
+  msg = msg.trim();
+
+  if (!msg) {
+    return false;
+  }
+
+  // Emit message to server
+  socket.emit('chatMessage', msg);
+
+  // Clear input
+  e.target.elements.msg.value = '';
+  e.target.elements.msg.focus();
+});
+});
 console.log('username after calling function: ' + username);
 
 
@@ -62,7 +103,7 @@ console.log('username after calling function: ' + username);
 
 
 
-
+/*
 // Join chatroom
 socket.emit('joinRoom', { username, friend });
 
@@ -101,7 +142,7 @@ chatForm.addEventListener('submit', (e) => {
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
 });
-
+*/
 // Output message to DOM
 function outputMessage(message) {
   const div = document.createElement('div');
