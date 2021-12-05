@@ -55,23 +55,26 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             console.log("The passwords don't match")
         //             return done(null, false)
         //         }
-        var hashedPass = "beforeHash";
-        bcrypt.hash(row1.password, 10, function(err, hash) {
-          // Store hash in your password DB.
-          hashedPass = hash;
-      });
-          bcrypt.compare(password, hashedPass, function(err, res) {
-            console.log("pass1: " + password);
-            console.log("pass2: " + row1.password);
-            console.log("hashed: " + hashedPass);
-            if(res) {
-              console.log("pog happened");
-              done(null, row1)
-            } else {
-              console.log("wutface happened");
-              done(null, false)
-            }
-          })
+        const hash = bcrypt.hashSync(row1.password, saltRounds);
+        console.log("hashed: " + hash);
+
+        if(bcrypt.compareSync(password, hash)) {
+          console.log("pass1: " + password);
+          console.log("pass2: " + row1.password);
+          console.log("hashed: " + hash);
+
+            console.log("pog happened");
+            done(null, row1)
+          
+        } else {
+          console.log("wutface happened");
+          console.log("pass1: " + password);
+          console.log("pass2: " + row1.password);
+          console.log("hashed: " + hash);
+          
+          done(null, false)
+        }
+
 
         } else {
           console.log("not found");
