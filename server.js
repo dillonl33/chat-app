@@ -128,7 +128,7 @@ io.on('connection', socket => {
     var username = req.body.username;
     var password = req.body.password;
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
-    client.query(update_query, (err) => {
+    client.query(regist_query, (err) => {
       if (err) throw err;
       res.redirect('https://chat-backend-attempt.herokuapp.com/');
       
@@ -140,7 +140,7 @@ io.on('connection', socket => {
     var username = req.body.username;
     var password = req.body.password;
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
-    client.query(update_query, (err) => {
+    client.query(regist_query, (err) => {
       if (err) throw err;
       res.redirect('https://chat-backend-attempt.herokuapp.com/');
       
