@@ -35,16 +35,29 @@ const { friend } = Qs.parse(location.search, {
 
 const socket = io();
 
-var username = 'initializedUsername';
-
-
 socket.emit('getName');
 
-socket.on('theName', (theName) => {
+var username = 'initializedUsername';
+
+function getTheName (onDone){
+  socket.on('theName', (theName) => {
+      var current_username = theName;
+      onDone(current_username);
+  });
+}
+
+getTheName(function(username){});
+
+
+
+
+
+
+/*socket.on('theName', (theName) => {
     console.log('we got the username as: ' + theName);
 
     username = theName;
-});
+});*/
 
 
 
