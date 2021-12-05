@@ -55,7 +55,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             console.log("The passwords don't match")
         //             return done(null, false)
         //         }
-        const hash = bcrypt.hashSync(row1.password, saltRounds);
+        const hash = bcrypt.hashSync(row1.password, 10);
         console.log("hashed: " + hash);
 
         if(bcrypt.compareSync(password, hash)) {
