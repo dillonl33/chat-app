@@ -122,6 +122,34 @@ io.on('connection', socket => {
     socket.emit('theName', ourUsername);
   })
 
+  // registration
+  app.post('/regist', function(req, res){
+    if (!req.body) return res.sendStatus(400);
+    var username = req.body.username;
+    var password = req.body.password;
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + test2 +"');";
+    client.query(update_query, (err) => {
+      if (err) throw err;
+      res.redirect('index.html');
+      
+  });
+  });
+
+  app.get('/regist', function(req, res){
+    if (!req.body) return res.sendStatus(400);
+    var username = req.body.username;
+    var password = req.body.password;
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + test2 +"');";
+    client.query(update_query, (err) => {
+      if (err) throw err;
+      res.redirect('index.html');
+      
+  });
+  });
+
+// END of registrating
+
+
   // profile editing
 app.post('/update', function(req, res) {  
   if (!req.body) return res.sendStatus(400);

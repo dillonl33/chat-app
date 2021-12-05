@@ -102,10 +102,10 @@ form p > * {
     <div id = "login_frame">
         
         <h1>Registration</h1>
-        <form method="post" action="Regist">
+        <form method="post" action="regist" onsubmit="return submit1()">
             <p><lable class="lable_input">Username</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Username" required/></p>
-            <p><lable class="lable_input">Password</lable><input type="password" id="password" class="text_field" name="password" placeholder="Password" required/></p>
-            <p><lable class="lable_input">Confirm</lable><input type="password" id="password" class="text_field" name="password" placeholder="Confirm Password" required/></p>
+            <p><lable class="lable_input">Password</lable><input type="password" id="password1" class="text_field" name="password" placeholder="Password" required/></p>
+            <p><lable class="lable_input">Confirm</lable><input type="password" id="password2" class="text_field" name="confirm_password" placeholder="Confirm Password" required/></p>
 
             <div id = "login_control">
                 <input type="submit" id="btn_login" value="SAVE"/>
@@ -115,5 +115,23 @@ form p > * {
         </form>
 
     </div>
+
+    <script>
+        var n = document.getElementById("username");
+        var p1= document.getElementById("password1");
+        var p2 = document.getElementById("password2");
+        
+        function submit1(){
+            var p1_v = p1.value;
+            var p2_v = p2.value;
+            if(p1_v != p2_v){
+                alert("Password doesn't match")
+                return false;
+            }else{
+                alert("Registration succesful");
+                return true;
+            }
+        }
+    </script>
 </body>
 </html>
