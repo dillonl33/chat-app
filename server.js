@@ -27,8 +27,7 @@ var app = express();
 
 // NEW CRAP FOR PASSPORT
 
-passport.use(new local_strategy(
-  async (username, password, done)=>{
+passport.use(new local_strategy(/*async*/ (username, password, done)=>{
       console.log("Here inside local_strategy" ,username, password)
   
   try
@@ -36,38 +35,45 @@ passport.use(new local_strategy(
       //let row1=await User_Obj.findOne({username: username})
       var row1 = 'poop' ;
       client.query('SELECT username, password from user_password where username = \'' + username + '\';' , (err, ret) => {
-        row1 = ret.rows[0];
-        if(row1.length < 1) {
-          console.log("no records found");
+        if(err) throw err;
+
+        if(ret.rows.length > 0) {
+          row1 = ret.rows[0];
+
+          if(row1.length < 1) {
+            console.log("no records found");
+            return done(null, false);
+          } else {
+            console.log("a record was found");
+          }
+          console.log("hopefully this isn't poop: " + row1);
+        //row1 should be the tuple from database where the username field matches the username supplied.
+        if(row1==null)
+        {
+            console.log("NO RECORDS FOUND")
+            return done(null, false)
+        }
+        else
+        {
+            console.log("Record found")
+            console.log(row1)
+            if(bcrypt.compareSync(password, row1.password))//Compare plaintext password with the hash
+            {
+                console.log("The passwords match")
+                console.log("Finished authenticate local")
+                return done(null, row1)
+            }
+            else
+                {
+                    console.log("The passwords don't match")
+                    return done(null, false)
+                }
+        }
         } else {
-          console.log("a record was found");
+          console.log("not found");
+          return done(null, false);
         }
       });
-
-
-      console.log("hopefully this isn't poop: " + row1);
-      //row1 should be the tuple from database where the username field matches the username supplied.
-      if(row1==null)
-      {
-          console.log("NO RECORDS FOUND")
-          return done(null, false)
-      }
-      else
-      {
-          console.log("Record found")
-          console.log(row1)
-          if(bcrypt.compareSync(password, row1.password))//Compare plaintext password with the hash
-          {
-              console.log("The passwords match")
-              console.log("Finished authenticate local")
-              return done(null, row1)
-          }
-          else
-              {
-                  console.log("The passwords don't match")
-                  return done(null, false)
-              }
-      }
       
   }
   catch(err){
