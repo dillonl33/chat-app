@@ -1,3 +1,10 @@
+var passport=require('passport')
+const bcrypt=require('bcrypt-nodejs')
+//const User_Obj=require('./Set_Up_Database_Stuffs')
+const local_strategy=require('passport-local').Strategy
+const connectEnsureLogin = require('connect-ensure-login');
+
+
 const path = require('path');
 const http = require('http');
 var session = require('express-session');
@@ -18,23 +25,148 @@ const loginStuff = require('./public/js/login');
 //const app = express();
 var app = express();
 
-// START CODE FROM LOGIN
-
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
+
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+app.use(passport.initialize())
+app.use(passport.session())
+
+// NEW CRAP FOR PASSPORT
+
+passport.use(new local_strategy(/*async*/ (username, password, done)=>{
+      console.log("Here inside local_strategy" ,username, password)
+  
+  try
+  {
+      //let row1=await User_Obj.findOne({username: username})
+      var row1 = 'poop' ;
+      client.query('SELECT username, password from user_passwords where username = \'' + username + '\';' , (err, ret) => {
+        if(err) return done(err);
+
+        if(ret.rows.length > 0) {
+          row1 = ret.rows[0];
+
+        //row1 should be the tuple from database where the username field matches the username supplied.
+
+          console.log("Record found")
+          console.log(row1)
+        //     if(bcrypt.compare(password, row1.password))//Compare plaintext password with the hash
+        //     {
+        //         console.log("The passwords match")
+        //         console.log("Finished authenticate local")
+        //         return done(null, row1)
+        //     }
+        //     else
+        //         {
+        //             console.log("The passwords don't match")
+        //             return done(null, false)
+        //         }
+
+        const saltRounds = 10;
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(row1.password, salt);
+        console.log("hashed: " + hash);
+
+        if(bcrypt.compareSync(password, hash)) {
+          console.log("pass1: " + password);
+          console.log("pass2: " + row1.password);
+          console.log("hashed: " + hash);
+
+            console.log("pog happened");
+            return done(null, row1)
+          
+        } else {
+          console.log("wutface happened");
+          console.log("pass1: " + password);
+          console.log("pass2: " + row1.password);
+          console.log("hashed: " + hash);
+
+          return done(null, false)
+        }
+
+
+        } else {
+          console.log("not found");
+          return done(null, false);
+        }
+      });
+      
+  }
+  catch(err){
+      console.log("Some error here")
+      return done(err)}
+  }
+));
+
+
+/*passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((uid, cb) => {
+  console.log("in deserialize, this is the id for you: " + uid)
+  db.query('SELECT uid, username FROM users WHERE id = $1', [parseInt(uid, 10)], (err, results) => {
+    if(err) {
+      winston.error('Error when selecting user on session deserialize', err)
+      return cb(err)
+    }
+
+    cb(null, results.rows[0])
+  })
+})*/
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+
+// END NEW CRAP FOR PASSPORT
+
+
+// START CODE FROM LOGIN
+
+
+
 
 // global variable as username, probably bad
+// TODO: PLEASE SOMEONE HELP: HOW TO GET THIS USERNAME FROM CURRENT USER INSTEAD OF GLOBAL VARAIBLE HERE!!!!!!!!!!!!!!!!!????????????????
 var ourUsername = 'uninitializedUsername';
 
 app.get('/', function(request, response) {
 	//response.sendFile(path.join(__dirname + '/login.html'));
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
+
+//app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
+
+app.post('/auth', /*passport.authenticate('local', { failureRedirect: '/' }),*/  function(req, res) {
+	console.log(req.user)
+  client.query('SELECT * FROM users;', (err, ret) =>  {
+    if (err) throw err;
+    req.session.loggedin = true;
+    req.session.username = req.body.username;
+    ourUsername = req.session.username;
+    //req.session.username = req.user.username;
+    res.redirect('/home?user=' + req.body.username);
+  });
+});
+
+
+
+//app.post('/api/login', passport.authenticate('local'), users.login);
+
+//Triggers the local strategy. If successful, redirect to articles page else show failure page
 
 app.post('/auth2', function(request, response) {
 	console.log('in auth2 function, attempting to log in');
@@ -67,14 +199,22 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
-app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
+app.get('/home'/*, connectEnsureLogin.ensureLoggedIn()*/, function(request, response) {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  //console.log("please give me the username" + request.user.username);
+  //response.redirect('/home?user=' +  request.user.username);
+  response.sendFile(path.join(__dirname + '/public/homePage.html'));
+});
+
+app.get('/home2'/*, passport.authenticate('local')*/, function(request, response) {
+	//if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
+    
     response.sendFile(path.join(__dirname + '/public/homePage.html'));
-	} else {
+	/*} else {
 		response.send('Please login to view this page!');
     response.end();
-	}
+	}*/
 	//response.end();
 });
 
@@ -97,6 +237,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 console.log(`Connecting to database`)
 const { Client } = require('pg');
+const e = require('express');
 
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -212,28 +353,66 @@ app.get('/update', function(req, res) {
 // end
 
   socket.on('joinRoom', ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
+    
+    var uid = '';
+    client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
+      console.log("joinRoom row: " + ret.rows[0]);
+      uid = JSON.stringify(ret.rows[0].uid);
+      console.log('UID: ' + uid);
+    });
 
+
+    const user = userJoin(socket.id, username, room, uid);
+    
     socket.join(user.room);
 
     // Welcome current user
     socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
 
-    // Load previous messages
+    // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
       var temp;
       var temp2;
       var temp3 = [];
-      client.query('SELECT username, message, timestamp FROM chats;', (err, ret) => {
+      var firstPart = user.room.substring(0,user.room.indexOf('_'));
+      var secondPart = user.room.substring(user.room.indexOf('_')+1);
+
+      var user_uid = '0';
+
+      client.query('SELECT senderid, message, time from chats where (senderid = (select uid from users where username = \'' + firstPart + '\') and receiverid = (select uid from users where username = \'' + secondPart + '\'))  OR (senderid = (select uid from users where username = \'' + secondPart + '\') and receiverid = (select uid from users where username = \'' + firstPart + '\')  ) ORDER BY chatid DESC LIMIT 10 ;', (err, ret) => {
+      //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
+        
+        //var rows = ret.rows.prototype.reverse();
+
+
         for (let row of ret.rows) {
-          temp = JSON.stringify(row);
-          temp2 = temp.split(',');
-          var index = 0;
-          for(let i of temp2 ) {
-            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
-            index++;
+          //temp = JSON.stringify(row);
+          //temp2 = temp.split(',');
+          var name = 'initializedName';
+          var msg = 'initializedMsg';
+          msg = row.message;
+          var time = 'initializedTime';
+          console.log('raw time: ' + row.time);
+          time = JSON.stringify(row.time);
+          console.log('stringified time: ' + time);
+          time = time.substring(time.indexOf('T')+1,  time.indexOf('.'));
+          console.log('formatted time: ' + time);
+          if(row.senderid == uid) { // this chat is from user to friend
+            console.log("this does happen");
+            name = username;
+          } else { // friend to user
+            console.log("hopefully  this isn't all that happens");
+            console.log("row.senderid: " + row.senderid + ", our uid: " + uid);
+            if(firstPart == username) {
+              name = secondPart;
+            } else {
+              name = firstPart;
+            }
           }
-          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+          //temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+          //index++;
+
+          socket.emit('message', formatMessage2(name, msg , time));
         }
 
       });
@@ -256,6 +435,36 @@ app.get('/update', function(req, res) {
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
+    // chatid, senderid, receiverid, message, time
+    var senderid = '';
+    var receiverid = '';
+    if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
+      senderid = user.room.substring(0,user.room.indexOf('_'));
+      receiverid = user.room.substring(user.room.indexOf('_')+1);
+    } else {
+      receiverid = user.room.substring(0,user.room.indexOf('_'));
+      senderid = user.room.substring(user.room.indexOf('_')+1);
+    }
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+      //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
+        //if (err) throw err;
+        // perhaps if it's not thrown it will be alright?
+        if(err) {
+          console.log(err);
+        }
+        /*for (let row of ret.rows) {
+          temp = JSON.stringify(row);
+          temp2 = temp.split(',');
+          var index = 0;
+          for(let i of temp2 ) {
+            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+            index++;
+          }
+          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+        }*/
+
+      });
+
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
