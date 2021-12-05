@@ -97,7 +97,9 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.post('/auth', passport.authenticate('local', {successRedirect: '/home?user=' + username, failureRedirect: '/failurepage'}))
+app.post('/auth',  function(request, response) {
+  passport.authenticate('local', {successRedirect: '/home?user=' + request.user.username, failureRedirect: '/failurepage'});
+})
 //Triggers the local strategy. If successful, redirect to articles page else show failure page
 
 app.post('/auth2', function(request, response) {
