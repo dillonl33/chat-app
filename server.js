@@ -228,6 +228,23 @@ app.get('/update', function(req, res) {
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
+    // chatid, senderid, receiverid, message, time
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + user.username + '\'), (select uid from users where username = \'' + user.room + '\'), ' + msg + ', CURRENT_TIMESTAMP);', (err, ret) => {
+      //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
+        if (err) throw err;
+        /*for (let row of ret.rows) {
+          temp = JSON.stringify(row);
+          temp2 = temp.split(',');
+          var index = 0;
+          for(let i of temp2 ) {
+            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+            index++;
+          }
+          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+        }*/
+
+      });
+
 
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
