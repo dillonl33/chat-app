@@ -14,8 +14,8 @@ socket.emit('getDc');
 
 socket.on('theName', (theName) => {
     console.log('we got the username as: ' + theName);
-    theName = theName.substr(1);
-    theName = theName.substring(0, theName.length-1);
+    //theName = theName.substr(1);
+    //theName = theName.substring(0, theName.length-1);
 
     document.getElementById('username').innerHTML = "Username: "+theName;
 
