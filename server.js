@@ -186,7 +186,7 @@ app.get('/update', function(req, res) {
     
     var uid = '';
     client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
-      uid = JSON.stringify(row.uid);
+      uid = JSON.stringify(ret.rows[0].uid);
       console.log('UID: ' + uid);
     });
 
@@ -232,7 +232,7 @@ app.get('/update', function(req, res) {
           temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
           index++;
 
-          socket.emit('message', formatMessage2(name, msg, time));
+          socket.emit('message', formatMessage2(name, msg , time));
         }
 
       });
