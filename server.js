@@ -145,18 +145,8 @@ app.post('/update', function(req, res) {
   
  let update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
                   + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
-  console.log(update_query);
-
-     client.connect(function (isErr) {
-        if (isErr) {
-            console.log('connect error:' + isErr.message);
-            client.end();
-            return;
-        }
-        client.query(update_query, (err) => {
+  client.query(update_query, (err) => {
         if (err) throw err;
-        });
-
         });
 
 });
@@ -183,16 +173,8 @@ app.get('/update', function(req, res) {
                   + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
   console.log(update_query);
 
- client.connect(function (isErr) {
-        if (isErr) {
-            console.log('connect error:' + isErr.message);
-            client.end();
-            return;
-        }
-        client.query(update_query, (err) => {
+  client.query(update_query, (err) => {
         if (err) throw err;
-        });
-
         });
 
 });
