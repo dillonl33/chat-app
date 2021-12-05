@@ -143,8 +143,8 @@ app.post('/update', function(req, res) {
   var year = req.body.year;
   var discord = req.body.discord;
   
-  var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
-                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = ";
+ var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
   console.log(update_query);
 });
 
@@ -167,7 +167,7 @@ app.get('/update', function(req, res) {
   var discord = req.body.discord;
   
   var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
-                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = ";
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
   console.log(update_query);
 });
 // end
