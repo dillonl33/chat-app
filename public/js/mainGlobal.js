@@ -3,30 +3,29 @@
 //const PORT = process.env.PORT || 3000
 
 // this is backend for the chat. should probably change the name at some point.
-// similar to mainGlobal but specifically for user to user. Main difference is that we need to save and load messages. also maybe remove join and leave messages, etc.
+
 
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
-
+// this variable should differentiate whether it's a global chatroom or a person-to-person chat.
+// it may be better to have a different .html and.js file for the difference, but trying it merged with if statements on this variable for now.
+var isGlobalChatroom = false;
 
 // Get username and room from URL
 // UPDATE: we want to get username of person and the person they are talking to.
-// therefore, only get username of friend, and use socket to get name of current user.
-
-/*const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
-
-// should these be var instead of const since we want to be able to change the person we are talking to?
-
-const { friend } = Qs.parse(location.search, {
+const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
 
+// BEGIN CODE TESTING
+
+
+
+// END CODE TESTING
 
 
 
@@ -35,26 +34,12 @@ const { friend } = Qs.parse(location.search, {
 
 const socket = io();
 
-const username = 'initializedUsername';
-
-
-socket.emit('getName');
-
-socket.on('theName', (theName) => {
-    console.log('we got the username as: ' + theName);
-
-    username = theName;
-});
-
-
-
-
 // Join chatroom
-socket.emit('joinRoom', { username, friend });
+socket.emit('joinRoom', { username, room });
 
 // Get room and users
-socket.on('roomUsers', ({ friend, users }) => {
-  outputRoomName(friend);
+socket.on('roomUsers', ({ room, users }) => {
+  outputRoomName(room);
   outputUsers(users);
 });
 
@@ -105,8 +90,8 @@ function outputMessage(message) {
 }
 
 // Add room name to DOM
-function outputRoomName(friend) {
-  roomName.innerText = friend;
+function outputRoomName(room) {
+  roomName.innerText = room;
 }
 
 // Add users to DOM
@@ -121,7 +106,7 @@ function outputUsers(users) {
 
 //Prompt the user before leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
-  const leaveRoom = confirm('Are you sure you want to leave your chat with' + friend + '?');
+  const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
   if (leaveRoom) {
     window.location = '../homePage.html';
   } else {
