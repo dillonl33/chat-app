@@ -1,6 +1,6 @@
-let passport=require('passport')
-let bcrypt=require('bcrypt-nodejs')
-let User_Obj=require('./Set_Up_Database_Stuffs')
+const passport=require('passport')
+const bcrypt=require('bcrypt-nodejs')
+const User_Obj=require('./Set_Up_Database_Stuffs')
 const local_strategy=require('passport-local').Strategy
 
 
