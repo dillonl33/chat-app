@@ -183,6 +183,7 @@ app.post('/auth2', function(request, response) {
 });
 
 app.get('/preHome', passport.authenticate('local'), function(request, response) {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   console.log("please give me the username" + request.user.username);
   response.redirect('/home?user=' +  request.user.username);
 });
