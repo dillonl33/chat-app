@@ -219,12 +219,12 @@ app.get('/update', function(req, res) {
           var time = 'initializedTime';
           time = JSON.stringify(row.time);
           time = time.substring(time.indexOf(' '),  time.indexOf('.'));
-          if(row.senderid == user.id) { // this chat is from user to friend
+          if(row.senderid == user.uid) { // this chat is from user to friend
             console.log("this does happen");
             name = username;
           } else { // friend to user
             console.log("hopefully  this isn't all that happens");
-            console.log("row.senderid: " + row.senderid + ", user.id: " + user.id);
+            console.log("row.senderid: " + row.senderid + ", user.uid: " + user.uid);
             if(firstPart == username) {
               name = secondPart;
             } else {
@@ -267,7 +267,7 @@ app.get('/update', function(req, res) {
       receiverid = user.room.substring(0,user.room.indexOf('_'));
       senderid = user.room.substring(user.room.indexOf('_')+1);
     }
-    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiver + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         //if (err) throw err;
         // perhaps if it's not thrown it will be alright?
