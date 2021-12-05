@@ -1,6 +1,5 @@
 const socket = io();
 
-
 socket.emit('getUid');
 
 socket.emit('getName');
