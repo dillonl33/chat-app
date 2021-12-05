@@ -217,7 +217,7 @@ app.get('/update', function(req, res) {
           var msg = 'initializedMsg';
           msg = row.message;
           var time = 'initializedTime';
-          time = row.time;
+          time = JSON.stringify(row.time);
           time = time.substring(time.indexOf(' '),  time.indexOf('.'));
           if(row.senderid == user.id) { // this chat is from user to friend
             console.log("this does happen");
