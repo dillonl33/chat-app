@@ -191,7 +191,7 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
-app.get('/preHome', connectEnsureLogin.ensureLogin(), function(request, response) {
+app.get('/preHome', connectEnsureLogin.ensureLoggedIn(), function(request, response) {
   console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   console.log("please give me the username" + request.user.username);
   //response.redirect('/home?user=' +  request.user.username);
