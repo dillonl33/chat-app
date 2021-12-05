@@ -194,7 +194,8 @@ app.get('/update', function(req, res) {
       var temp;
       var temp2;
       var temp3 = [];
-      client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
+      client.query('SELECT * from chats;', (err, ret) => {
+      //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         if (err) throw err;
         for (let row of ret.rows) {
           temp = JSON.stringify(row);
