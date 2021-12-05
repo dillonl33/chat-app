@@ -122,6 +122,61 @@ io.on('connection', socket => {
     socket.emit('theName', ourUsername);
   })
 
+  // profile editing
+app.post('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
+
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.mobile_number);
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var email = req.body.email;
+  var phone = req.body.mobile_number;
+  var location = req.body.location;
+  var game = req.body.main_game;
+  var day = req.body.day;
+  var month = req.body.month;
+  var year = req.body.year;
+  var discord = req.body.discord;
+  
+ let update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
+  client.query(update_query, (err) => {
+        if (err) throw err;
+        });
+
+});
+
+app.get('/update', function(req, res) {  
+  if (!req.body) return res.sendStatus(400);
+
+  console.log('firstname: ' + req.body.firstname);
+  console.log('lastname: ' + req.body.lastname);
+  console.log('Email: ' + req.body.email);
+  console.log('PhoneNumber: ' + req.body.mobile_number);
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var email = req.body.email;
+  var phone = req.body.mobile_number;
+  var location = req.body.location;
+  var game = req.body.main_game;
+  var day = req.body.day;
+  var month = req.body.month;
+  var year = req.body.year;
+  var discord = req.body.discord;
+  
+  let update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
+                  + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
+  console.log(update_query);
+
+  client.query(update_query, (err) => {
+        if (err) throw err;
+        });
+
+});
+// end
 
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
