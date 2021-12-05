@@ -306,12 +306,19 @@ io.on('connection', socket => {
   
   client.query(show_profile_query , (err, ret) => {
     if (err) throw err;
-    showed_uid = JSON.stringify(ret.rows[0].uid);
-    showed_username = ret.rows[0].username;
-    showed_email = JSON.stringify(ret.rows[0].email);
-    showed_location = JSON.stringify(ret.rows[0].location);
-    showed_discord = JSON.stringify(ret.rows[0].discord);
-    showed_game = JSON.stringify(ret.rows[0].game);
+    if(!ret.rows) {
+      console.log("ret.rows is undefined");
+    } else if(ret.rows.length > 0) {
+      console.log("ret.rows has length to it");
+      console.log(ret.rows[0]);
+      showed_uid = ret.rows[0].uid;
+      showed_username = ret.rows[0].username;
+      showed_email = JSON.stringify(ret.rows[0].email);
+      showed_location = JSON.stringify(ret.rows[0].location);
+      showed_discord = JSON.stringify(ret.rows[0].discord);
+      showed_game = JSON.stringify(ret.rows[0].game);
+    }
+
   });
 
   socket.on('getUid', () => {
