@@ -1,48 +1,118 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Match Found</title>
-		<style>
-		.login-form {
-			width: 300px;
-			margin: 0 auto;
-			font-family: Tahoma, Geneva, sans-serif;
-		}
-		.login-form h1 {
-			text-align: center;
-			color: #4d4d4d;
-			font-size: 24px;
-			padding: 20px 0 20px 0;
-		}
-		.login-form input[type="password"],
-		.login-form input[type="text"] {
-			width: 100%;
-			padding: 15px;
-			border: 1px solid #dddddd;
-			margin-bottom: 15px;
-			box-sizing:border-box;
-		}
-		.login-form input[type="submit"] {
-			width: 100%;
-			padding: 15px;
-			background-color: #535b63;
-			border: 0;
-			box-sizing: border-box;
-			cursor: pointer;
-			font-weight: bold;
-			color: #ffffff;
-		}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+ 
+    <style>
+		body{
+    background-image: url(image/background-image.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#login_frame{
+    width: 400px;
+    height: 260px;
+    padding: 13px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+
+    background-color: rgba(240, 255, 255 ,0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+form p > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+.lable_input{
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    width: 90px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+
+    color: white;
+    background-color: #00001a;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+
+.text_filed{
+    width: 278px;
+    height: 55px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+
+}
+
+#btn_login{
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    width: 120px;
+    height:28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #00001a;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+
+}
+
+.login-links {
+    font-size: 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.login-links:hover {
+    color: blue;
+    text-decoration: underline;
+}
+#login_control{
+    margin-left: 60px;
+}
+
+
 		</style>
-	</head>
-	<body>
-		<div class="login-form">
-			<h1>Login to Match Found</h1>
-			<form action="auth2" method="POST">
-				<input type="text" name="username" placeholder="Username" required>
-				<input type="password" name="password" placeholder="Password" required>
-				<input type="submit">
-			</form>
-		</div>
-	</body>
+</head>
+
+<body>
+    <div id = "login_frame">
+        
+        <h1>Match Found</h1>
+        <form method="post" action="auth2">
+            <p><lable class="lable_input">Username</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Username" required/></p>
+            <p><lable class="lable_input">Password</lable><input type="password" id="password" class="text_field" name="password" placeholder="Password" required/></p>
+
+            <div id = "login_control">
+                <input type="submit" id="btn_login" value="Login"/>
+                <a class="login-links" id ="new_user" href="create_profile.html">New User?</a>
+            </div>
+
+        </form>
+
+    </div>
+</body>
 </html>
