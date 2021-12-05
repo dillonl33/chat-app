@@ -68,15 +68,15 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             return done(null, false)
         //         }
 
-        const saltRounds = 10;
+        /*const saltRounds = 10;
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(row1.password, salt);
-        console.log("hashed: " + hash);
+        console.log("hashed: " + hash);*/
 
-        if(bcrypt.compareSync(password, hash)) {
+        if(bcrypt.compareSync(password, row1.password/*hash*/)) {
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
-          console.log("hashed: " + hash);
+          //console.log("hashed: " + hash);
 
             console.log("pog happened");
             return done(null, row1)
@@ -85,7 +85,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
           console.log("wutface happened");
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
-          console.log("hashed: " + hash);
+          //console.log("hashed: " + hash);
 
           return done(null, false)
         }
