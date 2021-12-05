@@ -108,8 +108,7 @@ passport.deserializeUser((uid, cb) => {
   })
 })
 
-app.use(passport.initialize())
-app.use(passport.session())
+
 
 // END NEW CRAP FOR PASSPORT
 
@@ -121,8 +120,13 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // global variable as username, probably bad
 var ourUsername = 'uninitializedUsername';
