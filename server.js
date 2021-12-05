@@ -1,4 +1,4 @@
-const passport=require('passport')
+var passport=require('passport')
 const bcrypt=require('bcrypt-nodejs')
 //const User_Obj=require('./Set_Up_Database_Stuffs')
 const local_strategy=require('passport-local').Strategy
