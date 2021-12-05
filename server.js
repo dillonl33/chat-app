@@ -483,7 +483,7 @@ app.get('/update', function(req, res) {
           console.log('stringified time: ' + time);
           time = time.substring(time.indexOf('T')+1,  time.indexOf('.'));
           console.log('formatted time: ' + time);
-          if(row.senderid == uid) { // this chat is from user to friend
+          if(ret.rows[row].senderid == uid) { // this chat is from user to friend
             console.log("this does happen");
             name = username;
           } else { // friend to user
