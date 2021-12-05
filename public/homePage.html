@@ -22,6 +22,7 @@
     .container{
       height: 1000px;
       background-color: white;
+      opacity:0.85;
       border-radius: 25px;
     }
     .icon{
@@ -51,8 +52,9 @@
   
       padding: 5px;
       width: 250px;
+      
       border-radius:6px;
-      border: 1px solid;
+      
       border-radius: 25px;
     }
     .button1{
@@ -62,7 +64,15 @@
       margin-top: 15px;
     }
     .PersonalChatText{
+      margin-top: 50px;;
       text-align: center;
+    }
+    .gamepic{
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .gamepic:hover{
+      transform:scale(1.2);
     }
     * {
   box-sizing: border-box;
@@ -77,7 +87,7 @@ form.searchBar input[type=text] {
   background: #f1f1f1;
 }
  
-/* 设置提交按钮 */
+
 form.searchBar button {
   float: left;
   width: 20%;
@@ -198,19 +208,19 @@ form.searchBar::after {
             </div>
             
             <div class="row clearfix">
-              <div class="col-md-4 column">
+              <div class="col-md-4 column gamepic">
                 <a id="personalChat1" href="../chat.html?username=test&room=1">
-                <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                <img alt="200x140" src="https://logos-world.net/wp-content/uploads/2020/11/League-of-Legends-Logo-2009-2019.png" class="img-rounded Chatroom_img" />
               </a>
               </div>
-              <div class="col-md-4 column">
+              <div class="col-md-4 column gamepic">
                 <a id="personalChat2" href="../chat.html?username=test&room=2">
-                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                  <img alt="200x140" src="https://1000logos.net/wp-content/uploads/2018/03/Overwatch-Logo.png" class="img-rounded Chatroom_img" />
                 </a>
               </div>
-              <div class="col-md-4 column">
+              <div class="col-md-4 column gamepic">
                 <a id="personalChat3" href="../chat.html?username=test&room=3">
-                  <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                  <img alt="200x140" src="https://logos-world.net/wp-content/uploads/2020/11/Apex-Legends-Logo.png" class="img-rounded Chatroom_img" />
                 </a>
               </div>
             </div>
@@ -219,21 +229,21 @@ form.searchBar::after {
               <div class="col-md-12 column SecondChatLine">
 
                 <div class="row clearfix">
-                  <div class="col-md-4 column">
+                  <div class="col-md-4 column gamepic">
                     <a id="globalChat1" href="../chat.html?username=test&room=4">
-                      <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                      <img alt="200x140" src="https://sm.ign.com/ign_ap/game/default/v-logotype-red_d9s9.png" class="img-rounded Chatroom_img" />
                     </a>
                   </div>
 
-                  <div class="col-md-4 column">
+                  <div class="col-md-4 column gamepic">
                     <a id="globalChat2" href="../chat.html?username=test&room=5">
-                      <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                      <img alt="200x140" src="https://logos-world.net/wp-content/uploads/2021/03/Dead-by-Daylight-Logo.png" class="img-rounded Chatroom_img" />
                     </a>
                   </div>
 
-                  <div class="col-md-4 column">
+                  <div class="col-md-4 column gamepic">
                     <a id="globalChat3" href="../chat.html?username=test&room=6">
-                      <img alt="200x140" src="image/ChatRoom.png" class="img-rounded Chatroom_img" />
+                      <img alt="200x140" src="https://logos-world.net/wp-content/uploads/2020/04/Minecraft-Logo.png" class="img-rounded Chatroom_img" />
                     </a>
                   </div>
                 </div>
