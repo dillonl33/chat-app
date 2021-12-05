@@ -93,7 +93,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
 ));
 
 
-passport.serializeUser((user, done) => {
+/*passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
@@ -107,7 +107,15 @@ passport.deserializeUser((uid, cb) => {
 
     cb(null, results.rows[0])
   })
-})
+})*/
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 
 
