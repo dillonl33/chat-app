@@ -122,6 +122,8 @@ io.on('connection', socket => {
     socket.emit('theName', ourUsername);
   })
 
+
+
   // registration
   app.post('/regist', function(req, res){
     if (!req.body) return res.sendStatus(400);
@@ -130,7 +132,7 @@ io.on('connection', socket => {
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     client.query(regist_query, (err) => {
       if (err) throw err;
-      res.redirect('https://chat-backend-attempt.herokuapp.com/');
+      res.redirect('/');
       
   });
   });
@@ -142,7 +144,7 @@ io.on('connection', socket => {
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     client.query(regist_query, (err) => {
       if (err) throw err;
-      res.redirect('https://chat-backend-attempt.herokuapp.com/');
+      res.redirect('/');
       
   });
   });
