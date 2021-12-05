@@ -276,7 +276,7 @@ io.on('connection', socket => {
       
   });
   });
-
+/*
   app.get('/regist', function(req, res){
     if (!req.body) return res.sendStatus(400);
     var username = req.body.username;
@@ -289,7 +289,7 @@ io.on('connection', socket => {
       res.redirect('/');
       
   });
-  });
+  }); */
 
 // END of registrating
 
