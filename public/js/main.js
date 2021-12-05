@@ -50,10 +50,10 @@ function getTheName (onDone){
       current_friend = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      friend = JSON.stringify(current_friend);
+      friend = JSON.stringify(current_friend.username);
       console.log('current_freind: ' + current_friend);
       console.log('friend:' + friend);
-      onDone(current_username, current_friend);
+      onDone(current_username, friend);
   });
 }
 console.log('username/friend before calling function: ' + username + '/' + friend);
