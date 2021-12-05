@@ -151,7 +151,7 @@ app.get('/', function(request, response) {
 
 app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
-	res.redirect('/preHome');
+	res.redirect('/preHome?user=' + req.user.username);
 });
 
 
