@@ -259,7 +259,7 @@ io.on('connection', socket => {
   // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
   socket.on('getName', function(req, res) {
     //socket.emit('theName', ourUsername);
-    socket.emit('theName', req.user.username);
+    socket.emit('theName', req.session.username);
   });
 
   // profile editing
