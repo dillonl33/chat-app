@@ -431,12 +431,18 @@ app.get('/update', function(req, res) {
     var uid = '';
     client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
       console.log("joinRoom row: " + ret.rows[0]);
-      uid = JSON.stringify(ret.rows[0].uid);
-      console.log('UID: ' + uid);
+      if(ret.rows[0] == undefined) {
+        console.log("it's undefined");
+      }
+      else {
+        uid = ret.rows[0].uid;
+        console.log('UID: ' + uid);
+      }
     });
 
-
-    const user = userJoin(socket.id, username, room, uid);
+    console.log("showed_uid: " + showed_uid);
+    console.log("uid: " + uid);
+    const user = userJoin(socket.id, username, room, showed_uid);
     
     socket.join(user.room);
 
@@ -462,7 +468,13 @@ app.get('/update', function(req, res) {
         // we want this to be backwards
         
         //for (let row of ret.rows) {
-          for (let row = numChatsFromHistory-1; row >= 0; row--) {
+          var historyAmount = 0;
+          if(ret.rows.length > 0) {
+            historyAmount = ret.rows.length;
+          }
+
+          
+          for (let row = historyAmount-1; row >= 0; row--) {
           //temp = JSON.stringify(row);
           //temp2 = temp.split(',');
           var name = 'initializedName';
