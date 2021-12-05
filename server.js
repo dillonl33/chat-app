@@ -155,7 +155,7 @@ app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  fun
     if (err) throw err;
     req.session.loggedin = true;
     req.session.username = req.user.username;
-    res.redirect('/home?user=' + req.user.username);
+    res.redirect('/home?user=' + req.body.username);
   });
 });
 
