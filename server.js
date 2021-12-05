@@ -34,7 +34,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
   {
       //let row1=await User_Obj.findOne({username: username})
       var row1 = 'poop' ;
-      client.query('SELECT username, password from user_password where username = \'' + username + '\';' , (err, ret) => {
+      client.query('SELECT username, password from user_passwords where username = \'' + username + '\';' , (err, ret) => {
         if(err) throw err;
 
         if(ret.rows.length > 0) {
