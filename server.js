@@ -226,6 +226,10 @@ app.post('/regist', function(req, res){
   if (!req.body) return res.sendStatus(400);
   var username = req.body.username;
   var password = req.body.password;
+  // hash the password
+  const saltRounds = 10;
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(password, salt);
   let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
   var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
   
@@ -236,7 +240,7 @@ app.post('/regist', function(req, res){
     
 });
 });
-
+/*
 app.get('/regist', function(req, res){
   if (!req.body) return res.sendStatus(400);
   var username = req.body.username;
@@ -249,7 +253,7 @@ app.get('/regist', function(req, res){
     res.redirect('/');
     
 });
-}); 
+}); */
 
 // END of registrating
 
