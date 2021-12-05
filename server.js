@@ -146,7 +146,7 @@ app.post('/update', function(req, res) {
  var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
                   + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
   console.log(update_query);
-  client.query(update_query, (err, ret) => {
+  client.query("SELECT * FROM users;", (err, ret) => {
         if (err) throw err;
         });
 
@@ -173,7 +173,7 @@ app.get('/update', function(req, res) {
   var update_query = "UPDATE users SET firstname = '" + firstname + "', lastname = '" + lastname + "', email = '" + email + "', phone = '" + phone + "', location = '" + location + "', game = '" + game + "', day = '" + day
                   + "', month = '" + month + "', year = '" + year + "', discord = '" + discord + "' WHERE username = '" + ourUsername + "'; ";
   console.log(update_query);
-  client.query(update_query, (err, ret) => {
+ client.query("SELECT * FROM users;", (err, ret) => {
         if (err) throw err;
         });
 });
