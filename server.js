@@ -140,6 +140,7 @@ passport.deserializeUser(function(user, done) {
 
 
 // global variable as username, probably bad
+// TODO: PLEASE SOMEONE HELP: HOW TO GET THIS USERNAME FROM CURRENT USER INSTEAD OF GLOBAL VARAIBLE HERE!!!!!!!!!!!!!!!!!????????????????
 var ourUsername = 'uninitializedUsername';
 
 app.get('/', function(request, response) {
@@ -149,12 +150,13 @@ app.get('/', function(request, response) {
 
 //app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
-app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
+app.post('/auth', /*passport.authenticate('local', { failureRedirect: '/' }),*/  function(req, res) {
 	console.log(req.user)
   client.query('SELECT * FROM users;', (err, ret) =>  {
     if (err) throw err;
     req.session.loggedin = true;
     req.session.username = req.body.username;
+    ourUsername = req.session.username;
     //req.session.username = req.user.username;
     res.redirect('/home?user=' + req.body.username);
   });
@@ -257,10 +259,9 @@ const botName = 'ChatCord Bot';
 io.on('connection', socket => {
 
   // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
-  socket.on('getName', function(req, res) {
-    //socket.emit('theName', ourUsername);
-    socket.emit('theName', req.session.username);
-  });
+  socket.on('getName', () => {
+    socket.emit('theName', ourUsername);
+  })
 
   // profile editing
 app.post('/update', function(req, res) {  
