@@ -50,7 +50,9 @@ function getTheName (onDone){
       current_friend = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      friend = JSON.stringify(current_friend.username).substring(1,-1);
+      friend = JSON.stringify(current_friend.username);
+      console.log('1: ' + current_friend.username);
+      console.log('2: ' + friend.substring(1, friend.length-1))
       console.log('current_freind: ' + current_friend);
       console.log('friend:' + friend);
       onDone(current_username, friend);
@@ -98,6 +100,46 @@ getTheName(function(username, friend) {
     e.target.elements.msg.value = '';
     e.target.elements.msg.focus();
   });
+
+  function outputMessage(message) {
+    const div = document.createElement('div');
+    div.classList.add('message');
+    const p = document.createElement('p');
+    p.classList.add('meta');
+    p.innerText = message.username;
+    p.innerHTML += `<span>${message.time}</span>`;
+    div.appendChild(p);
+    const para = document.createElement('p');
+    para.classList.add('text');
+    para.innerText = message.text;
+    div.appendChild(para);
+    document.querySelector('.chat-messages').appendChild(div);
+  }
+  
+  // Add room name to DOM
+  function outputRoomName(friend) {
+    roomName.innerText = friend;
+  }
+  
+  // Add users to DOM
+  function outputUsers(users) {
+    userList.innerHTML = '';
+    users.forEach((user) => {
+      const li = document.createElement('li');
+      li.innerText = user.username;
+      userList.appendChild(li);
+    });
+  }
+  
+  //Prompt the user before leave chat room
+  document.getElementById('leave-btn').addEventListener('click', () => {
+    const leaveRoom = confirm('Are you sure you want to leave your chat with' + friend + '?');
+    if (leaveRoom) {
+      window.location = '../homePage.html';
+    } else {
+    }
+  });
+
 });
 
 console.log('username after calling function: ' + username);
@@ -155,6 +197,7 @@ chatForm.addEventListener('submit', (e) => {
 });
 */
 // Output message to DOM
+/*
 function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
@@ -193,3 +236,4 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   } else {
   }
 });
+*/
