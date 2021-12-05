@@ -25,13 +25,14 @@ var room = 'initializedroomName'; // friend's name
 
 function getTheName (onDone){
   socket.on('theName', (theName) => {
-      console.log("cookie username: " + document.cookie);
+      //console.log("cookie username: " + document.cookie);
       var current_username = theName;
       var current_room = 'innerInitializedroomName';
       console.log('current_username: ' + current_username);
-      current_room = Qs.parse(location.search, {
+      current_room = response.user.username;
+      /*current_room = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
-      });
+      });*/
       // we want room name to be a combination of friend name and current user name, so they can both be in the same "room". to make it consistent,
       // the 'lesser' name goes first, in alphabetical order
       room = current_room.username;

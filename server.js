@@ -182,7 +182,7 @@ app.post('/auth2', function(request, response) {
 	}
 });
 
-app.get('/home', function(request, response) {
+app.get('/home', passport.authenticate('local'), function(request, response) {
 	//if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
     response.sendFile(path.join(__dirname + '/public/homePage.html'));
