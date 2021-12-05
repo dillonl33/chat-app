@@ -1,7 +1,9 @@
 const socket = io();
-socket.emit('getRecs',0);
 
-socket.on('retRecs', (recUser) => {
-    console.log("recUser: " + recUser);
-    document.getElementById('user0').innerHTML = recUser;
-});
+for (let i = 0; i < 10; i++) {
+    socket.emit('getRecs',i);
+    socket.on('retRecs', (recUser) => {
+        console.log("recUser: " + recUser);
+        document.getElementById('user'+i).innerHTML = recUser;
+    });
+}
