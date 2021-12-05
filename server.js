@@ -183,13 +183,13 @@ app.post('/auth2', function(request, response) {
 });
 
 app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
+	//if (request.session.loggedin) {
 		//response.send('Welcome back, ' + request.session.username + '!');
     response.sendFile(path.join(__dirname + '/public/homePage.html'));
-	} else {
+	/*} else {
 		response.send('Please login to view this page!');
     response.end();
-	}
+	}*/
 	//response.end();
 });
 
