@@ -27,7 +27,9 @@ const userList = document.getElementById('users');
 });*/
 
 
-
+const {const_current_friend} = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
 
 
 
@@ -45,10 +47,10 @@ function getTheName (onDone){
       var current_username = theName;
       //var current_friend = 'innerInitializedFriendName';
       console.log('current_username: ' + current_username);
-      const {const_current_friend} = Qs.parse(location.search, {
+      /*const {const_current_friend} = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
-      });
-      friend = const_current_friend;
+      });*/
+      friend = JSON.stringify(const_current_friend);
       console.log('const_current_freind: ' + const_current_friend);
       console.log('friend:' + friend);
       onDone(current_username, const_current_friend);
