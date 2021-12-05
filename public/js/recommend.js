@@ -30,28 +30,32 @@ socket.on('retRecs', (recUser) => {
     document.getElementById('user4').innerHTML = recUser;
 });
 
-// socket.emit('getRecs',5);
-// socket.on('retRecs', (recUser) => {
-//     console.log("recUser: " + recUser);
-//     document.getElementById('user5').innerHTML = recUser;
-// });
-// socket.emit('getRecs',6);
-// socket.on('retRecs', (recUser) => {
-//     console.log("recUser: " + recUser);
-//     document.getElementById('user6').innerHTML = recUser;
-// });
-// socket.emit('getRecs',7);
-// socket.on('retRecs', (recUser) => {
-//     console.log("recUser: " + recUser);
-//     document.getElementById('user7').innerHTML = recUser;
-// });
-// socket.emit('getRecs',8);
-// socket.on('retRecs', (recUser) => {
-//     console.log("recUser: " + recUser);
-//     document.getElementById('user8').innerHTML = recUser;
-// });
-// socket.emit('getRecs',9);
-// socket.on('retRecs', (recUser) => {
-//     console.log("recUser: " + recUser);
-//     document.getElementById('user9').innerHTML = recUser;
-// });
+socket.emit('getRecs',5);
+socket.on('retRecs', (recUser) => {
+    console.log("recUser: " + recUser);
+    document.getElementById('user5').innerHTML = recUser;
+});
+
+socket.emit('getRecs',6);
+socket.on('retRecs', (recUser) => {
+    console.log("recUser: " + recUser);
+    document.getElementById('user6').innerHTML = recUser;
+});
+
+socket.emit('getRecs',7);
+socket.on('retRecs', (recUser) => {
+    console.log("recUser: " + recUser);
+    document.getElementById('user7').innerHTML = recUser;
+});
+
+socket.emit('getRecs',8);
+socket.on('retRecs', (recUser) => {
+    console.log("recUser: " + recUser);
+    document.getElementById('user8').innerHTML = recUser;
+});
+
+socket.emit('getRecs',9);
+socket.on('retRecs', (recUser) => {
+    console.log("recUser: " + recUser);
+    document.getElementById('user9').innerHTML = recUser;
+});
