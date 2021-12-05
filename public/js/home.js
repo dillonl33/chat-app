@@ -1,5 +1,4 @@
 const socket = io();
-/*
 
 socket.emit('getUid');
 
@@ -62,4 +61,4 @@ socket.on('theGame', (theGame) => {
 
     document.getElementById('mainGame').innerHTML = "Main Game: "+theGame;
 
-}); */
+});

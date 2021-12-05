@@ -297,7 +297,7 @@ io.on('connection', socket => {
   // just for getting names since idk how to do it with await etc, taking advantage of sockets for another thing.
 
   //get user's profile and show to Homepage
-  /*
+  
   let show_profile_query = "SELECT * FROM users WHERE username = '" + ourUsername + "';";
   var showed_uid = '';
   var showed_username = '';
@@ -334,7 +334,7 @@ io.on('connection', socket => {
   socket.on('getDc', () => {
     socket.emit('theDc', showed_discord);
   })
-  */
+
 
   //END
 
