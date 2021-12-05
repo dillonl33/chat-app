@@ -35,7 +35,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
       //let row1=await User_Obj.findOne({username: username})
       var row1 = 'poop' ;
       client.query('SELECT username, password from user_passwords where username = \'' + username + '\';' , (err, ret) => {
-        if(err) throw err;
+        if(err) return done(err);
 
         if(ret.rows.length > 0) {
           row1 = ret.rows[0];
@@ -64,15 +64,15 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
           console.log("hashed: " + hash);
 
             console.log("pog happened");
-            done(null, row1)
+            return done(null, row1)
           
         } else {
           console.log("wutface happened");
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
           console.log("hashed: " + hash);
-          
-          done(null, false)
+
+          return done(null, false)
         }
 
 
