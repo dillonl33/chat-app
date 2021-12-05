@@ -55,7 +55,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             console.log("The passwords don't match")
         //             return done(null, false)
         //         }
-        
+
         const saltRounds = 10;
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(row1.password, salt);
@@ -92,6 +92,25 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
   }
 ));
 
+
+passport.serializeUser((user, done) => {
+  done(null, user.uid)
+})
+
+passport.deserializeUser((uid, cb) => {
+  db.query('SELECT uid, username FROM users WHERE id = $1', [parseInt(uid, 10)], (err, results) => {
+    if(err) {
+      winston.error('Error when selecting user on session deserialize', err)
+      return cb(err)
+    }
+
+    cb(null, results.rows[0])
+  })
+})
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 // END NEW CRAP FOR PASSPORT
 
 
@@ -114,6 +133,8 @@ app.get('/', function(request, response) {
 });
 
 app.post('/auth', passport.authenticate('local', {successRedirect: '/home', failureRedirect: '/failurepage'}));
+
+app.post('/api/login', passport.authenticate('local'), users.login)
 
 //Triggers the local strategy. If successful, redirect to articles page else show failure page
 
