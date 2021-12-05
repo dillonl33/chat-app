@@ -14,7 +14,7 @@ const userList = document.getElementById('users');
 
 // Get username and room from URL
 // UPDATE: we want to get username of person and the person they are talking to.
-// therefore, only get username of friend, and use socket to get name of current user.
+// therefore, only get username of room, and use socket to get name of current user.
 
 /*const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -22,12 +22,12 @@ const userList = document.getElementById('users');
 
 // should these be var instead of const since we want to be able to change the person we are talking to?
 
-/*const { friend } = Qs.parse(location.search, {
+/*const { room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });*/
 
 
-/*const {const_current_friend} = Qs.parse(location.search, {
+/*const {const_current_room} = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });*/
 
@@ -40,43 +40,43 @@ const socket = io();
 socket.emit('getName');
 
 var username = 'initializedUsername';
-var friend = 'initializedFriendName';
+var room = 'initializedroomName';
 
 function getTheName (onDone){
   socket.on('theName', (theName) => {
       var current_username = theName;
-      var current_friend = 'innerInitializedFriendName';
+      var current_room = 'innerInitializedroomName';
       console.log('current_username: ' + current_username);
-      current_friend = Qs.parse(location.search, {
+      current_room = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      friend = current_friend.username;
-      //console.log('1: ' + current_friend.username);
-      //console.log('2: ' + friend.substring(1, friend.length-1))
-      //console.log('current_freind: ' + current_friend);
-      console.log('friend:' + friend);
-      onDone(current_username, friend);
+      room = current_room.username;
+      //console.log('1: ' + current_room.username);
+      //console.log('2: ' + room.substring(1, room.length-1))
+      //console.log('current_freind: ' + current_room);
+      console.log('room:' + room);
+      onDone(current_username, room);
   });
 }
-console.log('username/friend before calling function: ' + username + '/' + friend);
+console.log('username/room before calling function: ' + username + '/' + room);
 // supposedly this can get the username?
-getTheName(function(username, friend) {
-  console.log('username/friend inside the function: ' + username + '/' + friend);
+getTheName(function(username, room) {
+  console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
-  console.log(friend);
-  socket.emit('joinRoom', { username, friend });
-  console.log(friend);
+  console.log('?' + room);
+  socket.emit('joinRoom', { username, room });
+  console.log(room);
 
   // Get room and users
-  socket.on('roomUsers', ({ friend, users }) => {
-    console.log(friend);
-    outputRoomName(friend);
+  socket.on('roomUsers', ({ room, users }) => {
+    console.log(room);
+    outputRoomName(room);
     outputUsers(users);
   });
 
   // Message from server
   socket.on('message', (message) => {
-    console.log(friend);
+    console.log(room);
     console.log(message);
     outputMessage(message);
 
@@ -121,9 +121,9 @@ getTheName(function(username, friend) {
   }
   
   // Add room name to DOM
-  function outputRoomName(friend) {
-    console.log('why is this undefined...' + friend)
-    roomName.innerText = friend;
+  function outputRoomName(room) {
+    console.log('why is this undefined...' + room)
+    roomName.innerText = room;
   }
   
   // Add users to DOM
@@ -138,7 +138,7 @@ getTheName(function(username, friend) {
   
   //Prompt the user before leave chat room
   document.getElementById('leave-btn').addEventListener('click', () => {
-    const leaveRoom = confirm('Are you sure you want to leave your chat with' + friend + '?');
+    const leaveRoom = confirm('Are you sure you want to leave your chat with' + room + '?');
     if (leaveRoom) {
       window.location = '../homePage.html';
     } else {
@@ -163,11 +163,11 @@ console.log('username after calling function: ' + username);
 
 /*
 // Join chatroom
-socket.emit('joinRoom', { username, friend });
+socket.emit('joinRoom', { username, room });
 
 // Get room and users
-socket.on('roomUsers', ({ friend, users }) => {
-  outputRoomName(friend);
+socket.on('roomUsers', ({ room, users }) => {
+  outputRoomName(room);
   outputUsers(users);
 });
 
@@ -219,8 +219,8 @@ function outputMessage(message) {
 }
 
 // Add room name to DOM
-function outputRoomName(friend) {
-  roomName.innerText = friend;
+function outputRoomName(room) {
+  roomName.innerText = room;
 }
 
 // Add users to DOM
@@ -235,7 +235,7 @@ function outputUsers(users) {
 
 //Prompt the user before leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
-  const leaveRoom = confirm('Are you sure you want to leave your chat with' + friend + '?');
+  const leaveRoom = confirm('Are you sure you want to leave your chat with' + room + '?');
   if (leaveRoom) {
     window.location = '../homePage.html';
   } else {
