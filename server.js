@@ -269,7 +269,7 @@ io.on('connection', socket => {
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
     
-    //client.query(profile_create_query);
+    client.query(profile_create_query);
     client.query(regist_query, (err) => {
       if (err) throw err;
       res.redirect('/');
@@ -283,7 +283,7 @@ io.on('connection', socket => {
     var password = req.body.password;
     let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
-    //client.query(profile_create_query);
+    client.query(profile_create_query);
     client.query(regist_query, (err) => {
       if (err) throw err;
       res.redirect('/');
