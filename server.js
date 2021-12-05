@@ -230,7 +230,7 @@ app.post('/regist', function(req, res){
   const saltRounds = 10;
   const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
-  let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
+  let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + /*password*/hash +"');";
   var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
   
   client.query(profile_create_query);
