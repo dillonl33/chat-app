@@ -45,7 +45,7 @@ function getTheName (onDone){
       var current_username = theName;
       var current_friend = 'innerInitializedFriendName';
       console.log('current_username: ' + current_username);
-      current_friend = Qs.parse(location.search, {
+      const {current_friend} = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
       onDone(current_username, current_friend);
