@@ -229,8 +229,8 @@ app.get('/update', function(req, res) {
               name = firstPart;
             }
           }
-          temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
-          index++;
+          //temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+          //index++;
 
           socket.emit('message', formatMessage2(name, msg , time));
         }
