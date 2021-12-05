@@ -68,15 +68,15 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             return done(null, false)
         //         }
 
-        const saltRounds = 10;
+        /*const saltRounds = 10;
         const salt = bcrypt.genSaltSync(saltRounds);
         const hash = bcrypt.hashSync(row1.password, salt);
-        console.log("hashed: " + hash);
+        console.log("hashed: " + hash);*/
 
-        if(bcrypt.compareSync(password, hash)) {
+        if(bcrypt.compareSync(password, row1.password/*hash*/)) {
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
-          console.log("hashed: " + hash);
+          //console.log("hashed: " + hash);
 
             console.log("pog happened");
             return done(null, row1)
@@ -85,7 +85,7 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
           console.log("wutface happened");
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
-          console.log("hashed: " + hash);
+          //console.log("hashed: " + hash);
 
           return done(null, false)
         }
@@ -150,7 +150,7 @@ app.get('/', function(request, response) {
 
 //app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
-app.post('/auth', /*passport.authenticate('local', { failureRedirect: '/' }),*/  function(req, res) {
+app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
 	console.log(req.user)
   client.query('SELECT * FROM users;', (err, ret) =>  {
     if (err) throw err;
@@ -226,7 +226,11 @@ app.post('/regist', function(req, res){
   if (!req.body) return res.sendStatus(400);
   var username = req.body.username;
   var password = req.body.password;
-  let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
+  // hash the password
+  const saltRounds = 10;
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(password, salt);
+  let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + /*password*/hash +"');";
   var profile_create_query = "INSERT INTO users (username, email, firstname, lastname, phone, location, game, day, month, year, discord) VALUES ('" + username + "', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp', 'temp');";
   
   client.query(profile_create_query);
@@ -236,7 +240,7 @@ app.post('/regist', function(req, res){
     
 });
 });
-
+/*
 app.get('/regist', function(req, res){
   if (!req.body) return res.sendStatus(400);
   var username = req.body.username;
@@ -249,7 +253,7 @@ app.get('/regist', function(req, res){
     res.redirect('/');
     
 });
-}); 
+}); */
 
 // END of registrating
 
