@@ -127,10 +127,10 @@ io.on('connection', socket => {
     if (!req.body) return res.sendStatus(400);
     var username = req.body.username;
     var password = req.body.password;
-    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + test2 +"');";
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     client.query(update_query, (err) => {
       if (err) throw err;
-      res.redirect('index.html');
+      res.redirect('https://chat-backend-attempt.herokuapp.com/');
       
   });
   });
@@ -139,10 +139,10 @@ io.on('connection', socket => {
     if (!req.body) return res.sendStatus(400);
     var username = req.body.username;
     var password = req.body.password;
-    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + test2 +"');";
+    let regist_query = "INSERT INTO user_passwords (username, password) VALUES ('" + username + "', '" + password +"');";
     client.query(update_query, (err) => {
       if (err) throw err;
-      res.redirect('index.html');
+      res.redirect('https://chat-backend-attempt.herokuapp.com/');
       
   });
   });
