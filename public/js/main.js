@@ -35,7 +35,7 @@ const { friend } = Qs.parse(location.search, {
 
 const socket = io();
 
-const username = 'initializedUsername';
+var username = 'initializedUsername';
 
 
 socket.emit('getName');
