@@ -69,10 +69,13 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         //             return done(null, false)
         //         }
             bcrypt.compare(password, row1.password, function(err, res) {
+              console.log("pass1: " + password);
+              console.log("pass2: " + row1.password);
             if(res) {
               console.log("pog happened");
               done(null, row1)
             } else {
+              console.log("wutface happened");
               done(null, false)
             }
           })
