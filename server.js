@@ -57,18 +57,26 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
         {
             console.log("Record found")
             console.log(row1)
-            if(bcrypt.compareSync(password, row1.password))//Compare plaintext password with the hash
-            {
-                console.log("The passwords match")
-                console.log("Finished authenticate local")
-                return done(null, row1)
+        //     if(bcrypt.compare(password, row1.password))//Compare plaintext password with the hash
+        //     {
+        //         console.log("The passwords match")
+        //         console.log("Finished authenticate local")
+        //         return done(null, row1)
+        //     }
+        //     else
+        //         {
+        //             console.log("The passwords don't match")
+        //             return done(null, false)
+        //         }
+            bcrypt.compare(password, row1.password, function(err, res) {
+            if(res) {
+              console.log("pog happened");
+              done(null, row1)
+            } else {
+              done(null, false)
             }
-            else
-                {
-                    console.log("The passwords don't match")
-                    return done(null, false)
-                }
-        }
+          })
+         }
         } else {
           console.log("not found");
           return done(null, false);
