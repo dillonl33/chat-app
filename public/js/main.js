@@ -43,11 +43,12 @@ var friend = 'initializedFriendName';
 function getTheName (onDone){
   socket.on('theName', (theName) => {
       var current_username = theName;
+      var current_friend = 'innerInitializedFriendName';
       console.log('current_username: ' + current_username);
-      var current_friend = Qs.parse(location.search, {
+      current_friend = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      onDone(current_username, currentFriend);
+      onDone(current_username, current_Friend);
   });
 }
 console.log('username/friend before calling function: ' + username + '/' + friend);
