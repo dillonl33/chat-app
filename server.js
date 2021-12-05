@@ -148,7 +148,7 @@ app.post('/update', function(req, res) {
   console.log(update_query);
   client.query(update_query, (err, ret) => {
         if (err) throw err;
-        }
+        });
 
 });
 
@@ -175,7 +175,7 @@ app.get('/update', function(req, res) {
   console.log(update_query);
   client.query(update_query, (err, ret) => {
         if (err) throw err;
-        }
+        });
 });
 // end
 
