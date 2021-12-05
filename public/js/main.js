@@ -10,7 +10,7 @@
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
-//const userList = document.getElementById('users');
+const userList = document.getElementById('users');
 
 
 
@@ -52,7 +52,15 @@ function getTheName (onDone){
       current_room = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
+      // we want room name to be a combination of friend name and current user name, so they can both be in the same "room". to make it consistent,
+      // the 'lesser' name goes first, in alphabetical order
       room = current_room.username;
+      if(current_username < room) {
+        room = current_username +'_' + room;
+      }
+      else {
+        room = room + '_' + current_username;
+      }
       onDone(current_username, room);
   });
 }
@@ -66,7 +74,7 @@ getTheName(function(username, room) {
   // Get room and users
   socket.on('roomUsers', ({ room, users }) => {
     outputRoomName(room);
-    /*outputUsers(users);*/
+    outputUsers(users);
   });
 
   // Message from server
@@ -120,7 +128,7 @@ getTheName(function(username, room) {
     roomName.innerText = room;
   }
   
-  /*// Add users to DOM
+  // Add users to DOM
   function outputUsers(users) {
     userList.innerHTML = '';
     users.forEach((user) => {
@@ -128,7 +136,7 @@ getTheName(function(username, room) {
       li.innerText = user.username;
       userList.appendChild(li);
     });
-  }*/
+  }
   
   //Prompt the user before leave chat room
   document.getElementById('leave-btn').addEventListener('click', () => {
