@@ -25,8 +25,8 @@ var {username, room} = Qs.parse(location.search, {
 
 
 
-const socket = io();
-
+//const socket = io();
+const socket = io({transports: ['websocket'], upgrade: false});
 
 
 

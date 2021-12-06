@@ -1,4 +1,5 @@
-const socket = io();
+//const socket = io();
+const socket = io({transports: ['websocket'], upgrade: false});
 
 socket.emit('getUid');
 
