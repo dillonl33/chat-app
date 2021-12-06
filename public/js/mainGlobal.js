@@ -67,18 +67,7 @@ function getTheName (onDone){
 getTheName(function(username, room) {
   //console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
-  socket.emit('joinRoom', { username, room });
-
-
-
-
-
-
-
-
-
-
-
+  socket.emit('joinRoom2', { username, room });
 
 
 
@@ -86,7 +75,7 @@ getTheName(function(username, room) {
 
 
 // Join chatroom
-socket.emit('joinRoom2', { username, room });
+//socket.emit('joinRoom', { username, room });
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
