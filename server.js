@@ -371,12 +371,12 @@ app.post('/getRank', function(req, res){
     "path": "/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV"
   };
 
-  const req = https.request(options, function (res) {
-    localstorage.setItem('rankScore',res.global.rank.rankScrore);
-    localstorage.setItem('rankName',res.global.rank.rankName);
+  const req1 = https.request(options, function (res1) {
+    localstorage.setItem('rankScore',res1.global.rank.rankScrore);
+    localstorage.setItem('rankName',res1.global.rank.rankName);
   });
 
-  req.end();
+  req1.end();
   console.log("AFTER API");
 });
 //end
