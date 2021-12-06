@@ -3,6 +3,7 @@
 
 
 const socket = io();
+//const socket = io({transports: ['websocket']});
 
 socket.emit('getName');
 

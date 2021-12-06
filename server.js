@@ -3,7 +3,46 @@ const bcrypt=require('bcrypt-nodejs')
 //const User_Obj=require('./Set_Up_Database_Stuffs')
 const local_strategy=require('passport-local').Strategy
 const connectEnsureLogin = require('connect-ensure-login');
+//const websocket = require('websocket');
+const GaleforceModule = require('galeforce');
+const galeforce = new GaleforceModule(/* config */);
 
+// BEGIN BAD WORD API THING
+var urlencode = require("urlencode");
+const https = require("https");
+
+console.log("BEFORE API");
+
+//sorry for typing bad word but must do to test bad word API
+const options = {
+	"method": "GET",
+	"hostname": "community-purgomalum.p.rapidapi.com",
+	"port": null,
+	"path": "/json?text=Fuck%20poopie%20some%20test%20input",
+	"headers": {
+		"x-rapidapi-host": "community-purgomalum.p.rapidapi.com",
+		"x-rapidapi-key": "cf70eddd7cmsh5cbd1478d5faaffp193b13jsn89e43f432950",
+		"useQueryString": true
+	}
+};
+
+const req = https.request(options, function (res) {
+	const chunks = [];
+
+	res.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res.on("end", function () {
+		const body = Buffer.concat(chunks);
+		console.log(body.toString());
+	});
+});
+
+req.end();
+console.log("AFTER API");
+
+// END BAD WORD API THING
 
 const path = require('path');
 const http = require('http');
@@ -266,6 +305,8 @@ app.get('/regist', function(req, res){
 const server = http.createServer(app);
 const io = socketio(server);
 
+//io.set('transports', ['websocket']);
+
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -330,6 +371,9 @@ io.on('connection', socket => {
   })
   socket.on('getName', () => {
     socket.emit('theName', showed_username);
+  })
+  socket.on('getName2', () => {
+    socket.emit('theName2', showed_username);
   })
   socket.on('getEmail', () => {
     socket.emit('theEmail', showed_email);
@@ -423,6 +467,60 @@ app.get('/update', function(req, res) {
 });
 // end
 
+  socket.on('joinRoomGlobal', ({ username, room }) => {
+    console.log("joinRoomGlobal username: " + username);
+    console.log("joinRoomGlobal room: " + room);
+    var uid = '';
+    client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
+      console.log("joinRoomGlobal row: " + ret.rows[0]);
+      if(ret.rows[0] == undefined) {
+        console.log("it's undefined");
+      }
+      else {
+        uid = ret.rows[0].uid;
+        console.log('UID: ' + uid);
+      }
+    });
+
+    console.log("showed_uid: " + showed_uid);
+    console.log("uid: " + uid);
+    const user = userJoin(socket.id, username, room, showed_uid);
+    
+    socket.join(user.room);
+
+    // Welcome current user
+    socket.emit('message2', formatMessage(botName, 'Welcome to the global chat for ' + user.room + '!'));
+
+    // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
+      var temp;
+      var temp2;
+      var temp3 = [];
+      //var firstPart = user.room.substring(0,user.room.indexOf('_'));
+      //var secondPart = user.room.substring(user.room.indexOf('_')+1);
+      var firstPart = user.username;
+      var secondPart = user.room;
+
+      var user_uid = '0';
+
+      var numChatsFromHistory = 10;
+
+
+    // Broadcast when a user connects
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message2',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
+
+    // Send users and room info
+    io.to(user.room).emit('roomUsers2', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  
   socket.on('joinRoom', ({ username, room }) => {
     
     var uid = '';
@@ -444,7 +542,7 @@ app.get('/update', function(req, res) {
     socket.join(user.room);
 
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+    //socket.emit('message', formatMessage(botName, 'Welcome to the chat!'));
 
     // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
       var temp;
@@ -483,7 +581,7 @@ app.get('/update', function(req, res) {
           console.log('stringified time: ' + time);
           time = time.substring(time.indexOf('T')+1,  time.indexOf('.'));
           console.log('formatted time: ' + time);
-          if(row.senderid == uid) { // this chat is from user to friend
+          if(ret.rows[row].senderid == uid) { // this chat is from user to friend
             console.log("this does happen");
             name = username;
           } else { // friend to user
@@ -498,7 +596,7 @@ app.get('/update', function(req, res) {
           //temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
           //index++;
 
-          socket.emit('message', formatMessage2(name, msg , time));
+          socket.emit('message3', formatMessage2(name, msg , time));
         }
 
       });
@@ -507,7 +605,7 @@ app.get('/update', function(req, res) {
     socket.broadcast
       .to(user.room)
       .emit(
-        'message',
+        'message3',
         formatMessage(botName, `${user.username} has joined the chat`)
       );
 
@@ -518,11 +616,52 @@ app.get('/update', function(req, res) {
     });
   });
 
+  socket.on('censorIt2', msg => {
+    var censoredMsg = "";
+    const options = {
+      "method": "GET",
+      "hostname": "community-purgomalum.p.rapidapi.com",
+      "port": null,
+      "path": "/json?text=" + urlencode(msg),//Fuck%20poopie%20some%20test%20input",
+      "headers": {
+        "x-rapidapi-host": "community-purgomalum.p.rapidapi.com",
+        "x-rapidapi-key": "cf70eddd7cmsh5cbd1478d5faaffp193b13jsn89e43f432950",
+        "useQueryString": true
+      }
+    };
+    
+    const req = https.request(options, function (res) {
+      const chunks = [];
+    
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+    
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        censoredMsg = body.toString();
+        console.log(body.toString());
+        censoredMsg = censoredMsg.substring(censoredMsg.indexOf(':')+2, censoredMsg.indexOf('}')-1)
+        socket.emit('censored', censoredMsg);
+      });
+    });
+    
+    req.end();
+
+  });
+  var LASTMESSAGE = "";
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
-    var senderid = '';
+
+    // USE API TO REMOVE BAD WORDS
+    
+    socket.emit('censorIt', msg);
+    var censoredMsg = "test";
+    socket.on('censored2', msg => {
+      censoredMsg = msg;
+      var senderid = '';
     var receiverid = '';
     if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
       senderid = user.room.substring(0,user.room.indexOf('_'));
@@ -531,6 +670,57 @@ app.get('/update', function(req, res) {
       receiverid = user.room.substring(0,user.room.indexOf('_'));
       senderid = user.room.substring(user.room.indexOf('_')+1);
     }
+
+    if(msg == LASTMESSAGE) {
+      //console.log("dupe, not doing");
+    } else {
+      //console.log("unique, gunna do");
+
+      client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+        //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
+          //if (err) throw err;
+          // perhaps if it's not thrown it will be alright?
+          if(err) {
+            console.log(err);
+          }
+          /*for (let row of ret.rows) {
+            temp = JSON.stringify(row);
+            temp2 = temp.split(',');
+            var index = 0;
+            for(let i of temp2 ) {
+              temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+              index++;
+            }
+            socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+          }*/
+  
+        });
+        //console.log("does this happen progressively more times?")
+        io.to(user.room).emit('message3', formatMessage(user.username, censoredMsg/*msg*/));
+    }
+
+    LASTMESSAGE = msg;
+
+    
+    });
+
+
+    
+  });
+
+  // Listen for chatMessage
+  socket.on('chatMessage2', msg => {
+    const user = getCurrentUser(socket.id);
+    // chatid, senderid, receiverid, message, time
+    var senderid = user.username;
+    var receiverid = user.room;
+    /*if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
+      senderid = user.room.substring(0,user.room.indexOf('_'));
+      receiverid = user.room.substring(user.room.indexOf('_')+1);
+    } else {
+      receiverid = user.room.substring(0,user.room.indexOf('_'));
+      senderid = user.room.substring(user.room.indexOf('_')+1);
+    }*/
     client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
       //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
         //if (err) throw err;
@@ -552,7 +742,7 @@ app.get('/update', function(req, res) {
       });
 
 
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
+    io.to(user.room).emit('message2', formatMessage(user.username, msg));
   });
 
   // Runs when client disconnects
@@ -561,12 +751,31 @@ app.get('/update', function(req, res) {
 
     if (user) {
       io.to(user.room).emit(
-        'message',
+        'message3',
         formatMessage(botName, `${user.username} has left the chat`)
       );
 
       // Send users and room info
       io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+
+  
+  // Runs when client disconnects
+  socket.on('disconnect2', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'message2',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers2', {
         room: user.room,
         users: getRoomUsers(user.room)
       });
