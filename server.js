@@ -4,7 +4,6 @@ const bcrypt=require('bcrypt-nodejs')
 const local_strategy=require('passport-local').Strategy
 const connectEnsureLogin = require('connect-ensure-login');
 
-
 const path = require('path');
 const http = require('http');
 var session = require('express-session');
@@ -21,6 +20,9 @@ const {
 } = require('./utils/users');
 
 const loginStuff = require('./public/js/login');
+
+const GaleforceModule = require('galeforce');
+const galeforce = new GaleforceModule(/* config */);
 
 //const app = express();
 var app = express();
