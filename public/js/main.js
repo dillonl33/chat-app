@@ -65,7 +65,7 @@ getTheName(function(username, room) {
 
   // Message from server
   socket.on('message3', (message) => {
-    if(message.message == LASTMESSAGE.message) {
+    if(message.text == LASTMESSAGE.text) {
       console.log("dupe, not doing");
     } else {
       console.log("unique, doing");
