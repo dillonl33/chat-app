@@ -690,7 +690,7 @@ app.get('/update', function(req, res) {
       });
 
     console.log("does this happen progressively more times?")
-    io.to(user.room).emit('message', formatMessage(user.username, censoredMsg/*msg*/));
+    io.to(user.room).emit('message3', formatMessage(user.username, censoredMsg/*msg*/));
     });
 
 

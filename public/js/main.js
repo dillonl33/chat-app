@@ -64,7 +64,7 @@ getTheName(function(username, room) {
   });
 
   // Message from server
-  socket.on('message', (message) => {
+  socket.on('message3', (message) => {
     console.log(message);
     outputMessage(message);
 
