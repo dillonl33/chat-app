@@ -67,7 +67,7 @@ function getTheName (onDone){
 getTheName(function(username, room) {
   //console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
-  socket.emit('joinRoom2', { username, room });
+  socket.emit('joinRoomGlobal', { username, room });
 
 
 
