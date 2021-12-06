@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "galeforce": "^0.5.1",
+    "leagueoflegends-api": "^1.0.6",
     "moment": "^2.24.0",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",

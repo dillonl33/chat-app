@@ -7,6 +7,18 @@ const connectEnsureLogin = require('connect-ensure-login');
 const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
 
+
+
+const LeagueofLegends = require('leagueoflegends-api');
+
+const lol = new LeagueofLegends('RGAPI-13601c11-720f-4c34-a59a-d6f15451878d', 'na');
+console.log("LEAGUE THING 1");
+console.log("LEAGUE THING 1");
+console.log("LEAGUE THING 1");
+lol.findSummoner('shp corasan').then((result) => console.log(result));
+console.log("LEAGUE THING 1");
+console.log("LEAGUE THING 1");
+console.log("LEAGUE THING 1");
 // BEGIN BAD WORD API THING
 var urlencode = require("urlencode");
 const https = require("https");
