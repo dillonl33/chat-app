@@ -672,9 +672,9 @@ app.get('/update', function(req, res) {
     }
 
     if(msg == LASTMESSAGE) {
-      console.log("dupe, not doing");
+      //console.log("dupe, not doing");
     } else {
-      console.log("unique, gunna do");
+      //console.log("unique, gunna do");
 
       client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
         //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
@@ -695,7 +695,7 @@ app.get('/update', function(req, res) {
           }*/
   
         });
-        console.log("does this happen progressively more times?")
+        //console.log("does this happen progressively more times?")
         io.to(user.room).emit('message3', formatMessage(user.username, censoredMsg/*msg*/));
     }
 

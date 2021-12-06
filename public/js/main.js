@@ -66,14 +66,14 @@ getTheName(function(username, room) {
   // Message from server
   socket.on('message3', (message) => {
     if(message.text == LASTMESSAGE.text) {
-      console.log("dupe, not doing");
+      //console.log("dupe, not doing");
     } else {
-      console.log("unique, doing");
+      //console.log("unique, doing");
       outputMessage(message);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     LASTMESSAGE = message;
-    console.log(message);
+    //console.log(message);
 
     // Scroll down
   });
