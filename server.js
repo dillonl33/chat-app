@@ -47,7 +47,7 @@ const options = {
 	"path": "/stats/imshleepdawg/PC",
 	"headers": {
 		"x-rapidapi-host": "apex-legends.p.rapidapi.com",
-		"x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
+		"x-rapidapi-key": process.env.APEX_AUTH,
 		"useQueryString": true
 	}
 };
@@ -61,6 +61,7 @@ const req5 = http5.request(options, function (res) {
 
 	res.on("end", function () {
 		const body = Buffer.concat(chunks);
+    console.log('Body of APEX API');
 		console.log(body.toString());
 	});
 });
