@@ -14,7 +14,9 @@ const userList = document.getElementById('users');
 
 // BEGIN CODE TESTING
 
-
+var {beforecurrUsername, beforecurrRoom} = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
 
 // END CODE TESTING
 
@@ -49,6 +51,10 @@ function getTheName (onDone){
       });
       username = currUsername;
       room = currRoom;
+      console.log("getTheName username: " + username);
+      console.log("getTheName room: " + room);
+      console.log("getTheName BEFORE username: " + beforecurrUsername);
+      console.log("getTheName BEFORE room: " + beforecurrRoom);
 
       /*
 
