@@ -16,6 +16,7 @@
     "connect-ensure-login": "^0.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+
     "fetch": "^1.1.0",
     "galeforce": "^0.5.1",
     "leagueoflegends-api": "^1.0.6",
