@@ -119,15 +119,15 @@ form p > * {
         <h1>Enter a Apex ID to see the rank</h1>
         <!-- <h2 id="RiotID">Riot ID: N/A</h2> -->
         <h2 id="rank">Level: N/A</h2>
-        <form onsubmit="getRank()">
+        <!-- <form onsubmit="getRank()"> -->
             <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" value="temp" required/></p>
 
             <div id = "login_control">
-                <input type="submit" id="btn_login" value="Submit"/>
+                <input type="button" id="btn_login" value="Submit" onclick="getRank()"/>
                 <a class="login-links" id ="return" href="../homePage.html">Return to Homepage</a>
             </div>
 
-        </form>
+        <!-- </form> -->
 
     </div>
     <script src="/socket.io/socket.io.js"></script>
