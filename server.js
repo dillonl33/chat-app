@@ -4,6 +4,8 @@ const bcrypt=require('bcrypt-nodejs')
 const local_strategy=require('passport-local').Strategy
 const connectEnsureLogin = require('connect-ensure-login');
 
+const https = require("https");
+
 const path = require('path');
 const http = require('http');
 var session = require('express-session');
@@ -361,12 +363,21 @@ io.on('connection', socket => {
 
 //apex legends api
 app.post('/getRank', function(req, res){  
-  app.get('https://api.mozambiquehe.re/bridge?version=5&platform=PC&player='+req.body.username+'&auth=F9xLgRbUJP0Q5adAv7jV', function(request, response) {
-    console.log(response.rank.rankScore);
-    console.log(response.rank.rankName);
-    localStorage.setItem('rankScore',response.rank.rankScore);
-    localStorage.setItem('rankName',response.rank.rankName);
+  console.log("BEFORE API");
+  const options = {
+    "method": "GET",
+    "hostname": "https://api.mozambiquehe.re",
+    "port": null,
+    "path": "/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV"
+  };
+
+  const req = https.request(options, function (res) {
+    localstorage.setItem('rankScore',res.global.rank.rankScrore);
+    localstorage.setItem('rankName',res.global.rank.rankName);
   });
+
+  req.end();
+  console.log("AFTER API");
 });
 //end
   
