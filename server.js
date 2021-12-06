@@ -614,13 +614,7 @@ app.get('/update', function(req, res) {
     });
   });
 
-
-  // Listen for chatMessage
-  socket.on('chatMessage', msg => {
-    const user = getCurrentUser(socket.id);
-    // chatid, senderid, receiverid, message, time
-
-    // USE API TO REMOVE BAD WORDS
+  socket.on('censorIt', msg => {
     var censoredMsg = msg;
     const options = {
       "method": "GET",
@@ -649,7 +643,21 @@ app.get('/update', function(req, res) {
     });
     
     req.end();
+    socket.emit('censored', censoredMsg);
+  });
 
+  // Listen for chatMessage
+  socket.on('chatMessage', msg => {
+    const user = getCurrentUser(socket.id);
+    // chatid, senderid, receiverid, message, time
+
+    // USE API TO REMOVE BAD WORDS
+    
+    socket.emit('censorIt', msg);
+    var censoredMsg = "test";
+    socket.on('censored', msg => {
+      censoredMsg = msg;
+    });
 
 
     var senderid = '';
