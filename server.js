@@ -4,12 +4,12 @@ const bcrypt=require('bcrypt-nodejs')
 const local_strategy=require('passport-local').Strategy
 const connectEnsureLogin = require('connect-ensure-login');
 //const websocket = require('websocket');
-const GaleforceModule = require('galeforce');
-const galeforce = new GaleforceModule(/* config */);
+//const GaleforceModule = require('galeforce');
+//const galeforce = new GaleforceModule(/* config */);
 
-const fetch = require("fetch");
+//const fetch = require("fetch");
 
-async function league() {
+/*async function league() {
   var api_key = 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d';
   let link = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + 'Kuriyama Mira' + '?api_key=' + api_key;
 
@@ -34,7 +34,7 @@ console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
 // BEGIN BAD WORD API THING
-var urlencode = require("urlencode");
+*/var urlencode = require("urlencode");
 const https = require("https");
 
 console.log("BEFORE API");
@@ -66,7 +66,7 @@ const req = https.request(options, function (res) {
 });
 
 req.end();
-console.log("AFTER API");
+//console.log("AFTER API");
 
 // END BAD WORD API THING
 
@@ -143,11 +143,11 @@ passport.use(new local_strategy(/*async*/ (username, password, done)=>{
           console.log("pass2: " + row1.password);
           //console.log("hashed: " + hash);
 
-            console.log("pog happened");
+            console.log("User was authenticated");
             return done(null, row1)
           
         } else {
-          console.log("wutface happened");
+          console.log("Password was wrong");
           console.log("pass1: " + password);
           console.log("pass2: " + row1.password);
           //console.log("hashed: " + hash);
@@ -215,7 +215,7 @@ app.get('/', function(request, response) {
 
 //app.post('/auth', passport.authenticate('local', {successRedirect: '/preHome'/* + app.session.passport.username*/, failureRedirect: '/failurepage'}));
 
-app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
+app.post('/auth', passport.authenticate('local', { failureRedirect: '/fail' }),  function(req, res) {
 	console.log(req.user)
   client.query('SELECT * FROM users;', (err, ret) =>  {
     if (err) throw err;
@@ -226,6 +226,11 @@ app.post('/auth', passport.authenticate('local', { failureRedirect: '/' }),  fun
     res.redirect('/home?user=' + req.body.username);
   });
 });
+
+app.get('/fail', function(request, response) {
+  alert('Wrong username/password combination provided.');
+  response.redirect('/');
+})
 
 
 
