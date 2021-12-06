@@ -349,7 +349,7 @@ io.on('connection', socket => {
     client.query(userRecs , (err, ret) => {
       if (err) throw err;
       // console.log("adding " + ret.rows[num].username  + " at num: " + num + "to recs");
-      socket.emit('retRecs',ret.rows,ret.rows.length());
+      socket.emit('retRecs',ret.rows,ret.rowCount);
     });
     // console.log("if you didn't see any 'adding' console logs, the query didn't work");
   })
