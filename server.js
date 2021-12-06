@@ -643,8 +643,8 @@ app.get('/update', function(req, res) {
     
       res.on("end", function () {
         const body = Buffer.concat(chunks);
-        censoredMsg = body.result.toString();
-        console.log(body.result.toString());
+        censoredMsg = body.toString();
+        console.log(body.toString());
       });
     });
     
