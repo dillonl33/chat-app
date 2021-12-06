@@ -7,7 +7,7 @@ const connectEnsureLogin = require('connect-ensure-login');
 const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
 
-const fetch = require("node-fetch");
+const fetch = require("fetch");
 
 async function league() {
   var api_key = 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d';
