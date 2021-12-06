@@ -305,6 +305,8 @@ app.get('/regist', function(req, res){
 const server = http.createServer(app);
 const io = socketio(server);
 
+io.set('transports', ['websocket']);
+
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -648,7 +650,7 @@ app.get('/update', function(req, res) {
   });
 
   // Listen for chatMessage
-  socket.once('chatMessage', msg => {
+  socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
 
