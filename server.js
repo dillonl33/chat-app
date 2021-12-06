@@ -4,6 +4,9 @@ const bcrypt=require('bcrypt-nodejs')
 const local_strategy=require('passport-local').Strategy
 const connectEnsureLogin = require('connect-ensure-login');
 
+const GaleforceModule = require('galeforce');
+const galeforce = new GaleforceModule(/* config */);
+
 
 const path = require('path');
 const http = require('http');
