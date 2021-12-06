@@ -131,3 +131,15 @@ getTheName(function(username, room) {
   });
 
 });
+
+
+
+socket.on('censorIt',  msg => {
+  console.log('censorIt' + msg);
+  socket.emit('censorIt2', msg);
+});
+
+socket.on('censored',  msg => {
+  console.log('censored' + msg);
+  socket.emit('censored2', msg);
+});

@@ -614,7 +614,7 @@ app.get('/update', function(req, res) {
     });
   });
 
-  socket.on('censorIt', msg => {
+  socket.on('censorIt2', msg => {
     var censoredMsg = msg;
     const options = {
       "method": "GET",
@@ -656,7 +656,7 @@ app.get('/update', function(req, res) {
     
     socket.emit('censorIt', msg);
     var censoredMsg = "test";
-    socket.on('censored', msg => {
+    socket.on('censored2', msg => {
       censoredMsg = msg;
       var senderid = '';
     var receiverid = '';
@@ -729,7 +729,7 @@ app.get('/update', function(req, res) {
       });
 
 
-    io.to(user.room).emit('message2', formatMessage(user.username, msg));
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
   // Runs when client disconnects
