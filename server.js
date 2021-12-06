@@ -462,7 +462,8 @@ app.get('/update', function(req, res) {
 // end
 
   socket.on('joinRoomGlobal', ({ username, room }) => {
-    
+    console.log("joinRoomGlobal username: " + username);
+    console.log("joinRoomGlobal room: " + username);
     var uid = '';
     client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
       console.log("joinRoomGlobal row: " + ret.rows[0]);
