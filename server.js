@@ -359,26 +359,24 @@ io.on('connection', socket => {
   //END
 
 
-
-
+//User: HeyImLifeline
+//https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV
 //apex legends api
-app.post('/getRank', function(req, res){  
-  console.log("BEFORE API");
-  const options = {
-    "method": "GET",
-    "hostname": "https://api.mozambiquehe.re",
-    "port": null,
-    "path": "/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV"
-  };
+// app.post('/getRank', function(req, res){  
+//   // const h = document.getElementById('rank');
+//   const url = 'https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=HeyImLifeline&auth='+APEX_AUTH;
 
-  const req1 = https.request(options, function (res1) {
-    localstorage.setItem('rankScore',res1.global.rank.rankScrore);
-    localstorage.setItem('rankName',res1.global.rank.rankName);
-  });
-
-  req1.end();
-  console.log("AFTER API");
-});
+//   fetch(url)
+//   .then((resp) => resp.json())
+//   .then(function(data) {
+//     let userInfo = data.results;
+//     console.log(userInfo.global.rank.rankScore);
+//     // h.innerHTML = userInfo.global.rank.rankScore;
+//   })
+//   .catch(function(error) {
+//     console.log(error);
+//   });
+// });
 //end
   
 
