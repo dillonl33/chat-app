@@ -372,7 +372,7 @@ app.post('/getRank', function(req, res){
     "path": "/stats/"+req.body.username+"/PC",
     "headers": {
       "x-rapidapi-host": "apex-legends.p.rapidapi.com",
-      "x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
+      "x-rapidapi-key": process.env.APEX_AUTH,
       "useQueryString": true
     }
   };
