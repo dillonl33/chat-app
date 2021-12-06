@@ -103,7 +103,7 @@ form p > * {
             const socket = io();
 
             socket.emit('getRank',usernameValue);
-            socket.on('retRank', (level) => {
+            socket.on('level', (level) => {
                 console.log("User Level: " + level);
                 document.getElementById('rank') = 'Level: '+level;
             });
