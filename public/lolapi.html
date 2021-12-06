@@ -101,7 +101,7 @@ form p > * {
         function getRank(username) {
             const socket = io();
 
-            socket.emit('getRank');
+            socket.emit('getRank',username);
             socket.on('retRank', (level) => {
                 console.log("User Level: " + level);
                 document.getElementById('rank') = 'Level: '+level;
@@ -115,7 +115,7 @@ form p > * {
         
         <h1>Enter a Apex ID to see the rank</h1>
         <!-- <h2 id="RiotID">Riot ID: N/A</h2> -->
-        <h2 id="rank">Rank: N/A</h2>
+        <h2 id="rank">Level: N/A</h2>
         <form onsubmit="getRank(username)">
             <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" required/></p>
 
