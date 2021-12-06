@@ -8,6 +8,7 @@ const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
 
 // BEGIN BAD WORD API THING
+var urlencode = require("urlencode");
 const https = require("https");
 
 console.log("BEFORE API");
@@ -618,6 +619,39 @@ app.get('/update', function(req, res) {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
+
+    // USE API TO REMOVE BAD WORDS
+    var censoredMsg = msg;
+    const options = {
+      "method": "GET",
+      "hostname": "community-purgomalum.p.rapidapi.com",
+      "port": null,
+      "path": "/json?text=" + urlencode(msg),//Fuck%20poopie%20some%20test%20input",
+      "headers": {
+        "x-rapidapi-host": "community-purgomalum.p.rapidapi.com",
+        "x-rapidapi-key": "cf70eddd7cmsh5cbd1478d5faaffp193b13jsn89e43f432950",
+        "useQueryString": true
+      }
+    };
+    
+    const req = https.request(options, function (res) {
+      const chunks = [];
+    
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+    
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        censoredMsg = body.result.toString();
+        console.log(body.result.toString());
+      });
+    });
+    
+    req.end();
+
+
+
     var senderid = '';
     var receiverid = '';
     if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
@@ -648,7 +682,7 @@ app.get('/update', function(req, res) {
       });
 
 
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
+    io.to(user.room).emit('message', formatMessage(user.username, censoredMsg/*msg*/));
   });
 
   // Listen for chatMessage
