@@ -98,25 +98,25 @@ form p > * {
 		</style>
 
     <script>
-        function getRank() {
-            var usernameValue = document.getElementById("username").value;
-            const socket = io();
+        // function getRank() {
+        //     var usernameValue = document.getElementById("username").value;
+        //     const socket = io();
 
-            socket.emit('getRank',usernameValue);
-            console.log("Testing socket comes back to web page");
-            socket.on('level', (level) => {
-                console.log("User Level: " + level);
-                alert("Level: "+level);
-            });
-        }
+        //     socket.emit('getRank_lol',usernameValue);
+        //     console.log("Testing socket comes back to web page");
+        //     socket.on('level_lol', (level_lol) => {
+        //         console.log("User Level: " + leve_lol);
+        //         alert("Level: "+level_lol);
+        //     });
+        //}
     </script>
 </head>
 
 <body>
     <div id = "login_frame">
         
-        <h1>Enter a Apex ID to see the rank</h1>
-            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" value="temp" required/></p>
+        <h1>Enter a League of Legends ID to see the level</h1>
+            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="League of Legends ID" value="temp" required/></p>
 
             <div id = "login_control">
                 <input type="button" id="btn_login" value="Submit" onclick="getRank()"/>
