@@ -72,6 +72,7 @@ getTheName(function(username, room) {
       outputMessage(message);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+    LASTMESSAGE = message;
     console.log(message);
 
     // Scroll down
