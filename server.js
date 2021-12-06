@@ -426,6 +426,59 @@ app.get('/update', function(req, res) {
 });
 // end
 
+  socket.on('joinRoomGlobal', ({ username, room }) => {
+    
+    var uid = '';
+    client.query('SELECT uid from users where username = \'' + username + '\';' , (err, ret) => {
+      console.log("joinRoomGlobal row: " + ret.rows[0]);
+      if(ret.rows[0] == undefined) {
+        console.log("it's undefined");
+      }
+      else {
+        uid = ret.rows[0].uid;
+        console.log('UID: ' + uid);
+      }
+    });
+
+    console.log("showed_uid: " + showed_uid);
+    console.log("uid: " + uid);
+    const user = userJoin(socket.id, username, room, showed_uid);
+    
+    socket.join(user.room);
+
+    // Welcome current user
+    socket.emit('message', formatMessage(botName, 'Welcome to the global chat for ' + user.room + '!'));
+
+    // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
+      var temp;
+      var temp2;
+      var temp3 = [];
+      //var firstPart = user.room.substring(0,user.room.indexOf('_'));
+      //var secondPart = user.room.substring(user.room.indexOf('_')+1);
+      var firstPart = user.username;
+      var secondPart = user.room;
+
+      var user_uid = '0';
+
+      var numChatsFromHistory = 10;
+
+
+    // Broadcast when a user connects
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
+
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  
   socket.on('joinRoom', ({ username, room }) => {
     
     var uid = '';
@@ -520,6 +573,7 @@ app.get('/update', function(req, res) {
       users: getRoomUsers(user.room)
     });
   });
+
 
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
