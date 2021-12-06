@@ -88,7 +88,21 @@ getTheName(function(username, room) {
 
 // Get room and users
 socket.on('roomUsers2', ({ room, users }) => {
-  outputRoomName(room);
+  if(room == '1') {
+    outputRoomName('League of Legends');
+  } else if(room == '2') {
+    outputRoomName('Overwatch');
+  } else if(room == '3') {
+    outputRoomName('Apex Legends');
+  } else if(room == '4') {
+    outputRoomName('Valorant');
+  } else if(room == '5') {
+    outputRoomName('Dead by Daylight');
+  } else if(room == '6') {
+    outputRoomName('Minecraft');
+  } else {
+    outputRoomName(room);
+  }
   outputUsers(users);
 });
 
@@ -141,6 +155,21 @@ function outputMessage(message) {
 // Add room name to DOM
 function outputRoomName(room) {
   roomName.innerText = room;
+  if(room == '1') {
+    roomName.innerText = ('League of Legends');
+  } else if(room == '2') {
+    roomName.innerText = ('Overwatch');
+  } else if(room == '3') {
+    roomName.innerText = ('Apex Legends');
+  } else if(room == '4') {
+    roomName.innerText = ('Valorant');
+  } else if(room == '5') {
+    roomName.innerText = ('Dead by Daylight');
+  } else if(room == '6') {
+    roomName.innerText = ('Minecraft');
+  } else {
+    roomName.innerText = (room);
+  }
 }
 
 // Add users to DOM
