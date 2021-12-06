@@ -648,7 +648,7 @@ app.get('/update', function(req, res) {
   });
 
   // Listen for chatMessage
-  socket.on('chatMessage', msg => {
+  socket.once('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     // chatid, senderid, receiverid, message, time
 
