@@ -104,17 +104,18 @@ form p > * {
         <h1>Enter a Apex ID to see the rank</h1>
         <!-- <h2 id="RiotID">Riot ID: N/A</h2> -->
         <h2 id="rank">Rank: N/A</h2>
-        <form method="post" action="getRank">
+        <form>
             <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" required/></p>
 
             <div id = "login_control">
-                <input type="submit" id="btn_login" value="Get Rank"/>
+                <input type="submit" id="btn_login" value="Get Rank" onclick="getRank(username)"/>
                 <a class="login-links" id ="return" href="../homePage.html">Return to Homepage</a>
             </div>
 
         </form>
 
     </div>
-    <!-- <script src="../public/js/apexAPI.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../public/js/apexAPI.js"></script>
 </body>
 </html>
