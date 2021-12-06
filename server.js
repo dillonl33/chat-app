@@ -362,21 +362,36 @@ io.on('connection', socket => {
 //User: HeyImLifeline
 //https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV
 //apex legends api
-// app.post('/getRank', function(req, res){  
-//   // const h = document.getElementById('rank');
-//   const url = 'https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=HeyImLifeline&auth='+APEX_AUTH;
+app.post('/getRank', function(req, res){  
+  const http = require("https");
 
-//   fetch(url)
-//   .then((resp) => resp.json())
-//   .then(function(data) {
-//     let userInfo = data.results;
-//     console.log(userInfo.global.rank.rankScore);
-//     // h.innerHTML = userInfo.global.rank.rankScore;
-//   })
-//   .catch(function(error) {
-//     console.log(error);
-//   });
-// });
+  const options = {
+    "method": "GET",
+    "hostname": "apex-legends.p.rapidapi.com",
+    "port": null,
+    "path": "/stats/"+res.body.username+"/PC",
+    "headers": {
+      "x-rapidapi-host": "apex-legends.p.rapidapi.com",
+      "x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
+      "useQueryString": true
+    }
+  };
+
+  const req = http.request(options, function (res) {
+    const chunks = [];
+
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+
+    res.on("end", function () {
+      const body = Buffer.concat(chunks);
+      console.log(body.toString());
+    });
+});
+
+req.end();
+});
 //end
   
 
