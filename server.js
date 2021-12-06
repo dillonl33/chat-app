@@ -61,8 +61,8 @@ const req5 = http5.request(options, function (res) {
 
 	res.on("end", function () {
 		const body = Buffer.concat(chunks);
-    console.log('Body of APEX API');
-		console.log(body.toString());
+    console.log('Getting RankScore of APEX API');
+		console.log(body.global.rank.rankScore.toString());
 	});
 });
 
