@@ -50,7 +50,7 @@ function getTheName (onDone){
       onDone(current_username, room);
   });
 }
-
+var LASTMESSAGE = "";
 getTheName(function(username, room) {
   //console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
@@ -65,11 +65,16 @@ getTheName(function(username, room) {
 
   // Message from server
   socket.on('message3', (message) => {
+    if(message == LASTMESSAGE) {
+      console.log("dupe, not doing");
+    } else {
+      console.log("unique, doing");
+      outputMessage(message);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
     console.log(message);
-    outputMessage(message);
 
     // Scroll down
-    chatMessages.scrollTop = chatMessages.scrollHeight;
   });
 
   // Message submit

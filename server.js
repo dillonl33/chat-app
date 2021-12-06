@@ -596,7 +596,7 @@ app.get('/update', function(req, res) {
           //temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
           //index++;
 
-          socket.emit('message', formatMessage2(name, msg , time));
+          socket.emit('message3', formatMessage2(name, msg , time));
         }
 
       });
@@ -605,7 +605,7 @@ app.get('/update', function(req, res) {
     socket.broadcast
       .to(user.room)
       .emit(
-        'message',
+        'message3',
         formatMessage(botName, `${user.username} has joined the chat`)
       );
 
@@ -740,7 +740,7 @@ app.get('/update', function(req, res) {
 
     if (user) {
       io.to(user.room).emit(
-        'message',
+        'message3',
         formatMessage(botName, `${user.username} has left the chat`)
       );
 
