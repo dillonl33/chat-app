@@ -7,6 +7,7 @@ const connectEnsureLogin = require('connect-ensure-login');
 const https = require("https");
 
 const http = require("https");
+
 const options = {
 	"method": "GET",
 	"hostname": "apex-legends.p.rapidapi.com",
