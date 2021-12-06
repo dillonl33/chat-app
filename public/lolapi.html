@@ -101,9 +101,11 @@ form p > * {
 <body>
     <div id = "login_frame">
         
-        <h1>Enter a League of Legend ID to see the rank</h1>
-        <form method="post" action="#">
-            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="League of Legend ID" required/></p>
+        <h1>Enter a Apex ID to see the rank</h1>
+        <!-- <h2 id="RiotID">Riot ID: N/A</h2> -->
+        <h2 id="rank">Rank: N/A</h2>
+        <form method="post" action="getRank">
+            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" required/></p>
 
             <div id = "login_control">
                 <input type="submit" id="btn_login" value="Get Rank"/>
@@ -113,5 +115,6 @@ form p > * {
         </form>
 
     </div>
+    <script src="../public/js/apexAPI.js"></script>
 </body>
 </html>

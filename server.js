@@ -21,9 +21,6 @@ const {
 
 const loginStuff = require('./public/js/login');
 
-const GaleforceModule = require('galeforce');
-const galeforce = new GaleforceModule(/* config */);
-
 //const app = express();
 var app = express();
 
@@ -362,7 +359,16 @@ io.on('connection', socket => {
 
 
 
-
+//apex legends api
+app.post('/getRank', function(req, res){  
+  app.get('https://api.mozambiquehe.re/bridge?version=5&platform=PC&player='+req.body.username+'&auth=F9xLgRbUJP0Q5adAv7jV', function(request, response) {
+    console.log(response.rank.rankScore);
+    console.log(response.rank.rankName);
+    localStorage.setItem('rankScore',response.rank.rankScore);
+    localStorage.setItem('rankName',response.rank.rankName);
+  });
+});
+//end
   
 
 
