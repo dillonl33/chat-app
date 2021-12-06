@@ -7,6 +7,8 @@ const connectEnsureLogin = require('connect-ensure-login');
 const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
 
+const fetch = require("node-fetch");
+
 async function league() {
   var api_key = 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d';
   let link = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + 'Kuriyama Mira' + '?api_key=' + api_key;
@@ -20,7 +22,7 @@ let link = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/' +
 
 console.log(fetch(link).json());
 
-const fetch = require("node-fetch");
+
 const LeagueofLegends = require('leagueoflegends-api');
 
 const lol = new LeagueofLegends('RGAPI-13601c11-720f-4c34-a59a-d6f15451878d', 'na');
