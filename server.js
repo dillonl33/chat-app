@@ -434,6 +434,8 @@ io.on('connection', socket => {
 
   //END
 
+
+
 socket.on('getRank',username => {
   var level = "";
   const options = {
@@ -467,40 +469,40 @@ socket.on('getRank',username => {
   req.end();  
 })
 
-  //apex legends api
-// app.post('/getRank', function(req, res){  
-//   const http5 = require("https");
+socket.on('getRank_lol',username => {
+  var level_lol = "";
+  var api_key1= "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d";
+  const options_lol = {
 
-//   const options = {
-//     "method": "GET",
-//     "hostname": "apex-legends.p.rapidapi.com",
-//     "port": null,
-//     "path": "/stats/imshleepdawg/PC",
-//     "headers": {
-//       "x-rapidapi-host": "apex-legends.p.rapidapi.com",
-//       "x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
-//       "useQueryString": true
-//     }
-//   };
+    "type": "GET",
+    "url": "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ username+"?api_key="+api_key1, 
+    "path": "/stats/"+username+"/PC",
+    "headers": {
+      "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d",
+    }
+  };
 
-//   const req5 = http5.request(options, function (res) {
-//     const chunks = [];
+  const req = https.request(options_lol, function (res) {
+    const chunks = [];
 
-//     res.on("data", function (chunk) {
-//       chunks.push(chunk);
-//     });
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
 
-//     res.on("end", function () {
-//       const body = Buffer.concat(chunks);
-//       console.log('Getting RankScore of APEX API');
-//       console.log(body.global.rank.rankScore.toString());
-//     });
-//   });
+    res.on("end", function () {
+      const body = Buffer.concat(chunks);
+      level_lol = body.toString();
+      level_lol = level_lol.substr(-4);
+      level_lol = level_lol.substring(0, Sum_lv.length-1);
+      console.log(username+'\'s level: '+level);
+      socket.emit('level',level);
+    });
+  });
 
-//   req5.end();
-// });
-//end
-  
+  req.end();  
+})
+
+
 
 
   // profile editing

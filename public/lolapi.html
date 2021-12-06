@@ -103,11 +103,11 @@ form p > * {
             var usernameValue = document.getElementById("username").value;
             const socket = io();
 
-            socket.emit('getRank',usernameValue);
+            socket.emit('getRank_lol',usernameValue);
             console.log("Testing socket comes back to web page");
-            socket.on('level', (level) => {
-                console.log("User Level: " + level);
-                alert("Level: "+level);
+            socket.on('level_lol', (level_lol) => {
+                console.log("User Level: " + leve_lol);
+                alert("Level: "+level_lol);
             });
         }
     </script>
