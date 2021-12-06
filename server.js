@@ -473,12 +473,11 @@ socket.on('getRank_lol',username => {
   var level_lol = "";
   var api_key1= "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d";
   const options_lol = {
-
+    "async": true,
     "type": "GET",
     "url": "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ username+"?api_key="+api_key1, 
-    "path": "/stats/"+username+"/PC",
     "headers": {
-      "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d",
+      "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d"
     }
   };
 
@@ -494,8 +493,8 @@ socket.on('getRank_lol',username => {
       level_lol = body.toString();
       level_lol = level_lol.substr(-4);
       level_lol = level_lol.substring(0, Sum_lv.length-1);
-      console.log(username+'\'s level: '+level);
-      socket.emit('level',level);
+      console.log(username+'\'s level: '+level_lol);
+      socket.emit('level_lol',level_lol);
     });
   });
 
