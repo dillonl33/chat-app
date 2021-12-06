@@ -16,6 +16,9 @@ const userList = document.getElementById('users');
 
 
 
+//const socket = io({transports: ['websocket'], upgrade: false});
+
+//const socket = io({transports: ['websocket']});
 const socket = io();
 
 socket.emit('getName');
@@ -47,7 +50,7 @@ function getTheName (onDone){
       onDone(current_username, room);
   });
 }
-
+var LASTMESSAGE = "";
 getTheName(function(username, room) {
   //console.log('username/room inside the function: ' + username + '/' + room);
   // Join chatroom
@@ -61,12 +64,18 @@ getTheName(function(username, room) {
   });
 
   // Message from server
-  socket.on('message', (message) => {
-    console.log(message);
-    outputMessage(message);
+  socket.on('message3', (message) => {
+    if(message.text == LASTMESSAGE.text) {
+      //console.log("dupe, not doing");
+    } else {
+      //console.log("unique, doing");
+      outputMessage(message);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    LASTMESSAGE = message;
+    //console.log(message);
 
     // Scroll down
-    chatMessages.scrollTop = chatMessages.scrollHeight;
   });
 
   // Message submit
@@ -83,6 +92,7 @@ getTheName(function(username, room) {
     }
 
     // Emit message to server
+    console.log("this should only happen once each");
     socket.emit('chatMessage', msg);
 
     // Clear input
@@ -130,4 +140,16 @@ getTheName(function(username, room) {
     }
   });
 
+});
+
+
+
+socket.on('censorIt',  msg => {
+  console.log('censorIt' + msg);
+  socket.emit('censorIt2', msg);
+});
+
+socket.on('censored',  msg => {
+  console.log('censored' + msg);
+  socket.emit('censored2', msg);
 });

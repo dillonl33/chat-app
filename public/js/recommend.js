@@ -1,4 +1,5 @@
 const socket = io();
+//const socket = io({transports: ['websocket']});
 
 socket.emit('getRecs');
 socket.on('retRecs', (recUsers,len) => {

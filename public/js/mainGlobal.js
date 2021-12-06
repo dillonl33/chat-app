@@ -10,20 +10,13 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
-// this variable should differentiate whether it's a global chatroom or a person-to-person chat.
-// it may be better to have a different .html and.js file for the difference, but trying it merged with if statements on this variable for now.
-var isGlobalChatroom = false;
-
-// Get username and room from URL
-// UPDATE: we want to get username of person and the person they are talking to.
-const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});
 
 
 // BEGIN CODE TESTING
 
-
+var {username, room} = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
 
 // END CODE TESTING
 
@@ -33,18 +26,88 @@ const { username, room } = Qs.parse(location.search, {
 
 
 const socket = io();
+//const socket = io({transports: ['websocket']});
+
+
+
+socket.emit('getName2');
+
+var username2 = 'initializedUsername'; // your name
+var room2= 'initializedroomName'; // friend's name
+
+function getTheName (onDone){
+  socket.on('theName2', (theName) => {
+      //console.log("cookie username: " + document.cookie);
+      /*var current_username = theName;
+      var current_room = 'innerInitializedroomName';
+      
+      console.log('current_username: ' + current_username);
+      //current_room = response.user.username;*/
+      //var current_username = theName;
+      //var current_room = 'innerInitializedroomName';
+      
+      var {currUsername, currRoom} = Qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+      username2 = currUsername;
+      room2 = currRoom;
+      console.log("getTheName username: " + username2);
+      console.log("getTheName room: " + room2);
+      console.log("getTheName BEFORE username: " + username);
+      console.log("getTheName BEFORE room: " + room);
+
+      /*
+
+      console.log('current_username: ' + current_username);
+      // we want room name to be a combination of friend name and current user name, so they can both be in the same "room". to make it consistent,
+      // the 'lesser' name goes first, in alphabetical order
+      room = current_room.username;
+    console.log('current_username: ' + room);
+      if(current_username < room) {
+        room = current_username +'_' + room;
+      }
+      else {
+        room = room + '_' + current_username;
+      }*/
+      onDone(username, room);
+  });
+}
+
+getTheName(function(username, room) {
+  //console.log('username/room inside the function: ' + username + '/' + room);
+  // Join chatroom
+  socket.emit('joinRoomGlobal', { username, room });
+
+
+
+
+
 
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+//socket.emit('joinRoom', { username, room });
 
 // Get room and users
-socket.on('roomUsers', ({ room, users }) => {
-  outputRoomName(room);
+socket.on('roomUsers2', ({ room, users }) => {
+  if(room == '1') {
+    outputRoomName('League of Legends');
+  } else if(room == '2') {
+    outputRoomName('Overwatch');
+  } else if(room == '3') {
+    outputRoomName('Apex Legends');
+  } else if(room == '4') {
+    outputRoomName('Valorant');
+  } else if(room == '5') {
+    outputRoomName('Dead by Daylight');
+  } else if(room == '6') {
+    outputRoomName('Minecraft');
+  } else {
+    outputRoomName(room);
+  }
   outputUsers(users);
 });
 
 // Message from server
-socket.on('message', (message) => {
+socket.on('message2', (message) => {
   console.log(message);
   outputMessage(message);
 
@@ -66,7 +129,7 @@ chatForm.addEventListener('submit', (e) => {
   }
 
   // Emit message to server
-  socket.emit('chatMessage', msg);
+  socket.emit('chatMessage2', msg);
 
   // Clear input
   e.target.elements.msg.value = '';
@@ -92,6 +155,21 @@ function outputMessage(message) {
 // Add room name to DOM
 function outputRoomName(room) {
   roomName.innerText = room;
+  if(room == '1') {
+    roomName.innerText = ('League of Legends');
+  } else if(room == '2') {
+    roomName.innerText = ('Overwatch');
+  } else if(room == '3') {
+    roomName.innerText = ('Apex Legends');
+  } else if(room == '4') {
+    roomName.innerText = ('Valorant');
+  } else if(room == '5') {
+    roomName.innerText = ('Dead by Daylight');
+  } else if(room == '6') {
+    roomName.innerText = ('Minecraft');
+  } else {
+    roomName.innerText = (room);
+  }
 }
 
 // Add users to DOM
@@ -111,4 +189,6 @@ document.getElementById('leave-btn').addEventListener('click', () => {
     window.location = '../homePage.html';
   } else {
   }
+});
+
 });
