@@ -6,6 +6,15 @@ const connectEnsureLogin = require('connect-ensure-login');
 //const websocket = require('websocket');
 const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
+
+async function league() {
+  var api_key = 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d';
+  let link = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + 'Kuriyama Mira' + '?api_key=' + api_key;
+
+  let response = await fetch(link);
+  response = await response.json()
+  console.log(response);
+}
 var api_key = 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d';
 let link = 'https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/' + 'Kuriyama Mira' + '?api_key=' + api_key;
 
