@@ -615,7 +615,7 @@ app.get('/update', function(req, res) {
   });
 
   socket.on('censorIt2', msg => {
-    var censoredMsg = msg;
+    var censoredMsg = "";
     const options = {
       "method": "GET",
       "hostname": "community-purgomalum.p.rapidapi.com",
@@ -687,7 +687,7 @@ app.get('/update', function(req, res) {
 
       });
 
-
+    console.log("does this happen progressively more times?")
     io.to(user.room).emit('message', formatMessage(user.username, censoredMsg/*msg*/));
     });
 
