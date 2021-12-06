@@ -384,6 +384,7 @@ socket.on('getRank',username => {
       const body = Buffer.concat(chunks);
       level = body.toString();
       level = level.substring(level.indexOf("level")+7, level.indexOf("toNextLevelPercent")-2);
+      console.log(username+'\'s level: '+level);
       socket.emit('retRank',level);
     });
   });
