@@ -69,7 +69,7 @@ function getTheName (onDone){
       else {
         room = room + '_' + current_username;
       }*/
-      onDone(currUsername, currRoom);
+      onDone(username, room);
   });
 }
 
