@@ -483,7 +483,7 @@ app.get('/update', function(req, res) {
     socket.join(user.room);
 
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to the global chat for ' + user.room + '!'));
+    socket.emit('message2', formatMessage(botName, 'Welcome to the global chat for ' + user.room + '!'));
 
     // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
       var temp;
@@ -503,12 +503,12 @@ app.get('/update', function(req, res) {
     socket.broadcast
       .to(user.room)
       .emit(
-        'message',
+        'message2',
         formatMessage(botName, `${user.username} has joined the chat`)
       );
 
     // Send users and room info
-    io.to(user.room).emit('roomUsers', {
+    io.to(user.room).emit('roomUsers2', {
       room: user.room,
       users: getRoomUsers(user.room)
     });
@@ -648,6 +648,43 @@ app.get('/update', function(req, res) {
     io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
+  // Listen for chatMessage
+  socket.on('chatMessage2', msg => {
+    const user = getCurrentUser(socket.id);
+    // chatid, senderid, receiverid, message, time
+    var senderid = user.username;
+    var receiverid = user.room;
+    /*if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
+      senderid = user.room.substring(0,user.room.indexOf('_'));
+      receiverid = user.room.substring(user.room.indexOf('_')+1);
+    } else {
+      receiverid = user.room.substring(0,user.room.indexOf('_'));
+      senderid = user.room.substring(user.room.indexOf('_')+1);
+    }*/
+    client.query('INSERT INTO chats values (default, (select uid from users where username = \'' + senderid + '\'), (select uid from users where username = \'' + receiverid + '\'), \'' + msg + '\', CURRENT_TIMESTAMP);', (err, ret) => {
+      //client.query('SELECT senderid, message, time FROM chats WHERE senderid = (select uid from users where username = \'' + username + '\') AND receiverid = (select uid from users where username = \'' + room + '\'));', (err, ret) => {
+        //if (err) throw err;
+        // perhaps if it's not thrown it will be alright?
+        if(err) {
+          console.log(err);
+        }
+        /*for (let row of ret.rows) {
+          temp = JSON.stringify(row);
+          temp2 = temp.split(',');
+          var index = 0;
+          for(let i of temp2 ) {
+            temp3[index] =  i.substring(i.indexOf(":")+2, i.lastIndexOf("\""));
+            index++;
+          }
+          socket.emit('message', formatMessage2(temp3[0], temp3[1], temp3[2]));
+        }*/
+
+      });
+
+
+    io.to(user.room).emit('message2', formatMessage(user.username, msg));
+  });
+
   // Runs when client disconnects
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
@@ -660,6 +697,25 @@ app.get('/update', function(req, res) {
 
       // Send users and room info
       io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+
+  
+  // Runs when client disconnects
+  socket.on('disconnect2', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'message2',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers2', {
         room: user.room,
         users: getRoomUsers(user.room)
       });

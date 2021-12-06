@@ -14,7 +14,7 @@ const userList = document.getElementById('users');
 
 // BEGIN CODE TESTING
 
-var {beforecurrUsername, beforecurrRoom} = Qs.parse(location.search, {
+var {username, room} = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
@@ -30,13 +30,13 @@ const socket = io();
 
 
 
-socket.emit('getName');
+socket.emit('getName2');
 
-var username = 'initializedUsername'; // your name
-var room = 'initializedroomName'; // friend's name
+var username2 = 'initializedUsername'; // your name
+var room2= 'initializedroomName'; // friend's name
 
 function getTheName (onDone){
-  socket.on('theName', (theName) => {
+  socket.on('theName2', (theName) => {
       //console.log("cookie username: " + document.cookie);
       /*var current_username = theName;
       var current_room = 'innerInitializedroomName';
@@ -49,12 +49,12 @@ function getTheName (onDone){
       var {currUsername, currRoom} = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
-      username = currUsername;
-      room = currRoom;
-      console.log("getTheName username: " + username);
-      console.log("getTheName room: " + room);
-      console.log("getTheName BEFORE username: " + beforecurrUsername);
-      console.log("getTheName BEFORE room: " + beforecurrRoom);
+      username2 = currUsername;
+      room2 = currRoom;
+      console.log("getTheName username: " + username2);
+      console.log("getTheName room: " + room2);
+      console.log("getTheName BEFORE username: " + username);
+      console.log("getTheName BEFORE room: " + room);
 
       /*
 
@@ -87,13 +87,13 @@ getTheName(function(username, room) {
 //socket.emit('joinRoom', { username, room });
 
 // Get room and users
-socket.on('roomUsers', ({ room, users }) => {
+socket.on('roomUsers2', ({ room, users }) => {
   outputRoomName(room);
   outputUsers(users);
 });
 
 // Message from server
-socket.on('message', (message) => {
+socket.on('message2', (message) => {
   console.log(message);
   outputMessage(message);
 
@@ -102,7 +102,7 @@ socket.on('message', (message) => {
 });
 
 // Message submit
-chatForm.addEventListener('submit', (e) => {
+chatForm.addEventListener('submit2', (e) => {
   e.preventDefault();
 
   // Get message text
@@ -115,7 +115,7 @@ chatForm.addEventListener('submit', (e) => {
   }
 
   // Emit message to server
-  socket.emit('chatMessage', msg);
+  socket.emit('chatMessage2', msg);
 
   // Clear input
   e.target.elements.msg.value = '';
