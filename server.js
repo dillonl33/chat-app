@@ -444,7 +444,7 @@ app.get('/update', function(req, res) {
     socket.join(user.room);
 
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+    //socket.emit('message', formatMessage(botName, 'Welcome to the chat!'));
 
     // Load previous messages. this should only find history for user to user, but this is not specified here, as I don't know how to send that. maybe i could add a boolean variable if necessary.
       var temp;
