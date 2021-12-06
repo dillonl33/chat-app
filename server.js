@@ -729,7 +729,7 @@ app.get('/update', function(req, res) {
       });
 
 
-    io.to(user.room).emit('message', formatMessage(user.username, msg));
+    io.to(user.room).emit('message2', formatMessage(user.username, msg));
   });
 
   // Runs when client disconnects

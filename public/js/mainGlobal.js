@@ -93,7 +93,7 @@ socket.on('roomUsers2', ({ room, users }) => {
 });
 
 // Message from server
-socket.on('message', (message) => {
+socket.on('message2', (message) => {
   console.log(message);
   outputMessage(message);
 
