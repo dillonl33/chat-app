@@ -369,6 +369,9 @@ io.on('connection', socket => {
   socket.on('getName', () => {
     socket.emit('theName', showed_username);
   })
+  socket.on('getName2', () => {
+    socket.emit('theName2', showed_username);
+  })
   socket.on('getEmail', () => {
     socket.emit('theEmail', showed_email);
   })
