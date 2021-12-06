@@ -15,7 +15,7 @@ const lol = new LeagueofLegends('RGAPI-13601c11-720f-4c34-a59a-d6f15451878d', 'n
 console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
-lol.findSummoner('shp corasan').then((result) => console.log(result));
+lol.findSummoner('Kuriyama Mira').then((result) => console.log(result));
 console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
 console.log("LEAGUE THING 1");
