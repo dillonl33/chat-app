@@ -469,39 +469,79 @@ socket.on('getRank',username => {
   req.end();  
 })
 
-/*
+
 socket.on('getRank_lol',username => {
-  var level_lol = "";
-  var api_key1= "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d";
-  const options_lol = {
 
-    "type": "GET",
-    "url": "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ username+"?api_key="+api_key1, 
-    "path": "/stats/"+username+"/PC",
-    "headers": {
-      "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d",
-    }
-  };
+  var https = require('follow-redirects').https;
+  var fs = require('fs');
 
-  const req = https.request(options_lol, function (res) {
-    const chunks = [];
+  var options = {
+  'method': 'GET',
+  'hostname': '',
+  'path': '/lol/summoner/v4/summoners/by-name/' + username,
+  'headers': {
+    "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d"
+  },
+  'maxRedirects': 20
+};
 
-    res.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
+var req = https.request(options, function (res) {
+  var chunks = [];
 
-    res.on("end", function () {
-      const body = Buffer.concat(chunks);
-      level_lol = body.toString();
-      level_lol = level_lol.substr(-4);
-      level_lol = level_lol.substring(0, Sum_lv.length-1);
-      console.log(username+'\'s level: '+level);
-      socket.emit('level',level);
-    });
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
   });
 
-  req.end();  
-}) */
+  res.on("end", function (chunk) {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+    level_lol = body.toString();
+      level_lol = level_lol.substr(-4);
+      level_lol = level_lol.substring(0, level_lol.length-1);
+      console.log(username+'\'s level: '+level_lol);
+      socket.emit('level_lol',level_lol);
+  });
+
+  res.on("error", function (error) {
+    console.error(error);
+  });
+});
+
+req.end();
+
+  // var https = require('follow-redirects').https;
+  // var fs = require('fs');
+  // var level_lol = "";
+  // var api_key1= "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d";
+  // const options_lol = {
+
+  //   "method": "GET",
+  //   "url": "https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+ username+"?api_key="+api_key1, 
+  //   "path": "/stats/"+username+"/PC",
+  //   "headers": {
+  //     "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d",
+  //   }
+  // };
+
+  // const req = https.request(options_lol, function (res) {
+  //   const chunks = [];
+
+  //   res.on("data", function (chunk) {
+  //     chunks.push(chunk);
+  //   });
+
+  //   res.on("end", function () {
+  //     const body = Buffer.concat(chunks);
+  //     level_lol = body.toString();
+  //     level_lol = level_lol.substr(-4);
+  //     level_lol = level_lol.substring(0, level_lol.length-1);
+  //     console.log(username+'\'s level: '+level_lol);
+  //     socket.emit('level_lol',level_lol);
+  //   });
+  // });
+
+  // req.end();  
+}) 
 
 
 

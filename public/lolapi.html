@@ -98,17 +98,17 @@ form p > * {
 		</style>
 
     <script>
-        // function getRank() {
-        //     var usernameValue = document.getElementById("username").value;
-        //     const socket = io();
+        function getRank() {
+            var usernameValue = document.getElementById("username").value;
+            const socket = io();
 
-        //     socket.emit('getRank_lol',usernameValue);
-        //     console.log("Testing socket comes back to web page");
-        //     socket.on('level_lol', (level_lol) => {
-        //         console.log("User Level: " + leve_lol);
-        //         alert("Level: "+level_lol);
-        //     });
-        //}
+            socket.emit('getRank_lol',usernameValue);
+            console.log("Testing socket comes back to web page");
+            socket.on('level_lol', (level_lol) => {
+                console.log("User Level: " + leve_lol);
+                alert("Level: "+level_lol);
+            });
+        }
     </script>
 </head>
 
