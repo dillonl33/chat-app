@@ -472,42 +472,25 @@ socket.on('getRank',username => {
 
 socket.on('getRank_lol',username => {
 
-  var https = require('follow-redirects').https;
-  var fs = require('fs');
-
+  var request = require('request');
   var options = {
   'method': 'GET',
-  'hostname': '',
-  'path': '/lol/summoner/v4/summoners/by-name/' + username,
+  'url': '/lol/summoner/v4/summoners/by-name/' + username,
   'headers': {
-    "X-Riot-Token": "RGAPI-13601c11-720f-4c34-a59a-d6f15451878d"
-  },
-  'maxRedirects': 20
+    'X-Riot-Token': 'RGAPI-13601c11-720f-4c34-a59a-d6f15451878d'
+  }
 };
-
-var req = https.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function (chunk) {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-    level_lol = body.toString();
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+    var body = response.body;
+      level_lol = body.toString();
       level_lol = level_lol.substr(-4);
       level_lol = level_lol.substring(0, level_lol.length-1);
       console.log(username+'\'s level: '+level_lol);
       socket.emit('level_lol',level_lol);
-  });
-
-  res.on("error", function (error) {
-    console.error(error);
-  });
 });
 
-req.end();
 
   // var https = require('follow-redirects').https;
   // var fs = require('fs');
