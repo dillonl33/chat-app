@@ -96,6 +96,7 @@ form p > * {
 
 
 		</style>
+        <script src="/socket.io/socket.io.js"></script>
 
     <script>
         function getRank() {
@@ -115,8 +116,8 @@ form p > * {
 <body>
     <div id = "login_frame">
         
-        <h1>Enter a Apex ID to see the rank</h1>
-            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" value="temp" required/></p>
+        <h1>Enter a League of Legends ID to see the level</h1>
+            <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="League of Legends ID" value="temp" required/></p>
 
             <div id = "login_control">
                 <input type="button" id="btn_login" value="Submit" onclick="getRank()"/>
@@ -124,7 +125,6 @@ form p > * {
             </div>
 
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     <!-- <script src="../public/js/apexAPI.js"></script> -->
 </body>
 </html>
