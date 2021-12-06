@@ -83,6 +83,7 @@ getTheName(function(username, room) {
     }
 
     // Emit message to server
+    console.log("this should only happen once each");
     socket.emit('chatMessage', msg);
 
     // Clear input
