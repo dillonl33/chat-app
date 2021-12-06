@@ -10,15 +10,6 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
-// this variable should differentiate whether it's a global chatroom or a person-to-person chat.
-// it may be better to have a different .html and.js file for the difference, but trying it merged with if statements on this variable for now.
-var isGlobalChatroom = false;
-
-// Get username and room from URL
-// UPDATE: we want to get username of person and the person they are talking to.
-const { username, room } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});
 
 
 // BEGIN CODE TESTING
@@ -33,6 +24,60 @@ const { username, room } = Qs.parse(location.search, {
 
 
 const socket = io();
+
+
+
+
+socket.emit('getName');
+
+var username = 'initializedUsername'; // your name
+var room = 'initializedroomName'; // friend's name
+
+function getTheName (onDone){
+  socket.on('theName', (theName) => {
+      //console.log("cookie username: " + document.cookie);
+      var current_username = theName;
+      var current_room = 'innerInitializedroomName';
+      console.log('current_username: ' + current_username);
+      //current_room = response.user.username;
+      current_room = Qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+      console.log('current_username: ' + current_username);
+      // we want room name to be a combination of friend name and current user name, so they can both be in the same "room". to make it consistent,
+      // the 'lesser' name goes first, in alphabetical order
+      room = current_room.username;
+    console.log('current_username: ' + room);
+      if(current_username < room) {
+        room = current_username +'_' + room;
+      }
+      else {
+        room = room + '_' + current_username;
+      }
+      onDone(current_username, room);
+  });
+}
+
+getTheName(function(username, room) {
+  //console.log('username/room inside the function: ' + username + '/' + room);
+  // Join chatroom
+  socket.emit('joinRoom', { username, room });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Join chatroom
 socket.emit('joinRoom', { username, room });
@@ -111,4 +156,6 @@ document.getElementById('leave-btn').addEventListener('click', () => {
     window.location = '../homePage.html';
   } else {
   }
+});
+
 });
