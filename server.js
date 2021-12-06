@@ -641,7 +641,7 @@ app.get('/update', function(req, res) {
         const body = Buffer.concat(chunks);
         censoredMsg = body.toString();
         console.log(body.toString());
-        censoredMsg = censoredMsg.substring(censoredMsg.indexOf(':')+1, censoredMsg.indexOf('}')-1)
+        censoredMsg = censoredMsg.substring(censoredMsg.indexOf(':')+2, censoredMsg.indexOf('}')-1)
         socket.emit('censored', censoredMsg);
       });
     });
