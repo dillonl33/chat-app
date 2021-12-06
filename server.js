@@ -6,6 +6,7 @@ const connectEnsureLogin = require('connect-ensure-login');
 
 const https = require("https");
 
+const http = require("https");
 const options = {
 	"method": "GET",
 	"hostname": "apex-legends.p.rapidapi.com",
@@ -18,7 +19,7 @@ const options = {
 	}
 };
 
-const req = http.request(options, function (res) {
+const req5 = http.request(options, function (res) {
 	const chunks = [];
 
 	res.on("data", function (chunk) {
@@ -31,7 +32,7 @@ const req = http.request(options, function (res) {
 	});
 });
 
-req.end();
+req5.end();
 
 const path = require('path');
 const http = require('http');
@@ -390,34 +391,34 @@ io.on('connection', socket => {
 //https://api.mozambiquehe.re/bridge?version=5&platform=PC&player=HeyImLifeline&auth=F9xLgRbUJP0Q5adAv7jV
 //apex legends api
 app.post('/getRank', function(req, res){  
-  const http = require("https");
+  // const http = require("https");
 
-  const options = {
-    "method": "GET",
-    "hostname": "apex-legends.p.rapidapi.com",
-    "port": null,
-    "path": "/stats/"+req.body.username+"/PC",
-    "headers": {
-      "x-rapidapi-host": "apex-legends.p.rapidapi.com",
-      "x-rapidapi-key": process.env.APEX_AUTH,
-      "useQueryString": true
-    }
-  };
+  // const options = {
+  //   "method": "GET",
+  //   "hostname": "apex-legends.p.rapidapi.com",
+  //   "port": null,
+  //   "path": "/stats/"+req.body.username+"/PC",
+  //   "headers": {
+  //     "x-rapidapi-host": "apex-legends.p.rapidapi.com",
+  //     "x-rapidapi-key": process.env.APEX_AUTH,
+  //     "useQueryString": true
+  //   }
+  // };
 
-  const req1 = http.request(options, function (res) {
-    const chunks = [];
+  // const req1 = http.request(options, function (res) {
+  //   const chunks = [];
 
-    res.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
+  //   res.on("data", function (chunk) {
+  //     chunks.push(chunk);
+  //   });
 
-    res.on("end", function () {
-      const body = Buffer.concat(chunks);
-      console.log(body.toString());
-    });
-  });
+  //   res.on("end", function () {
+  //     const body = Buffer.concat(chunks);
+  //     console.log(body.toString());
+  //   });
+  // });
 
-  req1.end();
+  // req1.end();
 });
 //end
   
