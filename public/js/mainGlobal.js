@@ -41,7 +41,10 @@ function getTheName (onDone){
       
       console.log('current_username: ' + current_username);
       //current_room = response.user.username;*/
-      const {currUsername, currRoom} = Qs.parse(location.search, {
+      //var current_username = theName;
+      //var current_room = 'innerInitializedroomName';
+      
+      var {currUsername, currRoom} = Qs.parse(location.search, {
         ignoreQueryPrefix: true,
       });
       username = currUsername;

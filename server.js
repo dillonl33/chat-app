@@ -7,6 +7,41 @@ const connectEnsureLogin = require('connect-ensure-login');
 const GaleforceModule = require('galeforce');
 const galeforce = new GaleforceModule(/* config */);
 
+// BEGIN BAD WORD API THING
+const https = require("https");
+
+console.log("BEFORE API");
+
+//sorry for typing bad word but must do to test bad word API
+const options = {
+	"method": "GET",
+	"hostname": "community-purgomalum.p.rapidapi.com",
+	"port": null,
+	"path": "/json?text=Fuck%20poopie%20some%20test%20input",
+	"headers": {
+		"x-rapidapi-host": "community-purgomalum.p.rapidapi.com",
+		"x-rapidapi-key": "cf70eddd7cmsh5cbd1478d5faaffp193b13jsn89e43f432950",
+		"useQueryString": true
+	}
+};
+
+const req = https.request(options, function (res) {
+	const chunks = [];
+
+	res.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res.on("end", function () {
+		const body = Buffer.concat(chunks);
+		console.log(body.toString());
+	});
+});
+
+req.end();
+console.log("AFTER API");
+
+// END BAD WORD API THING
 
 const path = require('path');
 const http = require('http');
