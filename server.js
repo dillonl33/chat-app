@@ -369,7 +369,7 @@ app.post('/getRank', function(req, res){
     "method": "GET",
     "hostname": "apex-legends.p.rapidapi.com",
     "port": null,
-    "path": "/stats/"+res.body.username+"/PC",
+    "path": "/stats/"+req.body.username+"/PC",
     "headers": {
       "x-rapidapi-host": "apex-legends.p.rapidapi.com",
       "x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
@@ -377,7 +377,7 @@ app.post('/getRank', function(req, res){
     }
   };
 
-  const req = http.request(options, function (res) {
+  const req1 = http.request(options, function (res) {
     const chunks = [];
 
     res.on("data", function (chunk) {
@@ -388,9 +388,9 @@ app.post('/getRank', function(req, res){
       const body = Buffer.concat(chunks);
       console.log(body.toString());
     });
-});
+  });
 
-req.end();
+  req1.end();
 });
 //end
   
