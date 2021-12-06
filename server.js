@@ -639,11 +639,12 @@ app.get('/update', function(req, res) {
         const body = Buffer.concat(chunks);
         censoredMsg = body.toString();
         console.log(body.toString());
+        socket.emit('censored', censoredMsg);
       });
     });
     
     req.end();
-    socket.emit('censored', censoredMsg);
+
   });
 
   // Listen for chatMessage
