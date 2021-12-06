@@ -47,7 +47,7 @@ const options = {
 	"path": "/stats/imshleepdawg/PC",
 	"headers": {
 		"x-rapidapi-host": "apex-legends.p.rapidapi.com",
-		"x-rapidapi-key": process.env.APEX_AUTH,
+		"x-rapidapi-key": "2845aa4e72msh03b047e344c8f37p15f41bjsnf768b73e52ba",
 		"useQueryString": true
 	}
 };
