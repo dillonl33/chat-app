@@ -18,7 +18,7 @@ const userList = document.getElementById('users');
 
 //const socket = io({transports: ['websocket'], upgrade: false});
 
-const socket = io({transports: ['websocket'], upgrade: false});
+const socket = io({transports: ['websocket']});
 
 socket.emit('getName');
 
