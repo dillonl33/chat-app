@@ -658,10 +658,7 @@ app.get('/update', function(req, res) {
     var censoredMsg = "test";
     socket.on('censored', msg => {
       censoredMsg = msg;
-    });
-
-
-    var senderid = '';
+      var senderid = '';
     var receiverid = '';
     if(user.username == user.room.substring(0,user.room.indexOf('_'))) { // username is first part
       senderid = user.room.substring(0,user.room.indexOf('_'));
@@ -692,6 +689,10 @@ app.get('/update', function(req, res) {
 
 
     io.to(user.room).emit('message', formatMessage(user.username, censoredMsg/*msg*/));
+    });
+
+
+    
   });
 
   // Listen for chatMessage
