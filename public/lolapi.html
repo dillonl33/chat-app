@@ -105,7 +105,7 @@ form p > * {
             socket.emit('getRank',usernameValue);
             socket.on('level', (level) => {
                 console.log("User Level: " + level);
-                document.getElementById('rank') = 'Level: '+level;
+                document.getElementById('rank').innerHTML = 'Level: '+level;
             });
         }
     </script>
