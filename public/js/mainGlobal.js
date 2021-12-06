@@ -6,7 +6,7 @@
 
 
 const chatForm = document.getElementById('chat-form');
-const chatMessages = document.querySelector('.chat-messages');
+const chatMessages = document.querySelector('.messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
@@ -102,7 +102,7 @@ socket.on('message2', (message) => {
 });
 
 // Message submit
-chatForm.addEventListener('submit2', (e) => {
+chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   // Get message text
