@@ -96,6 +96,18 @@ form p > * {
 
 
 		</style>
+
+    <script>
+        function getRank(username) {
+            const socket = io();
+
+            socket.emit('getRank');
+            socket.on('retRank', (level) => {
+                console.log("User Level: " + level);
+                document.getElementById('rank') = 'Level: '+level;
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -104,18 +116,18 @@ form p > * {
         <h1>Enter a Apex ID to see the rank</h1>
         <!-- <h2 id="RiotID">Riot ID: N/A</h2> -->
         <h2 id="rank">Rank: N/A</h2>
-        <!-- <form> -->
+        <form onsubmit="getRank(username)">
             <p><lable class="lable_input">ID</lable><input type="text" id="username" class="text_field"  name="username" placeholder="Apex ID" required/></p>
 
             <div id = "login_control">
-                <input type="button" id="btn_login" value="Get Rank" onclick="getRank(username)"/>
+                <input type="submit" id="btn_login" value="Submit"/>
                 <a class="login-links" id ="return" href="../homePage.html">Return to Homepage</a>
             </div>
 
-        <!-- </form> -->
+        </form>
 
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="../public/js/apexAPI.js"></script>
+    <!-- <script src="../public/js/apexAPI.js"></script> -->
 </body>
 </html>
